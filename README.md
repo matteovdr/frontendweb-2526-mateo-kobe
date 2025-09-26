@@ -2,6 +2,10 @@
 
 > Schrap hierboven eventueel wat niet past
 
+- Student: Kobe Vlieghe
+- Studentennummer: 202301886
+- E-mailadres: <kobe.vlieghe@student.hogent.be>
+
 - Student: VOORNAAM NAAM
 - Studentennummer: xxxxxxxxx
 - E-mailadres: <voornaam.naam@student.hogent.be>

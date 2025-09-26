@@ -9,6 +9,9 @@
 
 ## 📋 Studentgegevens
 
+- **Student:** Kobe Vlieghe
+- **Studentennummer:** 202301886
+- **E-mailadres:** <kobe.vlieghe@student.hogent.be>
 - **Student:** Voornaam Naam
 - **Studentennummer:** xxxxxxxx
 - **E-mailadres:** <voornaam.naam@student.hogent.be>
