@@ -6,9 +6,9 @@
 - Studentennummer: 202301886
 - E-mailadres: <kobe.vlieghe@student.hogent.be>
 
-- Student: VOORNAAM NAAM
-- Studentennummer: xxxxxxxxx
-- E-mailadres: <voornaam.naam@student.hogent.be>
+- Student: Matteo van droogenbroeck
+- Studentennummer: 202406598
+- E-mailadres: <matteo.van.droogenbroeck@student.hogent.be>
 
 ## Vereisten
 
