@@ -12,9 +12,9 @@
 - **Student:** Kobe Vlieghe
 - **Studentennummer:** 202301886
 - **E-mailadres:** <kobe.vlieghe@student.hogent.be>
-- **Student:** Voornaam Naam
-- **Studentennummer:** xxxxxxxx
-- **E-mailadres:** <voornaam.naam@student.hogent.be>
+- **Student:** Matteo van droogenbroeck
+- **Studentennummer:** 202406598
+- **E-mailadres:** <matteo.van.droogenbroeck@student.hogent.be>
 - **GitHub repository:** <LINK_NAAR_GITHUB_REPO>
 - **Online versies:**
   - **Back-end:** <LINK_NAAR_ONLINE_BACKEND>
