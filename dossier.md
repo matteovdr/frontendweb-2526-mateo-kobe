@@ -49,7 +49,7 @@
 
 > **Instructie:** Voeg hier een afbeelding van jouw ERD toe en licht de belangrijkste entiteiten en relaties kort toe.
 
-![ERD](pad/naar/erd-afbeelding.png)
+![ERD]("C:\Users\matte\Downloads\response.svg")
 
 [Korte toelichting bij het ERD...]
 
