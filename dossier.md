@@ -49,7 +49,8 @@
 
 > **Instructie:** Voeg hier een afbeelding van jouw ERD toe en licht de belangrijkste entiteiten en relaties kort toe.
 
-![ERD]("C:\Users\matte\Downloads\response.svg")
+![Response diagram](file:///C:/Users/matte/Documents/TI/2e%20jaar/Semester%201/Web_Services/response.svg)
+
 
 [Korte toelichting bij het ERD...]
 
