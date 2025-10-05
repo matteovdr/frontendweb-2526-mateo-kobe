@@ -1,9 +1,12 @@
 # ERD schema
 
-Voor ons erd schema hebben we **kroki plantuml** gebruikt.
-> API: https://kroki.io/plantuml/svg
+Voor ons erd schema hebben we **kroki plantuml** gebruikt dat we ingeven via postman.
 
-```
+> API: <https://kroki.io/plantuml/svg>
+
+De volgende code genereert het diagram.
+
+```plantuml
 @startuml
 class Ouder {
     *id
@@ -75,4 +78,5 @@ Kamp }|--|| Kookploeg : heeft
 Leiding <|-- Hoofdleiding
 
 
-@enduml 
+@enduml
+```
