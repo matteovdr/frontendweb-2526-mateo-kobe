@@ -5,6 +5,6 @@ import Login from './components/login';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Login />
+      <Login />
   </StrictMode>,
 );
