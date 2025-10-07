@@ -1,82 +1,73 @@
 # ERD schema
 
-Voor ons erd schema hebben we **kroki plantuml** gebruikt dat we ingeven via postman.
+Voor ons erd schema hebben we **kroki plantUML** gebruikt dat we ingeven via Postman.
 
 > API: <https://kroki.io/plantuml/svg>
 
 De volgende code genereert het diagram.
 
 ```plantuml
+plantuml
 @startuml
 class Ouder {
-    *id
-    +persoonId
+    *ouderID
+    voornaam
+    achternaam
     telefoon
     email
 }
 
-class Inschrijving {
-    *id
-    +kampId
-}
-
 class Lid {
-    *id
-    +inschrijvingId
-    +persoonId
+    *lidID
     +groepId
-    medischeInfo
-    opmerkingen
+    voornaam
+    achternaam
+    telefoon
+    email
 }
 
 class Leiding {
-    *id
-    +inschrijvingId
-    +persoonId
+    *leidingID
     +groepId
-    ervaring
+    voornaam
+    achternaam
+    telefoon
+    email
 }
 
 class Hoofdleiding {
-    *id
-    +leidingId
-    verantwoordelijkheden
+    verantwoordelijkheid
 }
 
 class Groep {
-    *id
-    naam
+    *naam
     leeftijdscategorie
 }
 
 class Kamp {
-    *id
+    *kampID
     naam
     locatie
     startDatum
     eindDatum
 }
 
-class Kookploeg {
-    *id
-    +persoonId
-    +kampId
-    specialisatie
-}
-
+' Zero or One      |o--
+' Exactly One     ||--
+' Zero or Many      }o--
+' One or Many       }|--
 ' Relaties (class-diagram syntax)
+
 Ouder }|--|{ Lid : ouder van
-Inschrijving ||--o{ Lid : inschrijving van
-Inschrijving ||--o{ Leiding : inschrijving van
-Inschrijving }|--o{ Kamp : vindt plaats in
-Lid }o--|| Groep : hoort bij
-Leiding ||--|{ Groep : hoort bij
-Leiding }|--o| Hoofdleiding : hoofd van
-Kamp }|--|| Kookploeg : heeft
+Ouder }|--|{ kamp : is kookploeg
+Lid }o--o{ Kamp : schrijft in
+Lid ||--o{ Groep : zit in
+Leiding }o--o{ Kamp : schrijft in
+Leiding ||--|{ Groep : beleid
+Hoofdleiding }|--o| Leiding : hoofd van
 
 ' Overerving
 Leiding <|-- Hoofdleiding
-
 
 @enduml
 ```
