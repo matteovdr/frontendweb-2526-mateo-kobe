@@ -1,110 +1,98 @@
 {
-  "Kamp": [
-    {
-      "id": 1,
-      "naam": "Zomerkamp 2025",
-      "locatie": "Durbuy",
-      "startDatum": "2025-07-15",
-      "eindDatum": "2025-07-25"
-    },
-    {
-      "id": 2,
-      "naam": "Paaskamp 2025",
-      "locatie": "De Ardennen",
-      "startDatum": "2025-04-05",
-      "eindDatum": "2025-04-12"
-    }
-  ],
-
-  "Groep": [
-    { "id": 1, "naam": "Sloebers", "leeftijdscategorie": "6-8 jaar" },
-    { "id": 2, "naam": "Paggaders", "leeftijdscategorie": "8-10 jaar" },
-    { "id": 3, "naam": "Joro's", "leeftijdscategorie": "10-12 jaar" },
-    { "id": 4, "naam": "Knim", "leeftijdscategorie": "12-14 jaar" },
-    { "id": 5, "naam": "Sjo", "leeftijdscategorie": "14-16 jaar" },
-    { "id": 6, "naam": "+16", "leeftijdscategorie": "16-18 jaar" }
-  ],
-
-  "Inschrijving": [
-    { "id": 1, "kampId": 1 },
-    { "id": 2, "kampId": 2 }
-  ],
-
-  "Ouder": [
+  "ouders": [
     {
       "id": 1,
       "persoonId": 101,
-      "telefoon": "+32470111222",
-      "email": "sofie.vanloock@example.com"
+      "telefoon": "+32 495 12 34 56",
+      "email": "anne.vandermeulen@gmail.com"
     },
     {
       "id": 2,
       "persoonId": 102,
-      "telefoon": "+32470111333",
-      "email": "tom.peeters@example.com"
+      "telefoon": "+32 478 98 76 54",
+      "email": "pieter.janssens@hotmail.com"
     }
   ],
-
-  "Lid": [
+  "groepen": [
+    {
+      "id": 1,
+      "naam": "Sloebers",
+      "leeftijdscategorie": "6-8 jaar"
+    },
+    {
+      "id": 2,
+      "naam": "Jongknapen",
+      "leeftijdscategorie": "8-10 jaar"
+    },
+    {
+      "id": 3,
+      "naam": "Knapen",
+      "leeftijdscategorie": "10-12 jaar"
+    }
+  ],
+  "kampen": [
+    {
+      "id": 1,
+      "naam": "Zomerkamp 2025",
+      "locatie": "Durbuy",
+      "startDatum": "2025-07-10",
+      "eindDatum": "2025-07-20"
+    }
+  ],
+  "inschrijvingen": [
+    {
+      "id": 1,
+      "kampId": 1
+    },
+    {
+      "id": 2,
+      "kampId": 1
+    }
+  ],
+  "leden": [
     {
       "id": 1,
       "inschrijvingId": 1,
       "persoonId": 201,
       "groepId": 1,
-      "medischeInfo": "Allergisch aan pinda’s",
-      "opmerkingen": "Heeft een inhalator nodig."
+      "medischeInfo": "Allergisch aan noten",
+      "opmerkingen": "Heeft bril nodig",
+      "ouderIds": [1]
     },
     {
       "id": 2,
-      "inschrijvingId": 1,
+      "inschrijvingId": 2,
       "persoonId": 202,
-      "groepId": 3,
-      "medischeInfo": "Geen",
-      "opmerkingen": "Altijd enthousiast."
-    },
-    {
-      "id": 3,
-      "inschrijvingId": 1,
-      "persoonId": 203,
-      "groepId": 6,
-      "medischeInfo": "Vegetariër",
-      "opmerkingen": ""
+      "groepId": 2,
+      "medischeInfo": "Astma – puffer dagelijks",
+      "opmerkingen": "",
+      "ouderIds": [1, 2]
     }
   ],
-
-  "Leiding": [
+  "leiding": [
     {
       "id": 1,
       "inschrijvingId": 1,
       "persoonId": 301,
       "groepId": 1,
-      "ervaring": "2 jaar"
+      "ervaring": "2 jaar leiding bij Sloebers"
     },
     {
       "id": 2,
-      "inschrijvingId": 1,
+      "inschrijvingId": 2,
       "persoonId": 302,
-      "groepId": 3,
-      "ervaring": "4 jaar"
-    },
-    {
-      "id": 3,
-      "inschrijvingId": 1,
-      "persoonId": 303,
-      "groepId": 6,
-      "ervaring": "6 jaar"
+      "groepId": 2,
+      "ervaring": "1 jaar leiding bij Jongknapen"
     }
   ],
-
-  "Hoofdleiding": [
+  "hoofdleiding": [
     {
       "id": 1,
-      "leidingId": 3,
-      "verantwoordelijkheden": "Coördinatie van activiteiten en veiligheid"
+      "leidingId": 1,
+      "verantwoordelijkheden": "Coördinatie kamp, veiligheid en planning"
     }
   ],
-
-  "Kookploeg": [
+  "kookploeg": [
     {
       "id": 1,
       "persoonId": 401,
@@ -115,13 +103,7 @@
       "id": 2,
       "persoonId": 402,
       "kampId": 1,
-      "specialisatie": "Desserts en bakken"
+      "specialisatie": "Ontbijt & dessert"
     }
-  ],
-
-  "Ouder_Lid": [
-    { "ouderId": 1, "lidId": 1 },
-    { "ouderId": 2, "lidId": 2 },
-    { "ouderId": 2, "lidId": 3 }
   ]
 }
