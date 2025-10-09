@@ -9,34 +9,26 @@ De volgende code genereert het diagram.
 ```plantuml
 plantuml
 @startuml
-class Ouder {
-    *ouderID
+class Persoon {
+    *id
     voornaam
     achternaam
     telefoon
     email
+}
+class Ouder {
+    *id
+    +persoonID
 }
 
 class Lid {
-    *lidID
-    +groepId
-    voornaam
-    achternaam
-    telefoon
-    email
+    *id
+    +persoonID
 }
 
 class Leiding {
-    *leidingID
-    +groepId
-    voornaam
-    achternaam
-    telefoon
-    email
-}
-
-class Hoofdleiding {
-    verantwoordelijkheid
+    *id
+    +persoonID
 }
 
 class Groep {
@@ -64,10 +56,12 @@ Lid }o--o{ Kamp : schrijft in
 Lid ||--o{ Groep : zit in
 Leiding }o--o{ Kamp : schrijft in
 Leiding ||--|{ Groep : beleid
-Hoofdleiding }|--o| Leiding : hoofd van
+Leiding |o--|{ Leiding : hoofd van
 
 ' Overerving
-Leiding <|-- Hoofdleiding
+Persoon <|-- Lid
+Persoon <|-- Ouder
+Persoon <|-- Leiding
 
 @enduml
 ```
