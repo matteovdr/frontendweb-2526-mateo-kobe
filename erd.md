@@ -59,7 +59,7 @@ class Kamp {
 ' Relaties (class-diagram syntax)
 
 Ouder }|--|{ Lid : ouder van
-Ouder }|--|{ kamp : is kookploeg
+Ouder }|--|{ Kamp : is kookploeg
 Lid }o--o{ Kamp : schrijft in
 Lid ||--o{ Groep : zit in
 Leiding }o--o{ Kamp : schrijft in
