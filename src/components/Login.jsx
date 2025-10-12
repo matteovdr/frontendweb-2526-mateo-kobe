@@ -1,4 +1,4 @@
-import { CgProfile } from "react-icons/cg";
+import { CgProfile } from 'react-icons/cg';
 
 function Login() {
   return (
