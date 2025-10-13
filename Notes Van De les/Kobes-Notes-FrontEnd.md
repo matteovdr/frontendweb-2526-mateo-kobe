@@ -31,4 +31,10 @@ faker is een library die fake data kan genereren, maar ai kan dit ook met realis
 
 react-router is een library die routing in react apps mogelijk maakt
 
+path * betekent dat alle paths die niet bestaan naar deze pagina gaan
+
+voor parameters in routes gebruik je :parameterName
+
 ## extras
+
+les 4
