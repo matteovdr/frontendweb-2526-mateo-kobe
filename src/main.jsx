@@ -9,7 +9,7 @@ import Kampen from './components/Kampen';
 import Inschrijvingen from './components/Inschrijvingen';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
-import express from 'express';
+/* import express from 'express';
 import cors from 'cors';
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(cors({
   origin: 'http://localhost:5173', // jouw frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // als je cookies of tokens meestuurt
-}));
+})); */
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
