@@ -1,7 +1,16 @@
+import { GoogleLogin } from '@react-oauth/google';
 import { CgProfile } from 'react-icons/cg';
 import { PiLockLight } from 'react-icons/pi';
 
 function Login() {
+  const handleSuccess = (credentialResponse) => {
+    console.log('Google login success:', credentialResponse);
+  };
+
+  const handleError = () => {
+    console.log('Google login failed');
+  };
+
   return (
     <>
       <div className="flex justify-center items-center bg-blue-100 min-h-screen">
@@ -40,6 +49,29 @@ function Login() {
           font-semibold py-3 rounded-2xl transition-all shadow-md cursor-pointer w-72 md:w-80">
             Inloggen
           </button>
+
+          {/* Divider */}
+          <div className="flex items-center my-4 w-72 md:w-80">
+            <div className="flex-1 h-px bg-blue-300"></div>
+            <span className="mx-3 text-gray-500 text-sm">of</span>
+            <div className="flex-1 h-px bg-blue-300"></div>
+          </div>
+
+          {/* Google Sign In */}
+          <div
+            className="w-72 md:w-80 mt-1 flex justify-center"
+            style={{ height: '46px' }}
+          >
+            <div className="w-full flex justify-center">
+              <GoogleLogin
+                onSuccess={handleSuccess}
+                onError={handleError}
+                theme="outline"
+                size="large"
+                shape="rectangular"
+              />
+            </div>
+          </div>
 
           {/* Links */}
           <div className="flex flex-col items-center mt-6 text-sm">
