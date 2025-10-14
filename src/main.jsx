@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
 
-import Login from './components/Login';
+import Login from './components/login';
 import Leiding from './components/Leiding';
 import About from './components/About_us';
 import Kampen from './components/Kampen';
@@ -54,9 +54,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <Login />
+      <RouterProvider router={router} />
     </GoogleOAuthProvider>
   </StrictMode>,
 );
