@@ -7,11 +7,11 @@ import './index.css';
 import Login from './components/login';
 import Leiding from './components/Leiding';
 import About from './components/About_us';
-import Kampen from './components/Kampen';
+import Kampen from './components/Kampen/Kampen';
 import Inschrijvingen from './components/Inschrijvingen';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
-import Layout from '../Layout';
+import Layout from './Layout';
 const router = createBrowserRouter([
   {
     Component: Layout, 

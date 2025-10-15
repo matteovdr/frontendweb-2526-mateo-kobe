@@ -13,7 +13,7 @@ const NotFound = () => {
       <h1>Pagina niet gevonden</h1>
       <p>Er is geen pagina met als url {pathname}, probeer iets anders.</p>    
       <button className='py-2 px-2.5 rounded-md text-blue-600 
-      border border-blue-600 mt-4' onClick={handleGoHome}>Go home!</button>
+      border border-blue-600 mt-4 cursor-pointer' onClick={handleGoHome}>Go home!</button>
     </div>
   );
 };

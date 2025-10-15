@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import Navbar from './src/components/Navbar';
+import Navbar from './components/Navbar';
 import { ScrollRestoration } from 'react-router';
 
 export default function Layout() {
