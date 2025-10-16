@@ -51,11 +51,9 @@
 
 ![Response diagram](./images/response.svg)
 
-
 [Korte toelichting bij het ERD...]
 
 De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers en leiding aan een specifiek kamp koppelen. Leden en Leiding maken elk deel uit van een Groep, terwijl Hoofdleiding een gespecialiseerde vorm van leiding is met extra verantwoordelijkheden. Ouders zijn verbonden aan één of meerdere leden en dienen als contactpersonen. Daarnaast is er een Kookploeg die minstens aan 1 of meerdere kampen zijn gekoppeld.
-
 
 ## ✅ Ontvankelijkheidscriteria
 
