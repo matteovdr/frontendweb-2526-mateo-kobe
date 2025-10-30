@@ -17,6 +17,31 @@ function leiding() {
       </div>
 
       <div className="mb-16">
+        <h3 className="text-2xl font-semibold text-[#004C97] mb-6">Hoofdleiding</h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-items-center">
+
+          <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center 
+          over:shadow-lg transition-shadow duration-200">
+            <img
+              src="/images/beau.png"
+              className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
+            />
+            <h4 className="text-xl font-semibold text-[#004C97]">Beau</h4>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center
+           hover:shadow-lg transition-shadow duration-200">
+            <img
+              src="/images/lotte.png"
+              className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
+            />
+            <h4 className="text-xl font-semibold text-[#004C97]">Lotte</h4>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-16">
         <h3 className="text-2xl font-semibold text-[#004C97] mb-6">Sloebers (6 - 8 jaar)</h3>
         <p className="text-gray-700 max-w-3xl mx-auto mb-10">
           De jongste bende van KSA Hillegem! De sloebers ontdekken de wereld door spel en fantasie. 
@@ -28,7 +53,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6
            max-w-xs text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/liam.png"
+              src="/images/helena.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Helena</h4>
@@ -43,7 +68,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6
            max-w-xs text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/liam.png"
+              src="/images/lotte.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Lotte</h4>
@@ -59,7 +84,7 @@ function leiding() {
           <div className="bg-white rounded-2xl 
           shadow-md p-6 max-w-xs text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/response.svg"
+              src="/images/liam.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Liam</h4>
@@ -99,7 +124,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md 
           p-6 max-w-xs text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/maud.jpg"
+              src="/images/maud.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Maud</h4>
@@ -127,7 +152,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs
            text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/inge.jpg"
+              src="/images/inge.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Inge</h4>
@@ -143,7 +168,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs 
           text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/senne.jpg"
+              src="/images/senne.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Senne</h4>
@@ -158,7 +183,7 @@ function leiding() {
           <div className="bg-white rounded-2xl
            shadow-md p-6 max-w-xs text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/sander.jpg"
+              src="/images/sander.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Sander</h4>
@@ -184,7 +209,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs
            text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/sarah.jpg"
+              src="/images/sarah.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Sarah</h4>
@@ -199,7 +224,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs
            text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/michiel.jpg"
+              src="/images/michiel.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Michiel</h4>
@@ -214,7 +239,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs 
           text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/lauren.jpg"
+              src="/images/lauren.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Lauren</h4>
@@ -240,7 +265,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs 
           text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/laure.jpg"
+              src="/images/laure.jpg"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Laure</h4>
@@ -258,7 +283,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs 
           text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/matteo.jpg"
+              src="/images/matteo.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Matteo</h4>
@@ -288,7 +313,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs
            text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/beau.jpg"
+              src="/images/beau.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Beau</h4>
@@ -306,7 +331,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center hover:shadow-lg 
           transition-shadow duration-200">
             <img
-              src="/images/leiding/chloe.jpg"
+              src="/images/chloë.jpg"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Chloë</h4>
@@ -320,7 +345,7 @@ function leiding() {
           <div className="bg-white rounded-2xl shadow-md p-6 max-w-xs 
           text-center hover:shadow-lg transition-shadow duration-200">
             <img
-              src="/images/leiding/jorben.jpg"
+              src="/images/jorben.png"
               className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
             />
             <h4 className="text-xl font-semibold text-[#004C97]">Jorben</h4>
