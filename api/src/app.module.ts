@@ -2,13 +2,21 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthController } from './health/health.controller';
-import { KampenController } from './kampen/kampen.controller';
-import { KampenService } from './kampen/kampen.service';
 import { DrizzleModule } from './drizzle/drizzle.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
+import { KampenModule } from './kampen/kampen.module';
 
 @Module({
-  imports: [DrizzleModule],
-  controllers: [AppController, HealthController, KampenController],
-  providers: [AppService, KampenService],
+  imports: [
+    KampenModule,
+    ConfigModule.forRoot({
+      load: [configuration],
+      isGlobal: true,
+    }),
+    DrizzleModule,
+  ],
+  controllers: [AppController, HealthController],
+  providers: [AppService],
 })
 export class AppModule {}
