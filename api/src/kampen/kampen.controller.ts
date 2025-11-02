@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { createKampRequestDTO } from './kamp.dto';
+import { KampenService } from './kampen.service';
 
 @Controller('kampen')
 export class KampenController {
+  constructor(private readonly KampenService: KampenService) {}
   @Get()
   getAllKampen(): string {
     // TODO

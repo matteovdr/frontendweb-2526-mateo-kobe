@@ -37,9 +37,9 @@ class Groep {
 }
 
 class Kamp {
-    *kampID
+    *id
     naam
-    locatie
+    stad
     startDatum
     eindDatum
 }
