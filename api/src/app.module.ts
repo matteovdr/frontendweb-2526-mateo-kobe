@@ -6,6 +6,7 @@ import { DrizzleModule } from './drizzle/drizzle.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { KampenModule } from './kampen/kampen.module';
+import { LeidingModule } from './leiding/leiding.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { KampenModule } from './kampen/kampen.module';
       isGlobal: true,
     }),
     DrizzleModule,
+    LeidingModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],
