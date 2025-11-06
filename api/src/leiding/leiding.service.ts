@@ -1,15 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-    CreateLeidingDto,
-    UpdateLeidingDto,
-    LeidingResponseDto,
-    LeidingListResponseDto,
+  CreateLeidingDto,
+  UpdateLeidingDto,
+  LeidingResponseDto,
+  LeidingListResponseDto,
 } from './leiding.dto';
 import {
-    type DatabaseProvider,
-    InjectDrizzle,
-} from  '../drizzle/drizzle.provider';
-@Injectable()
+  type DatabaseProvider,
+  InjectDrizzle,
+} from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
 import { leiding } from '../drizzle/schema';
 
@@ -31,7 +30,8 @@ export class LeidingService {
       },
     });
 
-    return { items };
+    return { items: items as LeidingResponseDto[] };
+
   }
 
   async getById(id: number): Promise<LeidingResponseDto> {
@@ -50,7 +50,8 @@ export class LeidingService {
       throw new NotFoundException('Geen leiding gevonden met dit ID');
     }
 
-    return item;
+    return item as LeidingResponseDto;
+
   }
 
   async create(dto: CreateLeidingDto): Promise<LeidingResponseDto> {

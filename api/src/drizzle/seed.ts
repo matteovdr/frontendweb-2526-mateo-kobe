@@ -74,6 +74,7 @@ async function main() {
 
   await resetDatabase();
   await seedPlaces();
+   await seedLeiding();
 
   console.log('🎉 Database seeding completed successfully!');
 }
@@ -86,3 +87,32 @@ main()
     await connection.end();
     process.exit(1);
   });
+
+
+
+ async function seedLeiding() {
+  console.log('Seeding leiding tabel...');
+
+  await db.insert(schema.leiding).values([
+    {
+      name: 'Johan Janssen',
+      ageGroup: 'sjo',
+      imageUrl: 'https://example.com/assets/johan.jpg',
+      description: 'Ervaren groepsleider voor de oudste groep.'
+    },
+    {
+      name: 'Sara Peeters',
+      ageGroup: 'joros',
+      imageUrl: 'https://example.com/assets/sara.jpg',
+      description: 'Organiseert creatieve activiteiten voor de middenbouw.'
+    },
+    {
+      name: 'Bram Vermeulen',
+      ageGroup: 'sloebers',
+      imageUrl: 'https://example.com/assets/bram.jpg',
+      description: 'Altijd enthousiast bij de jongste kinderen.'
+    }
+  ]);
+
+  console.log('✅ Leiding seeded successfully\n');
+}
