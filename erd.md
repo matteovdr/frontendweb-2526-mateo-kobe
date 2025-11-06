@@ -29,6 +29,7 @@ class Lid {
 class Leiding {
     *id
     +persoonID
+    beschrijving
 }
 
 class Groep {

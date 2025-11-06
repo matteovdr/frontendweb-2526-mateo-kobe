@@ -10,12 +10,12 @@ import { LeidingModule } from './leiding/leiding.module';
 
 @Module({
   imports: [
-    KampenModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
     }),
     DrizzleModule,
+    KampenModule,
     LeidingModule,
   ],
   controllers: [AppController, HealthController],
