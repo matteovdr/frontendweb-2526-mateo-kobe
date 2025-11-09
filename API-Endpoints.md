@@ -39,7 +39,7 @@ TODO:
 - **Output:** Een lijst van alle leiding in JSON-formaat.
 - **Beschrijving:** Deze endpoint haalt alle leiding op uit de database en retourneert een array van leidingobjecten.
 
----
+
 
 ### 2. Haal een specifieke leiding op
 - **URL:** `https://api.example.com/leiding/{id}`
@@ -49,7 +49,7 @@ TODO:
 - **Output:** Een leidingobject in JSON-formaat.
 - **Beschrijving:** Deze endpoint haalt een specifieke leiding op basis van het opgegeven id.
 
----
+
 
 ### 3. Maak een leiding aan
 - **URL:** `https://api.example.com/leiding`
@@ -59,7 +59,6 @@ TODO:
 - **Output:** Het nieuw aangemaakte leidingobject in JSON-formaat.
 - **Beschrijving:** Hiermee wordt een nieuwe leiding aangemaakt met de opgegeven data en toegevoegd aan de database.
 
----
 
 ### 4. Werk leiding bij
 - **URL:** `https://api.example.com/leiding/{id}`
@@ -70,7 +69,6 @@ TODO:
 - **Output:** Het bijgewerkte leidingobject in JSON-formaat.
 - **Beschrijving:** Update de gegevens van een bestaande leiding met de meegegeven waarden.
 
----
 
 ### 5. Verwijder een leiding
 - **URL:** `https://api.example.com/leiding/{id}`
