@@ -9,12 +9,12 @@ import { KampenModule } from './kampen/kampen.module';
 
 @Module({
   imports: [
-    KampenModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
     }),
     DrizzleModule,
+    KampenModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],

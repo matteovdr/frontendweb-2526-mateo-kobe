@@ -1,25 +1,39 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { createKampRequestDTO } from './kamp.dto';
-import { KampenListResponseDto } from './kamp.dto';
+import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
 import { KampenService } from './kampen.service';
+import { KampenListResponseDto, KampResponseDto, createKampRequestDTO } from './kamp.dto';
 
 @Controller('kampen')
 export class KampenController {
-  constructor(private readonly KampenService: KampenService) {}
+  constructor(private readonly kampenService: KampenService) {}
+
+  // GET /kampen
   @Get()
-  async getAllKampen(): Promise<KampenListResponseDto> {
-    return this.KampenService.getAll();
+  async getAll(): Promise<KampenListResponseDto> {
+    return this.kampenService.getAll();
   }
 
+  // GET /kampen/:id
   @Get(':id')
-  getKamp(@Param('id') id: number): string {
-    // TODO
-    return `this action returns 1 kamp with id: ${id}`;
+  async getOne(@Param('id') id: string): Promise<KampResponseDto> {
+    return this.kampenService.getKampWithId(Number(id));
   }
 
+  // POST /kampen
   @Post()
-  createKamp(@Body() createKampDTO: createKampRequestDTO): string {
-    // TODO
-    return `This action adds a new kamp for ${createKampDTO.naam}`;
+  async create(@Body() data: createKampRequestDTO): Promise<KampResponseDto> {
+    return this.kampenService.createKamp(data);
+  }
+
+  // PUT /kampen/:id
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() data: createKampRequestDTO): Promise<KampResponseDto> {
+    return this.kampenService.updateKamp(Number(id), data);
+  }
+
+  // DELETE /kampen/:id
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<{ message: string }> {
+    await this.kampenService.deleteKamp(Number(id));
+    return { message: `Kamp with ID ${id} deleted successfully` };
   }
 }
