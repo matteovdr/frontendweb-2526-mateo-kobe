@@ -15,6 +15,7 @@
 > Vul de vereisten eventueel aan
 
 Ik verwacht dat volgende software reeds geïnstalleerd is:
+pnpm install -D tailwindcss postcss autoprefixer
 
 - [NodeJS](https://nodejs.org)
 - [pnpm](https://pnpm.io)
