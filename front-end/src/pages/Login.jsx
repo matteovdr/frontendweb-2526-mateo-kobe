@@ -13,9 +13,9 @@ function Login() {
 
   return (
     <>
-      <div className="flex justify-center items-center bg-blue-100 min-h-screen">
+      <div className="flex justify-center items-center min-h-screen">
         <div className="flex justify-center items-center flex-col border-4 border-blue-300
-        rounded-4xl p-8 w-96 md:w-[28rem] lg:w-[32rem] shadow-xl bg-white/70 backdrop-blur-sm
+        rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
         h-auto">
           <CgProfile className="text-8xl text-blue-400 mb-4" />
           <h1 className="font-bold text-6xl text-blue-600 mb-6">Login</h1>
@@ -45,16 +45,16 @@ function Login() {
           </div>
 
           {/* Login button */}
-          <button className="mt-5 bg-blue-500 hover:bg-blue-600 text-white
-          font-semibold py-3 rounded-2xl transition-all shadow-md cursor-pointer w-72 md:w-80">
+          <button className="mt-5 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white
+          py-3 rounded-2xl transition-all shadow-md w-72 md:w-80">
             Inloggen
           </button>
 
           {/* Divider */}
           <div className="flex items-center my-4 w-72 md:w-80">
-            <div className="flex-1 h-px bg-blue-300"></div>
+            <div className="flex-1 border-b"></div>
             <span className="mx-3 text-gray-500 text-sm">of</span>
-            <div className="flex-1 h-px bg-blue-300"></div>
+            <div className="flex-1 border-b"></div>
           </div>
 
           {/* Google Sign In */}

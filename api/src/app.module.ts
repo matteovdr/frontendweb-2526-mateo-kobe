@@ -16,7 +16,6 @@ import { LeidingModule } from './leiding/leiding.module';
     }),
     DrizzleModule,
     KampenModule,
-    LeidingModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],
