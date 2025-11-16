@@ -8,3 +8,11 @@ export const kampen = mysqlTable('kampen', {
   startDatum: date('startDatum').notNull(),
   eindDatum: date('eindDatum').notNull(),
 });
+
+export const leiding = mysqlTable('leiding', {
+  id: int('id', { unsigned: true }).primaryKey().autoincrement(),
+  name: varchar('name', { length: 255 }).notNull(),
+  ageGroup: varchar('ageGroup', { length: 255 }).notNull(),
+  imageUrl: varchar('imageUrl', { length: 255 }).notNull(),
+  description: varchar('description', { length: 255 }),
+});
