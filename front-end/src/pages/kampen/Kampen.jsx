@@ -25,7 +25,7 @@ function Kampen() {
       <h1 className="text-6xl font-semibold mb-4 text-[#004C97] text-center">Kampen</h1>
       <p className="text-center py-4">
         Dit zijn onze kampen die we gedaan hebben en die ingepland zijn. <br />
-        Deze kampen zijn voor de leden voor eens veel plezier te hebben! <br />
+        Deze kampen zijn voor eens veel plezier te hebben! <br />
         Er moet wel altijd inschrijvingsgeld betaald worden.
         In geval van ziekte worden de ouders gebeld en moet het kind worden opgehaald.
       </p>
