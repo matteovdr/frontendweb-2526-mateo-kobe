@@ -4,14 +4,14 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
 
-import Login from './components/login';
-import Leiding from './components/Leiding';
-import About from './components/About_us';
-import Kampen from './components/Kampen/Kampen';
-import Inschrijvingen from './components/Inschrijvingen';
-import Home from './components/Home';
-import NotFound from './components/NotFound';
-import Layout from './Layout';
+import Layout from './pages/Layout';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Leiding from './pages/Leiding';
+import About from './pages/About_us';
+import Kampen from './pages/kampen/Kampen';
+import Inschrijvingen from './pages/Inschrijvingen';
+import NotFound from './pages/NotFound';
 const router = createBrowserRouter([
   {
     Component: Layout, 

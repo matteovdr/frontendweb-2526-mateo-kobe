@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import KampenLijst from './KampenLijst';
+import KampenLijst from '../../components/Kampen/KampenLijst';
 import { getAll } from '../../api';
 
 function Kampen() {
