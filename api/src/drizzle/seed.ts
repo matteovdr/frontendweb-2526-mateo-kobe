@@ -66,7 +66,7 @@ async function seedPlaces() {
     },
   ]);
 
-  console.log('✅ Places seeded successfully\n');
+  console.log('✅ Kampen seeded successfully\n');
 }
 
 async function main() {
