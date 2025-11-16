@@ -1,15 +1,13 @@
-import Kamp from './Kamp';
+import Kamp from '../Kampen/Kamp';
 
-function KampenLijst( alGedaan ) {
+function KampenLijst({ kampen, alGedaan }) {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 2xl:px-60">
-        
-        <Kamp />
-        <Kamp />
-        <Kamp />
-        <Kamp />
-        <Kamp />
+        {kampen.map((kamp) => (
+          <Kamp naam={kamp.naam} locatie={kamp.locatie} startDatum={kamp.startDatum}
+            eindDatum={kamp.eindDatum} alGedaan={alGedaan} />
+        ))}
       </div>
     </>
   );
