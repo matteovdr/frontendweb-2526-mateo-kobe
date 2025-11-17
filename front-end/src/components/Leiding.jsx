@@ -1,34 +1,32 @@
-import { useEffect, useState } from 'react';
-import * as leidingApi from '../api/leiding';
+import { useMemo } from 'react';
+import useSWR from 'swr';
+import * as leidingApi from '../api/index';
 
 export default function Leiding() {
-  const [leiding, setLeiding] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: leiding = [],
+    isLoading,
+    error,
+  } = useSWR('leiding', leidingApi.getAll);
 
-  useEffect(() => {
-    const fetchLeiding = async () => {
-      try {
-        const data = await leidingApi.getAll();
-        setLeiding(data);
-      } catch (error) {
-        console.error('Fout bij het ophalen van leiding:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const groepen = useMemo(() => {
+    return leiding.reduce((acc, lid) => {
+      if (!acc[lid.groep]) acc[lid.groep] = [];
+      acc[lid.groep].push(lid);
+      return acc;
+    }, {});
+  }, [leiding]);
 
-    fetchLeiding();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <p className="text-center mt-8">Gegevens worden geladen...</p>;
   }
-
-  const groepen = leiding.reduce((acc, lid) => {
-    if (!acc[lid.groep]) acc[lid.groep] = [];
-    acc[lid.groep].push(lid);
-    return acc;
-  }, {});
+  if (error) {
+    return (
+      <p className="text-center mt-8 text-red-500">
+        Fout bij het ophalen van leiding: {error.message}
+      </p>
+    );
+  }
 
   return (
     <div className="p-8 text-center max-w-4xl mx-auto">
@@ -47,21 +45,21 @@ export default function Leiding() {
         leidingsploeg voor, verdeeld per leeftijdsgroep.
       </p>
 
-      {Object.entries(groepen).map(([groepNaam, leiding]) => (
+      {Object.entries(groepen).map(([groepNaam, leden]) => (
         <div key={groepNaam} className="mb-16">
           <h3 className="text-2xl font-semibold text-[#004C97] mb-6">
             {groepNaam}
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
-            {leiding.map((leiding) => (
+            {leden.map((leiding) => (
               <div
                 key={leiding.id}
                 className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center
                  hover:shadow-lg transition-shadow duration-200"
               >
                 <img
-                  src={leiding.foto}
+                  src={leiding.foto ?? '/images/default.jpg'}
                   alt={leiding.naam}
                   className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
                 />
@@ -69,9 +67,7 @@ export default function Leiding() {
                   {leiding.naam}
                 </h4>
                 {leiding.omschrijving && (
-                  <p className="text-gray-700 text-sm mt-2">
-                    {leiding.omschrijving}
-                  </p>
+                  <p className="text-gray-700 text-sm mt-2">{leiding.omschrijving}</p>
                 )}
               </div>
             ))}
@@ -81,4 +77,3 @@ export default function Leiding() {
     </div>
   );
 }
-
