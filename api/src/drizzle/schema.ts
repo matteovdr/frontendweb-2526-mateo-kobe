@@ -1,5 +1,5 @@
 // src/drizzle/schema.ts
-import { mysqlTable, int, varchar, date } from 'drizzle-orm/mysql-core';
+import { mysqlTable, int, varchar, date, text } from 'drizzle-orm/mysql-core';
 
 export const kampen = mysqlTable('kampen', {
   id: int('id', { unsigned: true }).primaryKey().autoincrement(),
@@ -14,5 +14,5 @@ export const leiding = mysqlTable('leiding', {
   name: varchar('name', { length: 255 }).notNull(),
   ageGroup: varchar('ageGroup', { length: 255 }).notNull(),
   imageUrl: varchar('imageUrl', { length: 255 }).notNull(),
-  description: varchar('description', { length: 255 }),
+  description: text('description'),
 });

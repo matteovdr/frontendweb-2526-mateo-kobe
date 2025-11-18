@@ -1,18 +1,20 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import * as leidingApi from '../api/index';
+import { getAll } from '../api/';
 
 export default function Leiding() {
+
   const {
     data: leiding = [],
     isLoading,
     error,
-  } = useSWR('leiding', leidingApi.getAll);
+  } = useSWR('leiding', getAll );
+  console.log('leiding:', leiding);
 
   const groepen = useMemo(() => {
     return leiding.reduce((acc, lid) => {
-      if (!acc[lid.groep]) acc[lid.groep] = [];
-      acc[lid.groep].push(lid);
+      if (!acc[lid.ageGroup]) acc[lid.ageGroup] = [];
+      acc[lid.ageGroup].push(lid);
       return acc;
     }, {});
   }, [leiding]);
@@ -45,29 +47,29 @@ export default function Leiding() {
         leidingsploeg voor, verdeeld per leeftijdsgroep.
       </p>
 
-      {Object.entries(groepen).map(([groepNaam, leden]) => (
+      {Object.entries(groepen).map(([groepNaam, leiding]) => (
         <div key={groepNaam} className="mb-16">
           <h3 className="text-2xl font-semibold text-[#004C97] mb-6">
             {groepNaam}
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
-            {leden.map((leiding) => (
+            {leiding.map((leiding) => (
               <div
                 key={leiding.id}
                 className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center
                  hover:shadow-lg transition-shadow duration-200"
               >
                 <img
-                  src={leiding.foto ?? '/images/default.jpg'}
-                  alt={leiding.naam}
+                  src={leiding.imageUrl}
+                  alt={leiding.name}
                   className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
                 />
                 <h4 className="text-xl font-semibold text-[#004C97]">
-                  {leiding.naam}
+                  {leiding.name}
                 </h4>
-                {leiding.omschrijving && (
-                  <p className="text-gray-700 text-sm mt-2">{leiding.omschrijving}</p>
+                {leiding.description && (
+                  <p className="text-gray-700 text-sm mt-2">{leiding.description}</p>
                 )}
               </div>
             ))}
@@ -76,4 +78,5 @@ export default function Leiding() {
       ))}
     </div>
   );
+  
 }

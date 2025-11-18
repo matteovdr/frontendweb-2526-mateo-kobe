@@ -1,0 +1,1 @@
+ALTER TABLE `leiding` MODIFY COLUMN `description` text;
