@@ -3,6 +3,7 @@ export class CreateLeidingDto {
   ageGroup: string;
   imageUrl: string;
   description: string;
+  isHoofdleiding: boolean;
 }
 
 export class UpdateLeidingDto {
@@ -10,6 +11,7 @@ export class UpdateLeidingDto {
   ageGroup?: string;
   imageUrl?: string;
   description?: string;
+  isHoofdleiding: boolean;
 }
 
 export class LeidingResponseDto {
@@ -18,6 +20,7 @@ export class LeidingResponseDto {
   ageGroup: string;
   imageUrl: string;
   description: string;
+  isHoofdleiding: boolean;
 }
 
 export class LeidingListResponseDto {

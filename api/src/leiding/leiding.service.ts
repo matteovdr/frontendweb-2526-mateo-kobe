@@ -27,6 +27,7 @@ export class LeidingService {
         ageGroup: true,
         imageUrl: true,
         description: true,
+        isHoofdleiding: true,
       },
     });
 
@@ -42,6 +43,7 @@ export class LeidingService {
         ageGroup: true,
         imageUrl: true,
         description: true,
+        isHoofdleiding: true, 
       },
       where: eq(leiding.id, id),
     });
@@ -69,11 +71,11 @@ export class LeidingService {
     id: number,
     dto: UpdateLeidingDto,
   ): Promise<LeidingResponseDto> {
-    const { name, ageGroup, imageUrl, description } = dto;
+    const { name, ageGroup, imageUrl, description ,isHoofdleiding  } = dto;
 
     await this.db
       .update(leiding)
-      .set({ name, ageGroup, imageUrl, description })
+      .set({ name, ageGroup, imageUrl, description, isHoofdleiding })
       .where(eq(leiding.id, id));
 
     return this.getById(id);

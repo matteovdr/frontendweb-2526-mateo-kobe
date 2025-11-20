@@ -46,7 +46,39 @@ export default function Leiding() {
         zichzelf geven om onze leden een geweldige tijd te bezorgen. Hieronder stellen we graag onze
         leidingsploeg voor, verdeeld per leeftijdsgroep.
       </p>
+      <div className="mb-16">
+        <h3 className="text-2xl font-semibold text-[#004C97] mb-6">
+          Hoofdleiding
+        </h3>
 
+        <div className="flex flex-wrap justify-center gap-8">
+          {leiding
+            .filter((Hoofdleiding) => Hoofdleiding.isHoofdleiding === true)
+            .map((Hoofdleiding) => (
+              <div
+                key={Hoofdleiding.id}
+                className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center
+           hover:shadow-lg transition-shadow duration-200"
+              >
+                <img
+                  src={Hoofdleiding.imageUrl}
+                  alt={Hoofdleiding.name}
+                  className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
+                />
+                <h4 className="text-xl font-semibold text-[#004C97]">
+                  {Hoofdleiding.name}
+                </h4>
+                {Hoofdleiding.description && (
+                  <p className="text-gray-700 text-sm mt-2">
+                    {Hoofdleiding.description}
+                  </p>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    
       {Object.entries(groepen).map(([groepNaam, leiding]) => (
         <div key={groepNaam} className="mb-16">
           <h3 className="text-2xl font-semibold text-[#004C97] mb-6">
