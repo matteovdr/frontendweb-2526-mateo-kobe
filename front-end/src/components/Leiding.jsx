@@ -31,17 +31,17 @@ export default function Leiding() {
   }
 
   return (
-    <div className="p-8 text-center max-w-4xl mx-auto">
+    <div className="p-8 text-center max-w-full mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-[#004C97]">
         Onze leidingsploeg
       </h2>
       <img
         src="/images/leiding.jpg"
-        className="w-full h-96 object-cover mb-8"
+        className="w-full h-96 object-cover mb-8 max-w-4xl justify-self-center"
         alt="Leiding"
       />
 
-      <p className="text-lg text-gray-700 leading-relaxed mb-12">
+      <p className="text-lg text-gray-700 leading-relaxed mb-12 max-w-4xl justify-self-center">
         Onze leidingsploeg bestaat uit enthousiaste vrijwilligers die elke week opnieuw het beste van
         zichzelf geven om onze leden een geweldige tijd te bezorgen. Hieronder stellen we graag onze
         leidingsploeg voor, verdeeld per leeftijdsgroep.
@@ -53,7 +53,7 @@ export default function Leiding() {
             {groepNaam}
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
+          <div className="flex flex-wrap justify-center gap-8">
             {leiding.map((leiding) => (
               <div
                 key={leiding.id}
