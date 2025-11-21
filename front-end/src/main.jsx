@@ -4,7 +4,8 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
 
-import Login from './components/login';
+import Login from './components/Login';
+import Register from './components/Register';
 import Leiding from './components/Leiding';
 import About from './components/About_us';
 import Kampen from './components/Kampen/Kampen';
@@ -12,9 +13,10 @@ import Inschrijvingen from './components/Inschrijvingen';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
 import Layout from './Layout';
+
 const router = createBrowserRouter([
   {
-    Component: Layout, 
+    element: <Layout />, 
     children: [
       {
         path: '/',
@@ -43,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
       {
         path: '*',
