@@ -6,22 +6,34 @@ import { mutate } from 'swr';
 
 // --- Validatie Schema ---
 const kampSchema = Yup.object().shape({
-  naam: Yup.string().required('Naam is verplicht'),
-  locatie: Yup.string().required('Stad is verplicht'),
+  naam: Yup.string()
+    .required('Naam is verplicht')
+    .max(40, 'Naam mag maximaal 40 tekens bevatten'),
+
+  locatie: Yup.string()
+    .required('Stad is verplicht')
+    .max(20, 'Stad mag maximaal 20 tekens bevatten'),
+
   startDatum: Yup.date()
     .required('Startdatum is verplicht')
     .min(
+      // Creëert een Date object dat de start van de huidige dag (middernacht) vertegenwoordigt
       new Date(new Date().setHours(0, 0, 0, 0)),
       'Startdatum moet in de toekomst liggen',
     ),
+
   eindDatum: Yup.date()
     .required('Einddatum is verplicht')
-    .when(
-      'startDatum',
-      (startDatum, schema) =>
-        startDatum &&
-        schema.min(startDatum, 'Einddatum moet na de startdatum liggen'),
+    .test(
+      'is-after',
+      'Einddatum moet later zijn dan de startdatum',
+      function (value) {
+        const { startDatum } = this.parent;
+        if (!startDatum || !value) return false;
+        return value > startDatum;
+      },
     ),
+
 });
 
 function KampForm() {
