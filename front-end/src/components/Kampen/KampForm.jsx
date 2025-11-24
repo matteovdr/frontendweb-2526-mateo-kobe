@@ -39,9 +39,10 @@ function KampForm() {
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await postData('kampen', {
-            ...values,
-            startDatum: new Date(values.startDatum),
-            eindDatum: new Date(values.eindDatum),
+            naam: values.naam,
+            locatie: values.locatie,
+            startDatum: values.startDatum,
+            eindDatum: values.eindDatum,
           });
 
           mutate('kampen');
