@@ -1,4 +1,4 @@
-function Kamp({naam, locatie, startDatum, eindDatum, alGedaan}) {
+function Kamp({key, naam, locatie, startDatum, eindDatum, alGedaan}) {
   return (
     <div className="flex flex-1 flex-col place-content-center
     border border-blue-300 rounded-2xl p-5 bg-gray-100 shadow-xl">
