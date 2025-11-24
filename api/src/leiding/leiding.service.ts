@@ -1,9 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-  CreateLeidingDto,
   UpdateLeidingDto,
   LeidingResponseDto,
-  LeidingListResponseDto,
+  LeidingListResponseDto
 } from './leiding.dto';
 import {
   type DatabaseProvider,
@@ -12,12 +11,12 @@ import {
 import { eq } from 'drizzle-orm';
 import { leiding } from '../drizzle/schema';
 
-// @Injectable()
-// export class LeidingService {
-//   constructor(
-//     @InjectDrizzle()
-//     private readonly db: DatabaseProvider,
-//   ) {}
+@Injectable()
+export class LeidingService {
+  constructor(
+    @InjectDrizzle()
+    private readonly db: DatabaseProvider,
+  ) {}
 
   async getAll(): Promise<LeidingListResponseDto> {
     const items = await this.db.query.leiding.findMany({
@@ -32,7 +31,6 @@ import { leiding } from '../drizzle/schema';
     });
 
     return { items: items as LeidingResponseDto[] };
-
   }
 
   async getById(id: number): Promise<LeidingResponseDto> {
@@ -43,49 +41,38 @@ import { leiding } from '../drizzle/schema';
         ageGroup: true,
         imageUrl: true,
         description: true,
-        isHoofdleiding: true, 
+        isHoofdleiding: true,
       },
       where: eq(leiding.id, id),
     });
 
-//     if (!item) {
-//       throw new NotFoundException('Geen leiding gevonden met dit ID');
-//     }
+    if (!item) {
+      throw new NotFoundException('Geen leiding gevonden met dit ID');
+    }
 
     return item as LeidingResponseDto;
-
   }
-
-//   async create(dto: CreateLeidingDto): Promise<LeidingResponseDto> {
-//     const [newLeiding] = await this.db
-//       .insert(leiding)
-//       .values({
-//         ...dto,
-//       })
-//       .$returningId();
-
-//     return this.getById(newLeiding.id);
-//   }
 
   async updateById(
     id: number,
     dto: UpdateLeidingDto,
   ): Promise<LeidingResponseDto> {
-    const { name, ageGroup, imageUrl, description ,isHoofdleiding  } = dto;
+    const { name, ageGroup, imageUrl, description, isHoofdleiding } = dto;
 
     await this.db
       .update(leiding)
       .set({ name, ageGroup, imageUrl, description, isHoofdleiding })
       .where(eq(leiding.id, id));
 
-//     return this.getById(id);
-//   }
+    return this.getById(id);
+  }
 
-//   async deleteById(id: number): Promise<void> {
-//     const [result] = await this.db.delete(leiding).where(eq(leiding.id, id));
+  async deleteById(id: number): Promise<void> {
+  await this.db
+    .delete(leiding)
+    .where(eq(leiding.id, id));
+}
 
-//     if (result.affectedRows === 0) {
-//       throw new NotFoundException('Geen leiding gevonden met dit ID');
-//     }
-//   }
-// }
+  
+
+}

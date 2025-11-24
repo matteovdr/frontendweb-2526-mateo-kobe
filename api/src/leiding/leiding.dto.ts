@@ -23,6 +23,6 @@ export class LeidingResponseDto {
   isHoofdleiding: boolean;
 }
 
-// export class LeidingListResponseDto {
-//   items: LeidingResponseDto[];
-// }
+export class LeidingListResponseDto {
+   items: LeidingResponseDto[];
+ }
