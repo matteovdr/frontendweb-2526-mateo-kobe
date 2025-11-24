@@ -10,7 +10,7 @@ const kampSchema = Yup.object().shape({
     .required('Naam is verplicht')
     .max(40, 'Naam mag maximaal 40 tekens bevatten'),
 
-  locatie: Yup.string()
+  stad: Yup.string()
     .required('Stad is verplicht')
     .max(20, 'Stad mag maximaal 20 tekens bevatten'),
 
@@ -43,7 +43,7 @@ function KampForm() {
     <Formik
       initialValues={{
         naam: '',
-        locatie: '',
+        stad: '',
         startDatum: '',
         eindDatum: '',
       }}
@@ -52,7 +52,7 @@ function KampForm() {
         try {
           await postData('kampen', {
             naam: values.naam,
-            locatie: values.locatie,
+            stad: values.stad,
             startDatum: values.startDatum,
             eindDatum: values.eindDatum,
           });
@@ -87,13 +87,13 @@ function KampForm() {
             {/* STAD */}
             <label className="font-semibold text-blue-600 mb-1">Stad</label>
             <Field
-              name="locatie"
+              name="stad"
               placeholder="Bijv. Gent"
-              data-cy="input-locatie"
+              data-cy="input-stad"
               className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
               shadow-sm focus:ring-2 focus:ring-blue-400 placeholder:text-blue-400"
             />
-            <ErrorMessage name="locatie" component="div" className="text-red-500 text-sm mb-3" />
+            <ErrorMessage name="stad" component="div" className="text-red-500 text-sm mb-3" />
 
             {/* STARTDATUM */}
             <label className="font-semibold text-blue-600 mb-1">Startdatum</label>

@@ -1,7 +1,7 @@
 import { deleteData } from '../../api';
 import { mutate } from 'swr';
 
-function Kamp({ id, naam, locatie, startDatum, eindDatum, alGedaan }) {
+function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
 
@@ -25,8 +25,8 @@ function Kamp({ id, naam, locatie, startDatum, eindDatum, alGedaan }) {
       {/* DATA */}
       <div>
         <div className="grid grid-cols-2 border-t">
-          <label className="font-bold self-center">Locatie</label>
-          <p className="text-right self-center">{locatie}</p>
+          <label className="font-bold self-center">Stad</label>
+          <p className="text-right self-center">{stad}</p>
         </div>
 
         <div className="grid grid-cols-2">
@@ -51,7 +51,7 @@ function Kamp({ id, naam, locatie, startDatum, eindDatum, alGedaan }) {
         </button>
 
         <button
-          data-cy={`delete-${id}`}
+          data-cy={'delete'}
           onClick={handleDelete}
           className="bg-red-500 text-white rounded-4xl mt-2 py-1.5
           justify-self-center px-4 min-w-1/2 hover:bg-red-600 cursor-pointer"

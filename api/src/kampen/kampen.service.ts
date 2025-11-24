@@ -17,7 +17,7 @@ export class KampenService {
       items: items.map((item) => ({
         id: item.id,
         naam: item.naam,
-        locatie: item.stad,
+        stad: item.stad,
         startDatum: item.startDatum,
         eindDatum: item.eindDatum,
       })),
@@ -32,7 +32,7 @@ export class KampenService {
     return {
       id: item.id,
       naam: item.naam,
-      locatie: item.stad,
+      stad: item.stad,
       startDatum: item.startDatum,
       eindDatum: item.eindDatum,
     };
@@ -43,7 +43,7 @@ export class KampenService {
       .insert(kampen)
       .values({
         naam: data.naam,
-        stad: data.locatie,
+        stad: data.stad,
         startDatum: data.startDatum,
         eindDatum: data.eindDatum,
       })
@@ -59,7 +59,7 @@ export class KampenService {
       .update(kampen)
       .set({
         naam: data.naam,
-        stad: data.locatie,
+        stad: data.stad,
         startDatum: data.startDatum,
         eindDatum: data.eindDatum,
       })
