@@ -3,20 +3,19 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
-
-import Login from './components/Login';
-import Register from './components/Register';
-import Leiding from './components/Leiding';
-import About from './components/About_us';
-import Kampen from './components/Kampen/Kampen';
-import Inschrijvingen from './components/Inschrijvingen';
-import Home from './components/Home';
-import NotFound from './components/NotFound';
-import Layout from './Layout';
+import Layout from './pages/Layout';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Leiding from './pages/Leiding';
+import About from './pages/About_us';
+import Kampen from './pages/kampen/Kampen.jsx';
+import AddKamp from './pages/kampen/AddKamp.jsx';
+import Inschrijvingen from './pages/Inschrijvingen';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
   {
-    element: <Layout />, 
+    Component: Layout, 
     children: [
       {
         path: '/',
@@ -36,7 +35,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/kampen',
-        element: <Kampen />,
+        children: [
+          {
+            index: true,
+            Component:Kampen,
+          },
+          {
+            path: 'add',
+            Component: AddKamp,
+          },
+        ],
       },
       {
         path: '/inschrijvingen',
@@ -45,10 +53,6 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
-      },
-      {
-        path: '/register',
-        element: <Register />,
       },
       {
         path: '*',

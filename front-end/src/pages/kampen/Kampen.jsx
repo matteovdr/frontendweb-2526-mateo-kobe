@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import useSWR from 'swr';
 import KampenLijst from '../../components/Kampen/KampenLijst';
 import { getAll } from '../../api';
+import { Link } from 'react-router-dom';
 
 function Kampen() {
   const {
@@ -29,6 +30,12 @@ function Kampen() {
         Er moet wel altijd inschrijvingsgeld betaald worden.
         In geval van ziekte worden de ouders gebeld en moet het kind worden opgehaald.
       </p>
+
+      <div className='flex justify-center border-y my-6 2xl:mx-60'>
+        <Link to="add" className='my-6 py-4 px-16 border border-blue-300 rounded-2xl
+        text-blue-500 cursor-pointer hover:bg-blue-500 hover:text-white
+        transition duration-300'>Voeg een kamp toe</Link>
+      </div>
 
       <h2 className="text-4xl mb-4 text-blue-500 text-center">
         Dit zijn de kampen die we gedaan hebben

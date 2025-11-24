@@ -1,7 +1,7 @@
 function Kamp({naam, locatie, startDatum, eindDatum, alGedaan}) {
   return (
     <div className="flex flex-1 flex-col place-content-center 
-    border-3 border-blue-300 rounded-2xl p-5 bg-white shadow-xl">
+    border border-blue-300 rounded-2xl p-5 bg-gray-100 shadow-xl">
       <h3 className="text-center font-semibold text-xl
       text-blue-600 border-black">{naam}</h3>
 

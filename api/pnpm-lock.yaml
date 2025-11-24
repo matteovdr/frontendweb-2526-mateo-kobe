@@ -63,6 +63,12 @@ importers:
       '@types/supertest':
         specifier: ^6.0.2
         version: 6.0.3
+      drizzle-kit:
+        specifier: ^0.31.6
+        version: 0.31.7
+      env-cmd:
+        specifier: ^11.0.0
+        version: 11.0.0
       eslint:
         specifier: ^9.18.0
         version: 9.38.0
