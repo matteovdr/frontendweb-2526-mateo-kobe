@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cypress open",
     "init-tailwind": "tailwindcss init -p"
   },
   "keywords": [],
@@ -34,7 +34,9 @@
     "@vitejs/plugin-react": "^5.0.4",
     "@vitejs/plugin-react-swc": "^4.0.1",
     "autoprefixer": "^10.4.22",
+    "cypress": "^15.7.0",
     "eslint": "^9.35.0",
+    "eslint-plugin-cypress": "^5.2.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.4.0",

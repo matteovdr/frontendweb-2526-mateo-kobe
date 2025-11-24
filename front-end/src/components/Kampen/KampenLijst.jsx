@@ -5,7 +5,8 @@ function KampenLijst({ kampen, alGedaan }) {
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 2xl:px-60">
         {kampen.map((kamp) => (
-          <Kamp key={kamp.id} naam={kamp.naam} locatie={kamp.locatie} startDatum={kamp.startDatum}
+          <Kamp 
+            key={kamp.id} id={kamp.id} naam={kamp.naam} locatie={kamp.locatie} startDatum={kamp.startDatum}
             eindDatum={kamp.eindDatum} alGedaan={alGedaan} />
         ))}
       </div>
