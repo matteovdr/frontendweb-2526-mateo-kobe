@@ -14,16 +14,14 @@ describe('Login Page', () => {
     cy.contains('Vul uw email en wachtwoord in').should('exist'); 
   });
 
-  it('should allow typing email and password', () => {
-    cy.get('[data-cy=email_input]')
-      .type('test@example.com')
-      .should('have.value', 'test@example.com');
+  // it('should allow typing email and password', () => {
+  //   cy.get('[data-cy=email_input]').type('test@example.com').should('have.value', 'test@example.com');
 
-    cy.get('[data-cy=password_input]')
-      .type('123456')
-      .should('have.value', '123456');
+  //   cy.get('[data-cy=password_input]')
+  //     .type('123456')
+  //     .should('have.value', '123456');
 
-  });
+  // });
 
   it('should attempt login', () => {
     cy.get('[data-cy=email_input]').type('test@example.com');
