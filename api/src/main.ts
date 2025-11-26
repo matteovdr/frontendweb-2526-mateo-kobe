@@ -1,18 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { ServerConfig, CorsConfig } from './config/configuration';
+import {
+  Logger,
+} from '@nestjs/common';
+import CustomLogger from 'src/core/customLogger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const config = app.get(ConfigService<ServerConfig>);
-  const cors = config.get<CorsConfig>('cors')!;
-  app.setGlobalPrefix('api');
-  console.log(cors);
+
+  app.useLogger(new CustomLogger()); 
   app.enableCors({
-    origin: cors.origins,
-    maxAge: cors.maxAge,
+    origin: 'http://localhost:5173',
+    credentials: true,
   });
-  await app.listen(process.env.PORT ?? 3000);
+
+  app.setGlobalPrefix('api');
+
+  await app.listen(process.env.PORT ?? 3000, () => {
+    new Logger().log('🚀 Server listening on http://127.0.0.1:3000');
+  });
 }
+
 bootstrap();
