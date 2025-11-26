@@ -5,7 +5,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
 
 import Login from './pages/Login';
-import Register from './components/Register';
+import Register from './pages/Register';
 import Leiding from './pages/Leiding';
 import About from './pages/About_us';
 import Kampen from './pages/Kampen/Kampen';

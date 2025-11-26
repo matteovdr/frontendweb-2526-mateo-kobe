@@ -1,6 +1,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { CgProfile } from 'react-icons/cg';
 import { PiLockLight } from 'react-icons/pi';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const handleSuccess = (credentialResponse) => {
@@ -74,14 +75,14 @@ function Login() {
 
         {/* Links */}
         <div className="flex flex-col items-center mt-6 text-sm">
-          <a href="#" className="text-blue-600 underline mb-2">
+          <Link to="#" className="text-blue-600 underline mb-2">
             Wachtwoord vergeten?
-          </a>
+          </Link>
           <p className="text-black">
             Heb je nog geen account?{' '}
-            <a href="/signup" className="font-semibold text-blue-600 underline">
+            <Link to="/register" className="font-semibold text-blue-600 underline">
               Registreer
-            </a>
+            </Link>
           </p>
         </div>
       </div>
