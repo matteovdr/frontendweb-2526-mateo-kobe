@@ -1,7 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { CgProfile } from 'react-icons/cg';
 import { PiLockLight } from 'react-icons/pi';
-import { Link } from 'react-router-dom';
 
 function Login() {
   const handleSuccess = (credentialResponse) => {
@@ -13,8 +12,7 @@ function Login() {
   };
 
   return (
- 
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen w-full">
       <div className="flex justify-center items-center flex-col border-4 border-blue-300
         rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
         h-auto">
@@ -76,19 +74,18 @@ function Login() {
 
         {/* Links */}
         <div className="flex flex-col items-center mt-6 text-sm">
-          <Link to="/register" className="text-blue-600 underline mb-2">
+          <a href="#" className="text-blue-600 underline mb-2">
             Wachtwoord vergeten?
-          </Link>
+          </a>
           <p className="text-black">
             Heb je nog geen account?{' '}
-            <Link to="/register" className="font-semibold text-blue-600 underline">
+            <a href="/signup" className="font-semibold text-blue-600 underline">
               Registreer
-            </Link>
+            </a>
           </p>
         </div>
       </div>
     </div>
-   
   );
 }
 

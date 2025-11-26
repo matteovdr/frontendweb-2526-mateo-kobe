@@ -39,7 +39,7 @@ Dit document beschrijft alle API endpoints van onze webservice, inclusief de URL
 
 - **URL:** `http://localhost:3000/kampen`
 - **Methode:** POST
-- **Input:** JSON-object met de gegevens van het nieuwe kamp (naam, locatie, startDatum, eindDatum).
+- **Input:** JSON-object met de gegevens van het nieuwe kamp (naam, stad, startDatum, eindDatum).
 - **Output:** Het nieuw aangemaakte kamp-object in JSON-formaat, inclusief automatisch gegenereerd ID.
 - **Beschrijving:** Maakt een nieuw kamp aan in de database.
 
@@ -90,16 +90,17 @@ TODO:
 - **Beschrijving:** Deze endpoint haalt een specifiek lid op basis van het opgegeven `Id`.
 
 ## Leiding Endpoints
+
 ### 1. Haal alle leiding op
+
 - **URL:** `https://api.example.com/leiding`
 - **Methode:** GET
 - **Input:** Geen
 - **Output:** Een lijst van alle leiding in JSON-formaat.
 - **Beschrijving:** Deze endpoint haalt alle leiding op uit de database en retourneert een array van leidingobjecten.
 
-
-
 ### 2. Haal een specifieke leiding op
+
 - **URL:** `https://api.example.com/leiding/{id}`
 - **Methode:** GET
 - **Input:**  
@@ -107,9 +108,8 @@ TODO:
 - **Output:** Een leidingobject in JSON-formaat.
 - **Beschrijving:** Deze endpoint haalt een specifieke leiding op basis van het opgegeven id.
 
-
-
 ### 3. Maak een leiding aan
+
 - **URL:** `https://api.example.com/leiding`
 - **Methode:** POST
 - **Input:**  
@@ -117,8 +117,8 @@ TODO:
 - **Output:** Het nieuw aangemaakte leidingobject in JSON-formaat.
 - **Beschrijving:** Hiermee wordt een nieuwe leiding aangemaakt met de opgegeven data en toegevoegd aan de database.
 
-
 ### 4. Werk leiding bij
+
 - **URL:** `https://api.example.com/leiding/{id}`
 - **Methode:** PATCH
 - **Input:**  
@@ -127,12 +127,11 @@ TODO:
 - **Output:** Het bijgewerkte leidingobject in JSON-formaat.
 - **Beschrijving:** Update de gegevens van een bestaande leiding met de meegegeven waarden.
 
-
 ### 5. Verwijder een leiding
+
 - **URL:** `https://api.example.com/leiding/{id}`
 - **Methode:** DELETE
 - **Input:**  
   - `id` (path parameter): Het unieke ID van de leiding die verwijderd moet worden.
 - **Output:** Geen (of eventueel een statusmelding).
 - **Beschrijving:** Verwijdert een leiding uit de database op basis van het ID.
-

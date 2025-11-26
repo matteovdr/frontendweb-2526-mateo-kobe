@@ -1,1 +1,0 @@
-ALTER TABLE `leiding` ADD `isHoofdleiding` boolean DEFAULT false NOT NULL;

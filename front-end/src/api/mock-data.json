@@ -1,5 +1,40 @@
 {
+<<<<<<< HEAD:src/api/mock-data.json
   "ouders": [
+=======
+  "Kampen": [
+    {
+      "id": 1,
+      "naam": "Zomerkamp 2025",
+      "locatie": "Durbuy",
+      "startDatum": "2025-07-15",
+      "eindDatum": "2025-07-25"
+    },
+    {
+      "id": 2,
+      "naam": "Paaskamp 2025",
+      "locatie": "De Ardennen",
+      "startDatum": "2025-04-05",
+      "eindDatum": "2025-04-12"
+    }
+  ],
+
+  "Groep": [
+    { "id": 1, "naam": "Sloebers", "leeftijdscategorie": "6-8 jaar" },
+    { "id": 2, "naam": "Paggaders", "leeftijdscategorie": "8-10 jaar" },
+    { "id": 3, "naam": "Joro's", "leeftijdscategorie": "10-12 jaar" },
+    { "id": 4, "naam": "Knim", "leeftijdscategorie": "12-14 jaar" },
+    { "id": 5, "naam": "Sjo", "leeftijdscategorie": "14-16 jaar" },
+    { "id": 6, "naam": "+16", "leeftijdscategorie": "16-18 jaar" }
+  ],
+
+  "Inschrijving": [
+    { "id": 1, "kampId": 1 },
+    { "id": 2, "kampId": 2 }
+  ],
+
+  "Ouder": [
+>>>>>>> refs/remotes/origin/main:front-end/src/api/mock-data.json
     {
       "id": 1,
       "persoonId": 101,
@@ -106,8 +141,4 @@
       "specialisatie": "Ontbijt & dessert"
     }
   ]
-  
-
-  
 }
-

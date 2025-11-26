@@ -9,6 +9,7 @@ import Register from './components/Register';
 import Leiding from './pages/Leiding';
 import About from './pages/About_us';
 import Kampen from './pages/Kampen/Kampen';
+import AddKamp from './pages/kampen/AddKamp.jsx';
 import Inschrijvingen from './pages/Inschrijvingen';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
@@ -16,7 +17,7 @@ import Layout from './pages/Layout';
 
 const router = createBrowserRouter([
   {
-    element: <Layout />, 
+    Component: Layout, 
     children: [
       {
         path: '/',
@@ -36,7 +37,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/kampen',
-        element: <Kampen />,
+        children: [
+          {
+            index: true,
+            Component:Kampen,
+          },
+          {
+            path: 'add',
+            Component: AddKamp,
+          },
+        ],
       },
       {
         path: '/inschrijvingen',

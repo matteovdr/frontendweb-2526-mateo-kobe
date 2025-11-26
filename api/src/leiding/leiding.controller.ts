@@ -1,17 +1,17 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    ParseIntPipe,
-    Patch
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch
 } from '@nestjs/common';
 import { LeidingService } from './leiding.service';
 import {
-    UpdateLeidingDto,
-    LeidingListResponseDto,
-    LeidingResponseDto
+  UpdateLeidingDto,
+  LeidingListResponseDto,
+  LeidingResponseDto
 } from './leiding.dto';
 
 @Controller('leiding')

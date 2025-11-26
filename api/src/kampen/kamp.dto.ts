@@ -1,9 +1,10 @@
 export class createKampRequestDTO {
   naam: string;
-  locatie: string;
+  stad: string;
   startDatum: Date;
   eindDatum: Date;
 }
+
 export class KampResponseDto extends createKampRequestDTO {
   id: number;
 }
