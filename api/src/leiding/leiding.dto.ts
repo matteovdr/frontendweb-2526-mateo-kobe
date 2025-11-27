@@ -1,26 +1,30 @@
 export class CreateLeidingDto {
-  name: string;
+  persoonId?: number;
+  voornaam?: string;
+  achternaam?: string;
   ageGroup: string;
   imageUrl: string;
   description: string;
-  isHoofdleiding: boolean;
+  isHoofdleiding?: boolean;
 }
 
 export class UpdateLeidingDto {
-  name?: string;
+  voornaam?: string;
+  achternaam?: string;
   ageGroup?: string;
   imageUrl?: string;
   description?: string;
-  isHoofdleiding: boolean;
+  isHoofdleiding?: boolean;
 }
 
 export class LeidingResponseDto {
   id: number;
-  name: string;
+  voornaam: string;
+  achternaam: string;
   ageGroup: string;
   imageUrl: string;
   description: string;
-  isHoofdleiding: boolean;
+  isHoofdleiding?: boolean;
 }
 
 export class LeidingListResponseDto {

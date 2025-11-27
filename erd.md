@@ -17,18 +17,17 @@ class Persoon {
     email
 }
 class Ouder {
-    *id
     +persoonID
 }
 
 class Lid {
-    *id
     +persoonID
+    ageGroup
 }
 
 class Leiding {
-    *id
     +persoonID
+    ageGroup
     beschrijving
 }
 

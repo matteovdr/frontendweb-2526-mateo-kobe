@@ -10,6 +10,7 @@ describe('KampForm', () => {
     cy.contains('Stad is verplicht');
     cy.contains('Startdatum is verplicht');
     cy.contains('Einddatum is verplicht');
+    cy.contains('Beschrijving is verplicht');
   });
 
   it('should not allow selecting past dates', () => {
@@ -30,6 +31,7 @@ describe('KampForm', () => {
     cy.get('[data-cy="input-stad"]').type('Gent');
     cy.get('[data-cy="input-start"]').type('2030-01-10');
     cy.get('[data-cy="input-eind"]').type('2030-01-12');
+    cy.get('[data-cy="input-beschrijving"]').type('Een toffe beschrijving van het kamp.');
 
     // volgen aanvraag en geven een naam: createKamp (zo kunnen we checken of het juist is gelukt met de status code)
     // ** -> eender welke tekst, inclusief meerdere folders of karakters (handig voor later bij de release)

@@ -20,7 +20,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "env-cmd tsx src/drizzle/seed.ts"
+    "db:seed": "env-cmd tsx src/drizzle/seed.ts",
+    "db:wait": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./scripts/wait-for-db.ps1",
+    "db:reset": "docker compose down -v && docker compose up -d && pnpm db:wait && pnpm db:migrate && pnpm db:seed"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

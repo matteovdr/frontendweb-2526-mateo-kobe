@@ -18,6 +18,7 @@ export class KampenService {
         id: item.id,
         naam: item.naam,
         stad: item.stad,
+        beschrijving: item.beschrijving,
         startDatum: item.startDatum,
         eindDatum: item.eindDatum,
       })),
@@ -33,6 +34,7 @@ export class KampenService {
       id: item.id,
       naam: item.naam,
       stad: item.stad,
+      beschrijving: item.beschrijving,
       startDatum: item.startDatum,
       eindDatum: item.eindDatum,
     };
@@ -44,6 +46,7 @@ export class KampenService {
       .values({
         naam: data.naam,
         stad: data.stad,
+        beschrijving: data.beschrijving,
         startDatum: data.startDatum,
         eindDatum: data.eindDatum,
       })
@@ -60,6 +63,7 @@ export class KampenService {
       .set({
         naam: data.naam,
         stad: data.stad,
+        beschrijving: data.beschrijving,
         startDatum: data.startDatum,
         eindDatum: data.eindDatum,
       })

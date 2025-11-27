@@ -33,6 +33,9 @@ const kampSchema = Yup.object().shape({
         return value > startDatum;
       },
     ),
+  beschrijving: Yup.string()
+    .required('Beschrijving is verplicht')
+    .max(1000, 'Beschrijving mag maximaal 1000 tekens bevatten'),
 
 });
 
@@ -44,6 +47,7 @@ function KampForm() {
       initialValues={{
         naam: '',
         stad: '',
+        beschrijving: '',
         startDatum: '',
         eindDatum: '',
       }}
@@ -53,6 +57,7 @@ function KampForm() {
           await postData('kampen', {
             naam: values.naam,
             stad: values.stad,
+            beschrijving: values.beschrijving,
             startDatum: values.startDatum,
             eindDatum: values.eindDatum,
           });
@@ -116,6 +121,18 @@ function KampForm() {
               shadow-sm focus:ring-2 focus:ring-blue-400"
             />
             <ErrorMessage name="eindDatum" component="div" className="text-red-500 text-sm mb-4" />
+
+            {/* BESCHRIJVING */}
+            <label className="font-semibold text-blue-600 mb-1">Beschrijving</label>
+            <Field
+              as="textarea"
+              name="beschrijving"
+              placeholder="Bijv. Een avontuurlijk kamp met veel activiteiten"
+              data-cy="input-beschrijving"
+              className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
+              shadow-sm focus:ring-2 focus:ring-blue-400 placeholder:text-blue-400 h-28"
+            />
+            <ErrorMessage name="beschrijving" component="div" className="text-red-500 text-sm mb-3" />
 
             {/* SUBMIT BUTTON */}
             <button

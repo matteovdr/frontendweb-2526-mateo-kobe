@@ -26,7 +26,7 @@ export default function Leiding() {
           Onze leidingsploeg
         </h2>
         <img
-          src="/images/leiding.jpg"
+          src="/src/images/leiding.jpg"
           className="w-full h-96 object-cover mb-8 max-w-4xl justify-self-center"
           alt="Leiding"
         />
@@ -76,22 +76,22 @@ export default function Leiding() {
             </h3>
 
             <div className="flex flex-wrap justify-center gap-8">
-              {groepLeiding.map((l) => (
+              {groepLeiding.map((leiding) => (
                 <div
-                  key={l.id}
+                  key={leiding.id}
                   className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center
                   hover:shadow-lg transition-shadow duration-200"
                 >
                   <img
-                    src={l.imageUrl}
-                    alt={l.name}
+                    src={leiding.imageUrl}
+                    alt={leiding.voornaam}
                     className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
                   />
                   <h4 className="text-xl font-semibold text-[#004C97]">
-                    {l.name}
+                    {leiding.voornaam}
                   </h4>
-                  {l.description && (
-                    <p className="text-gray-700 text-sm mt-2">{l.description}</p>
+                  {leiding.description && (
+                    <p className="text-gray-700 text-sm mt-2">{leiding.description}</p>
                   )}
                 </div>
               ))}

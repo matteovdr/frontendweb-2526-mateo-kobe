@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
+  CreateLeidingDto,
   UpdateLeidingDto,
   LeidingResponseDto,
   LeidingListResponseDto
@@ -9,7 +10,7 @@ import {
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
-import { leiding } from '../drizzle/schema';
+import { leiding, persoon } from '../drizzle/schema';
 
 @Injectable()
   export class LeidingService {
@@ -20,56 +21,97 @@ import { leiding } from '../drizzle/schema';
 
     async getAll(): Promise<LeidingListResponseDto> {
       const items = await this.db.query.leiding.findMany({
-        columns: {
-          id: true,
-          name: true,
-          ageGroup: true,
-          imageUrl: true,
-          description: true,
-          isHoofdleiding: true,
-        },
+        with: { persoon: true },
       });
 
-      return { items: items as LeidingResponseDto[] };
+      return {
+        items: items.map((item) => ({
+          id: item.persoon?.id ?? item.persoonId,
+          voornaam: item.persoon?.voornaam ?? '',
+          achternaam: item.persoon?.achternaam ?? '',
+          ageGroup: item.ageGroup,
+          imageUrl: item.imageUrl,
+          description: item.beschrijving,
+          isHoofdleiding: item.isHoofdleiding,
+        })) as LeidingResponseDto[],
+      };
     }
 
     async getById(id: number): Promise<LeidingResponseDto> {
       const item = await this.db.query.leiding.findFirst({
-        columns: {
-          id: true,
-          name: true,
-          ageGroup: true,
-          imageUrl: true,
-          description: true,
-          isHoofdleiding: true,
-        },
-        where: eq(leiding.id, id),
+        with: { persoon: true },
+        where: eq(leiding.persoonId, id),
       });
 
       if (!item) {
         throw new NotFoundException('Geen leiding gevonden met dit ID');
       }
 
-      return item as LeidingResponseDto;
+      return {
+        id: item.persoon?.id ?? item.persoonId,
+        voornaam: item.persoon?.voornaam ?? '',
+        achternaam: item.persoon?.achternaam ?? '',
+        ageGroup: item.ageGroup,
+        imageUrl: item.imageUrl,
+        description: item.beschrijving,
+        isHoofdleiding: item.isHoofdleiding,
+      } as LeidingResponseDto;
     }
 
     async updateById(
       id: number,
       dto: UpdateLeidingDto,
     ): Promise<LeidingResponseDto> {
-      const { name, ageGroup, imageUrl, description, isHoofdleiding } = dto;
+      const { ageGroup, imageUrl, description, voornaam, achternaam } = dto as any;
 
+      // Update leiding table columns (map description -> beschrijving)
       await this.db
         .update(leiding)
-        .set({ name, ageGroup, imageUrl, description, isHoofdleiding })
-        .where(eq(leiding.id, id));
+        .set({
+          ageGroup: ageGroup,
+          imageUrl: imageUrl,
+          beschrijving: description,
+        })
+        .where(eq(leiding.persoonId, id));
+
+      // If voornaam/achternaam provided, update personne fields
+      if (voornaam || achternaam) {
+        await this.db
+          .update(persoon)
+          .set({ voornaam: voornaam ?? '', achternaam: achternaam ?? '' })
+          .where(eq(persoon.id, id));
+      }
 
       return this.getById(id);
+    }
+
+    async create(dto: CreateLeidingDto): Promise<LeidingResponseDto> {
+      const { persoonId, ageGroup, imageUrl, description } = dto;
+
+      // If persoonId supplied, validate it exists
+      if (persoonId) {
+        const person = await this.db.query.persoon.findFirst({ where: eq(persoon.id, persoonId) });
+        if (!person) throw new NotFoundException(`Persoon with ID ${persoonId} not found`);
+      }
+
+      // For now, require persoonId
+      if (!persoonId) {
+        throw new NotFoundException('Creating a leiding without a persoonId is not supported yet. Please use an existing persoonId.');
+      }
+
+      await this.db.insert(leiding).values({
+        persoonId: persoonId,
+        ageGroup: ageGroup,
+        imageUrl: imageUrl,
+        beschrijving: description,
+      });
+
+      return this.getById(persoonId);
     }
 
     async deleteById(id: number): Promise<void> {
     await this.db
       .delete(leiding)
-      .where(eq(leiding.id, id));
+      .where(eq(leiding.persoonId, id));
   }
 }

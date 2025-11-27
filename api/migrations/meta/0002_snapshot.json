@@ -1,0 +1,366 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "6ea98cc5-183a-4ed2-8521-1d91f3233c07",
+  "prevId": "eb49de3e-afe5-4825-aa67-727ec7c50537",
+  "tables": {
+    "kampen": {
+      "name": "kampen",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "stad": {
+          "name": "stad",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "beschrijving": {
+          "name": "beschrijving",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "startDatum": {
+          "name": "startDatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "eindDatum": {
+          "name": "eindDatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "kampen_id": {
+          "name": "kampen_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "leiding": {
+      "name": "leiding",
+      "columns": {
+        "persoonId": {
+          "name": "persoonId",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ageGroup": {
+          "name": "ageGroup",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "imageUrl": {
+          "name": "imageUrl",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "beschrijving": {
+          "name": "beschrijving",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "isHoofdleiding": {
+          "name": "isHoofdleiding",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "leiding_persoonId_persoon_id_fk": {
+          "name": "leiding_persoonId_persoon_id_fk",
+          "tableFrom": "leiding",
+          "tableTo": "persoon",
+          "columnsFrom": [
+            "persoonId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "leiding_persoonId": {
+          "name": "leiding_persoonId",
+          "columns": [
+            "persoonId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "leiding_kamp": {
+      "name": "leiding_kamp",
+      "columns": {
+        "leidingId": {
+          "name": "leidingId",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kampId": {
+          "name": "kampId",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "leiding_kamp_leidingId_leiding_persoonId_fk": {
+          "name": "leiding_kamp_leidingId_leiding_persoonId_fk",
+          "tableFrom": "leiding_kamp",
+          "tableTo": "leiding",
+          "columnsFrom": [
+            "leidingId"
+          ],
+          "columnsTo": [
+            "persoonId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "leiding_kamp_kampId_kampen_id_fk": {
+          "name": "leiding_kamp_kampId_kampen_id_fk",
+          "tableFrom": "leiding_kamp",
+          "tableTo": "kampen",
+          "columnsFrom": [
+            "kampId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "leiding_kamp_leidingId_kampId_pk": {
+          "name": "leiding_kamp_leidingId_kampId_pk",
+          "columns": [
+            "leidingId",
+            "kampId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "lid": {
+      "name": "lid",
+      "columns": {
+        "persoonId": {
+          "name": "persoonId",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ageGroup": {
+          "name": "ageGroup",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lid_persoonId_persoon_id_fk": {
+          "name": "lid_persoonId_persoon_id_fk",
+          "tableFrom": "lid",
+          "tableTo": "persoon",
+          "columnsFrom": [
+            "persoonId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "lid_persoonId": {
+          "name": "lid_persoonId",
+          "columns": [
+            "persoonId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "lid_kamp": {
+      "name": "lid_kamp",
+      "columns": {
+        "lidId": {
+          "name": "lidId",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kampId": {
+          "name": "kampId",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lid_kamp_lidId_lid_persoonId_fk": {
+          "name": "lid_kamp_lidId_lid_persoonId_fk",
+          "tableFrom": "lid_kamp",
+          "tableTo": "lid",
+          "columnsFrom": [
+            "lidId"
+          ],
+          "columnsTo": [
+            "persoonId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "lid_kamp_kampId_kampen_id_fk": {
+          "name": "lid_kamp_kampId_kampen_id_fk",
+          "tableFrom": "lid_kamp",
+          "tableTo": "kampen",
+          "columnsFrom": [
+            "kampId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "lid_kamp_lidId_kampId_pk": {
+          "name": "lid_kamp_lidId_kampId_pk",
+          "columns": [
+            "lidId",
+            "kampId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "persoon": {
+      "name": "persoon",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "voornaam": {
+          "name": "voornaam",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "achternaam": {
+          "name": "achternaam",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "geboorteDatum": {
+          "name": "geboorteDatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "telefoon": {
+          "name": "telefoon",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "persoon_id": {
+          "name": "persoon_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
