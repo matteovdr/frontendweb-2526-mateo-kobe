@@ -8,9 +8,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Leiding from './pages/Leiding';
 import About from './pages/About_us';
-import Kampen from './pages/Kampen/Kampen';
+import Kampen from './pages/kampen/Kampen';
 import AddKamp from './pages/kampen/AddKamp.jsx';
-import Inschrijvingen from './pages/Inschrijvingen';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Layout from './pages/Layout';
@@ -47,10 +46,6 @@ const router = createBrowserRouter([
             Component: AddKamp,
           },
         ],
-      },
-      {
-        path: '/inschrijvingen',
-        element: <Inschrijvingen />,
       },
       {
         path: '/login',

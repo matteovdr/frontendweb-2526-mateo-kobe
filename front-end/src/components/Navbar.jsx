@@ -42,7 +42,6 @@ function Navbar() {
           <Link to="/leiding" className="hover:text-yellow-300 transition p-2">Leiding</Link>
           <Link to="/about" className="hover:text-yellow-300 transition p-2">About Us</Link>
           <Link to="/kampen" className="hover:text-yellow-300 transition p-2">Kampen</Link>
-          <Link to="/inschrijvingen" className="hover:text-yellow-300 transition p-2">Inschrijvingen</Link>
           <Link to="/login" className="hover:text-yellow-300 font-semibold transition p-2">Login</Link>
         </div>
       </div>
@@ -57,8 +56,6 @@ function Navbar() {
             to="/about" className="hover:text-yellow-300 transition p-2">About Us</Link>
           <Link onClick={() => setMenuOpen(false)} 
             to="/kampen" className="hover:text-yellow-300 transition p-2">Kampen</Link>
-          <Link onClick={() => setMenuOpen(false)}
-            to="/inschrijvingen" className="hover:text-yellow-300 transition p-2">Inschrijvingen</Link>
           <Link onClick={() => setMenuOpen(false)} 
             to="/login" className="hover:text-yellow-300 font-semibold transition p-2">Login</Link>
         </div>
