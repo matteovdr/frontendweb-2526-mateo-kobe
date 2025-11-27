@@ -22,6 +22,7 @@ class Ouder {
 
 class Lid {
     +persoonID
+    ageGroup
 }
 
 class Leiding {
