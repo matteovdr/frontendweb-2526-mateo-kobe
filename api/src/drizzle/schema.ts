@@ -8,10 +8,15 @@ import {
 } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 
+/* --------------------------------- */
+/* PERSOON                           */
+/* --------------------------------- */
+
 export const persoon = mysqlTable("persoon", {
   id: int("id", { unsigned: true }).primaryKey().autoincrement(),
   voornaam: varchar("voornaam", { length: 255 }).notNull(),
   achternaam: varchar("achternaam", { length: 255 }).notNull(),
+  geboorteDatum: date("geboorteDatum").notNull(),
   telefoon: varchar("telefoon", { length: 50 }),
   email: varchar("email", { length: 255 }).notNull(),
 });
@@ -20,42 +25,53 @@ export const persoonRelations = relations(persoon, ({ many }) => ({
   leden: many(lid),
   leiding: many(leiding),
 }));
+
 /* --------------------------------- */
+/* LID                               */
+/* --------------------------------- */
+
 export const lid = mysqlTable("lid", {
   persoonId: int("persoonId", { unsigned: true })
     .primaryKey()
     .references(() => persoon.id, { onDelete: "cascade" }),
+
+  ageGroup: varchar("ageGroup", { length: 255 }).notNull(),
 });
 
 export const lidRelations = relations(lid, ({ one, many }) => ({
   persoon: one(persoon, {
-    fields: [lid.persoonID],
+    fields: [lid.persoonId],
     references: [persoon.id],
   }),
 
   kampen: many(lidKamp),
 }));
+
+/* --------------------------------- */
+/* LEIDING                           */
 /* --------------------------------- */
 
 export const leiding = mysqlTable("leiding", {
-  id: int("id", { unsigned: true }).primaryKey().autoincrement(),
-  persoonID: int("persoonID", { unsigned: true })
-    .notNull()
+  persoonId: int("persoonId", { unsigned: true })
+    .primaryKey()
     .references(() => persoon.id, { onDelete: "cascade" }),
+
   ageGroup: varchar("ageGroup", { length: 255 }).notNull(),
   imageUrl: varchar("imageUrl", { length: 255 }).notNull(),
   beschrijving: text("beschrijving").notNull(),
 });
 
-
 export const leidingRelations = relations(leiding, ({ one, many }) => ({
   persoon: one(persoon, {
-    fields: [leiding.persoonID],
+    fields: [leiding.persoonId],
     references: [persoon.id],
   }),
 
   kampen: many(leidingKamp),
 }));
+
+/* --------------------------------- */
+/* KAMPEN                            */
 /* --------------------------------- */
 
 export const kampen = mysqlTable("kampen", {
@@ -72,47 +88,52 @@ export const kampenRelations = relations(kampen, ({ many }) => ({
   leiding: many(leidingKamp),
 }));
 
+/* --------------------------------- */
+/* LID_KAMP (pivot)                  */
+/* --------------------------------- */
+
 export const lidKamp = mysqlTable(
   "lid_kamp",
   {
     lidId: int("lidId", { unsigned: true })
       .notNull()
-      .references(() => lid.id, { onDelete: "cascade" }),
+      .references(() => lid.persoonId, { onDelete: "cascade" }),
 
     kampId: int("kampId", { unsigned: true })
       .notNull()
       .references(() => kampen.id, { onDelete: "cascade" }),
   },
-  (table) => [
-    primaryKey({ columns: [table.lidId, table.kampId] }),
-  ]
+  (table) => [primaryKey({ columns: [table.lidId, table.kampId] })]
 );
 
 export const lidKampRelations = relations(lidKamp, ({ one }) => ({
   lid: one(lid, {
     fields: [lidKamp.lidId],
-    references: [lid.id],
+    references: [lid.persoonId],
   }),
+
   kamp: one(kampen, {
     fields: [lidKamp.kampId],
     references: [kampen.id],
   }),
 }));
 
+/* --------------------------------- */
+/* LEIDING_KAMP (pivot)              */
+/* --------------------------------- */
+
 export const leidingKamp = mysqlTable(
   "leiding_kamp",
   {
     leidingId: int("leidingId", { unsigned: true })
       .notNull()
-      .references(() => leiding.id, { onDelete: "cascade" }),
+      .references(() => leiding.persoonId, { onDelete: "cascade" }),
 
     kampId: int("kampId", { unsigned: true })
       .notNull()
       .references(() => kampen.id, { onDelete: "cascade" }),
   },
-  (table) => [
-    primaryKey({ columns: [table.leidingId, table.kampId] }),
-  ]
+  (table) => [primaryKey({ columns: [table.leidingId, table.kampId] })]
 );
 
 export const leidingKampRelations = relations(
@@ -120,8 +141,9 @@ export const leidingKampRelations = relations(
   ({ one }) => ({
     leiding: one(leiding, {
       fields: [leidingKamp.leidingId],
-      references: [leiding.id],
+      references: [leiding.persoonId],
     }),
+
     kamp: one(kampen, {
       fields: [leidingKamp.kampId],
       references: [kampen.id],
