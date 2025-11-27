@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-  CreateLeidingDto,
-  UpdateLeidingDto,
-  LeidingResponseDto,
-  LeidingListResponseDto
+    CreateLeidingDto,
+    UpdateLeidingDto,
+    LeidingResponseDto,
+    LeidingListResponseDto
 } from './leiding.dto';
 import {
-  type DatabaseProvider,
-  InjectDrizzle,
+    type DatabaseProvider,
+    InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
 import { leiding, persoon } from '../drizzle/schema';
@@ -27,7 +27,8 @@ import { leiding, persoon } from '../drizzle/schema';
       return {
         items: items.map((item) => ({
           id: item.persoon?.id ?? item.persoonId,
-          name: `${item.persoon?.voornaam ?? ''} ${item.persoon?.achternaam ?? ''}`.trim(),
+          voornaam: item.persoon?.voornaam ?? '',
+          achternaam: item.persoon?.achternaam ?? '',
           ageGroup: item.ageGroup,
           imageUrl: item.imageUrl,
           description: item.beschrijving,
@@ -48,7 +49,8 @@ import { leiding, persoon } from '../drizzle/schema';
 
       return {
         id: item.persoon?.id ?? item.persoonId,
-        name: item.persoon ? `${item.persoon.voornaam} ${item.persoon.achternaam}` : '',
+        voornaam: item.persoon?.voornaam ?? '',
+        achternaam: item.persoon?.achternaam ?? '',
         ageGroup: item.ageGroup,
         imageUrl: item.imageUrl,
         description: item.beschrijving,
@@ -60,7 +62,7 @@ import { leiding, persoon } from '../drizzle/schema';
       id: number,
       dto: UpdateLeidingDto,
     ): Promise<LeidingResponseDto> {
-      const { name, ageGroup, imageUrl, description } = dto;
+      const { ageGroup, imageUrl, description, voornaam, achternaam } = dto as any;
 
       // Update leiding table columns (map description -> beschrijving)
       await this.db
@@ -72,13 +74,11 @@ import { leiding, persoon } from '../drizzle/schema';
         })
         .where(eq(leiding.persoonId, id));
 
-      // If name provided, update the persoon table
-      if (name) {
-        const [firstName, ...lastParts] = name.split(' ');
-        const lastName = lastParts.join(' ') || '';
+      // If voornaam/achternaam provided, update personne fields
+      if (voornaam || achternaam) {
         await this.db
           .update(persoon)
-          .set({ voornaam: firstName ?? '', achternaam: lastName })
+          .set({ voornaam: voornaam ?? '', achternaam: achternaam ?? '' })
           .where(eq(persoon.id, id));
       }
 
@@ -86,7 +86,7 @@ import { leiding, persoon } from '../drizzle/schema';
     }
 
     async create(dto: CreateLeidingDto): Promise<LeidingResponseDto> {
-      const { persoonId, name, ageGroup, imageUrl, description } = dto;
+      const { persoonId, ageGroup, imageUrl, description } = dto;
 
       // If persoonId supplied, validate it exists
       if (persoonId) {

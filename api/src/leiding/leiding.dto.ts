@@ -1,6 +1,7 @@
 export class CreateLeidingDto {
   persoonId?: number;
-  name?: string; // if persoonId not provided user may supply name, but DB requires a persoon entry; for now, prefer persoonId
+  voornaam?: string;
+  achternaam?: string;
   ageGroup: string;
   imageUrl: string;
   description: string;
@@ -8,7 +9,8 @@ export class CreateLeidingDto {
 }
 
 export class UpdateLeidingDto {
-  name?: string;
+  voornaam?: string;
+  achternaam?: string;
   ageGroup?: string;
   imageUrl?: string;
   description?: string;
@@ -17,7 +19,8 @@ export class UpdateLeidingDto {
 
 export class LeidingResponseDto {
   id: number;
-  name: string;
+  voornaam: string;
+  achternaam: string;
   ageGroup: string;
   imageUrl: string;
   description: string;

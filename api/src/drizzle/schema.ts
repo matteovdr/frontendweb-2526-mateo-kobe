@@ -5,6 +5,7 @@ import {
   text,
   date,
   primaryKey,
+  boolean,
 } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 
@@ -59,6 +60,7 @@ export const leiding = mysqlTable("leiding", {
   ageGroup: varchar("ageGroup", { length: 255 }).notNull(),
   imageUrl: varchar("imageUrl", { length: 255 }).notNull(),
   beschrijving: text("beschrijving").notNull(),
+  isHoofdleiding: boolean('isHoofdleiding').notNull().default(false),
 });
 
 export const leidingRelations = relations(leiding, ({ one, many }) => ({
