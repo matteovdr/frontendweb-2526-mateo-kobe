@@ -14,59 +14,40 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Layout from './pages/Layout';
 
+import AuthProvider from './contexts/Auth.context.jsx';
+
+import ThemeProvider from './contexts/Theme.context';
+
 const router = createBrowserRouter([
   {
-    Component: Layout, 
+    Component: Layout,
     children: [
-      {
-        path: '/',
-        element: <Navigate replace to="/home" />,
-      },
-      {
-        path: '/home',
-        element: <Home />,
-      },
-      {
-        path: '/leiding',
-        element: <Leiding />,
-      },
-      {
-        path: '/about',
-        element: <About />,
-      },
+      { path: '/', element: <Navigate replace to="/home" /> },
+      { path: '/home', element: <Home /> },
+      { path: '/leiding', element: <Leiding /> },
+      { path: '/about', element: <About /> },
       {
         path: '/kampen',
         children: [
-          {
-            index: true,
-            Component:Kampen,
-          },
-          {
-            path: 'add',
-            Component: AddKamp,
-          },
+          { index: true, Component: Kampen },
+          { path: 'add', Component: AddKamp },
         ],
       },
-      {
-        path: '/login',
-        element: <Login />,
-      },
-      {
-        path: '/register',
-        element: <Register />,
-      },
-      {
-        path: '*',
-        element: <NotFound />,
-      },
+      { path: '/login', element: <Login /> },
+      { path: '/register', element: <Register /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <RouterProvider router={router} />
-    </GoogleOAuthProvider>
+    <ThemeProvider>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </GoogleOAuthProvider>
+    </ThemeProvider>
   </StrictMode>,
 );

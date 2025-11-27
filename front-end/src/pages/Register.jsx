@@ -1,179 +1,292 @@
+import {
+  FormProvider,
+  useForm,
+} from 'react-hook-form';
+import { useCallback, useMemo } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/auth';
 import { CgProfile } from 'react-icons/cg';
 import { PiLockLight } from 'react-icons/pi';
-import { Link } from 'react-router-dom';
 import { IoMdMailOpen } from 'react-icons/io';
 import { FaPhone } from 'react-icons/fa6';
 import { SlCalender } from 'react-icons/sl';
 
-function Register() {
+export default function Register() {
+  const { error, loading, register: registerUser } = useAuth();
+  const navigate = useNavigate();
+
+  const methods = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = methods;
+
+  const handleCancel = useCallback(() => {
+    reset();
+  }, [reset]);
+
+  const handleRegister = useCallback(
+    async ({ firstName, lastName, email, phone, birthDate, password }) => {
+      const ok = await registerUser({
+        firstName,
+        lastName,
+        email,
+        phone,
+        birthDate,
+        password,
+      });
+
+      if (ok) {
+        navigate('/', { replace: true });
+      }
+    },
+    [registerUser, navigate],
+  );
+
+  const validationRules = useMemo(
+    () => ({
+      firstName: { required: 'Voornaam is verplicht' },
+      lastName: { required: 'Achternaam is verplicht' },
+      email: {
+        required: 'E-mail is verplicht',
+        pattern: {
+          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          message: 'Ongeldig e-mailadres',
+        },
+      },
+      phone: { required: 'Telefoonnummer is verplicht' },
+      birthDate: { required: 'Geboortedatum is verplicht' },
+      password: { required: 'Wachtwoord is verplicht' },
+      confirmPassword: {
+        required: 'Bevestig je wachtwoord',
+        validate: (value) => {
+          const password = getValues('password');
+          return password === value || 'Wachtwoorden komen niet overeen';
+        },
+      },
+    }),
+    [getValues],
+  );
+
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div
-        className="flex justify-center items-center flex-col border-4 border-blue-300
-        rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
-        h-auto"
-      >
-        <CgProfile className="text-8xl text-blue-400 mb-4" />
-        <h1 className="font-bold text-6xl text-blue-600 mb-6">Registreren</h1>
-
-        {/* Naam label*/}
-        <div className="w-72 md:w-80 mb-2">
-          <label className="block mb-1 text-sm font-medium text-blue-700">
-            Naam
-          </label>
-
-          {/* Voornaam */}
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3 mb-3
-    focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <CgProfile className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="text"
-              placeholder="Voornaam"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-
-          {/* Achternaam */}
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-    focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <CgProfile className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="text"
-              placeholder="Achternaam"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="flex items-center my-4 w-72 md:w-80">
-          <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
-        </div>
-
-        {/* E-mail */}
-        <div className="w-72 md:w-80 mb-4">
-          <label className="block mb-1 text-sm font-medium text-blue-700">
-            E-mail
-          </label>
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <IoMdMailOpen className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="email"
-              placeholder="E-mail"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-        </div>
-
-        {/* Telefoonnummer */}
-        <div className="w-72 md:w-80 mb-4">
-          <label className="block mb-1 text-sm font-medium text-blue-700">
-            Telefoonnummer
-          </label>
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <FaPhone className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="tel"
-              placeholder="Telefoonnummer"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-        </div>
-
-        {/* Geboortedatum */}
-        <div className="w-72 md:w-80 mb-2">
-          <label className="block mb-1 text-sm font-medium text-blue-700">
-            Geboortedatum
-          </label>
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <SlCalender className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="date"
-              placeholder="Geboortedatum"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="flex items-center my-4 w-72 md:w-80">
-          <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
-        </div>
-
-        {/* Wachtwoord */}
-        <div className="w-72 md:w-80 mb-4">
-          <label className="block mb-1 text-sm font-medium text-blue-700">
-            Wachtwoord
-          </label>
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <PiLockLight className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="password"
-              placeholder="Wachtwoord"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-        </div>
-
-        {/* Bevestig wachtwoord */}
-        <div className="w-72 md:w-80 mb-4">
-          <label className="block mb-1 text-sm font-medium text-blue-700">
-            Bevestig wachtwoord
-          </label>
-          <div
-            className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm"
-          >
-            <PiLockLight className="text-blue-400 text-2xl" />
-            <div className="h-6 w-px bg-blue-300 mx-3" />
-            <input
-              type="password"
-              placeholder="Bevestig wachtwoord"
-              className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
-            />
-          </div>
-        </div>
-
-        <button
-          className="mt-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white
-          py-3 rounded-2xl transition-all shadow-md w-72 md:w-80"
+    <FormProvider {...methods}>
+      <div className="flex justify-center items-center min-h-screen">
+        <form
+          onSubmit={handleSubmit(handleRegister)}
+          className="flex justify-center items-center flex-col border-4 border-blue-300
+                     rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
+                     h-auto"
         >
-          Registreren
-        </button>
+          {/* optioneel: globale fout tonen */}
+          {error && (
+            <p className="mb-2 text-red-600 text-sm">
+              {String(error)}
+            </p>
+          )}
 
-        <div className="flex flex-col items-center mt-6 text-sm">
-          <p className="text-black">
-            Heb je al een account?{' '}
-            <Link to="/login" className="font-semibold text-blue-600 underline">
-              Login
-            </Link>
-          </p>
-        </div>
+          <CgProfile className="text-8xl text-blue-400 mb-4" />
+          <h1 className="font-bold text-6xl text-blue-600 mb-6">Registreren</h1>
+
+          {/* NAAM */}
+          <div className="w-72 md:w-80 mb-2">
+            <label className="block mb-1 text-sm font-medium text-blue-700">
+              Naam
+            </label>
+
+            {/* Voornaam */}
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3 mb-1
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <CgProfile className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="text"
+                placeholder="Voornaam"
+                {...register('firstName', validationRules.firstName)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.firstName && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.firstName.message}
+              </p>
+            )}
+
+            {/* Achternaam */}
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3 mt-2
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <CgProfile className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="text"
+                placeholder="Achternaam"
+                {...register('lastName', validationRules.lastName)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.lastName && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.lastName.message}
+              </p>
+            )}
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center my-4 w-72 md:w-80">
+            <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
+          </div>
+
+          {/* E-MAIL */}
+          <div className="w-72 md:w-80 mb-4">
+            <label className="block mb-1 text-sm font-medium text-blue-700">
+              E-mail
+            </label>
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <IoMdMailOpen className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="email"
+                placeholder="E-mail"
+                {...register('email', validationRules.email)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          {/* TELEFOON */}
+          <div className="w-72 md:w-80 mb-4">
+            <label className="block mb-1 text-sm font-medium text-blue-700">
+              Telefoonnummer
+            </label>
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <FaPhone className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="tel"
+                placeholder="Telefoonnummer"
+                {...register('phone', validationRules.phone)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.phone && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.phone.message}
+              </p>
+            )}
+          </div>
+
+          {/* GEBOORTEDATUM */}
+          <div className="w-72 md:w-80 mb-2">
+            <label className="block mb-1 text-sm font-medium text-blue-700">
+              Geboortedatum
+            </label>
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <SlCalender className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="date"
+                {...register('birthDate', validationRules.birthDate)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.birthDate && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.birthDate.message}
+              </p>
+            )}
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center my-4 w-72 md:w-80">
+            <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
+          </div>
+
+          {/* WACHTWOORD */}
+          <div className="w-72 md:w-80 mb-4">
+            <label className="block mb-1 text-sm font-medium text-blue-700">
+              Wachtwoord
+            </label>
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <PiLockLight className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="password"
+                placeholder="Wachtwoord"
+                {...register('password', validationRules.password)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          {/* BEVESTIG WACHTWOORD */}
+          <div className="w-72 md:w-80 mb-4">
+            <label className="block mb-1 text-sm font-medium text-blue-700">
+              Bevestig wachtwoord
+            </label>
+            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+              <PiLockLight className="text-blue-400 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 mx-3" />
+              <input
+                type="password"
+                placeholder="Bevestig wachtwoord"
+                {...register('confirmPassword', validationRules.confirmPassword)}
+                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+              />
+            </div>
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          {/* KNOPPEN */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-2 bg-blue-500 hover:bg-blue-600 disabled:opacity-60 cursor-pointer text-white
+                       py-3 rounded-2xl transition-all shadow-md w-72 md:w-80"
+          >
+            Registreren
+          </button>
+
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="mt-2 bg-gray-200 hover:bg-gray-300 text-blue-700
+                       py-3 rounded-2xl transition-all shadow-md w-72 md:w-80"
+          >
+            Annuleren
+          </button>
+
+          <div className="flex flex-col items-center mt-6 text-sm">
+            <p className="text-black">
+              Heb je al een account?{' '}
+              <Link to="/login" className="font-semibold text-blue-600 underline">
+                Login
+              </Link>
+            </p>
+          </div>
+        </form>
       </div>
-    </div>
+    </FormProvider>
   );
 }
 
-export default Register;

@@ -1,1 +1,37 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply  bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
+    min-height: 100vh;
+  }
+  h1 {
+    @apply text-4xl mb-4;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    color-scheme: light;
+  }
+
+  .dark input,
+  .dark select,
+  .dark textarea,
+  .dark button {
+    color-scheme: dark;
+  }
+}
+
+@layer components {
+  .primary {
+    @apply bg-blue-500 text-white font-medium py-2 px-4 rounded;
+  }
+  .secondary {
+    @apply py-2 px-4 rounded text-blue-500 
+      border border-blue-500 bg-white dark:bg-gray-900;
+  }
+}
