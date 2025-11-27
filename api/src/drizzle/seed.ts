@@ -15,7 +15,7 @@ const db = drizzle(connection, {
 async function main() {
   console.log('🌱 Starting database seeding...\n');
 
-  // await resetDatabase();
+  await resetDatabase();
   await seedKampen();
   await seedPersonen();
   await seedLeiding();
@@ -38,12 +38,17 @@ main()
 async function resetDatabase() {
   console.log('🗑️ Resetting database...');
 
-  await db.delete(schema.kampen);
-  await db.delete(schema.persoon);
+  // Remove pivot tables first
+  await db.delete(schema.leidingKamp);
+  await db.delete(schema.lidKamp);
+
+  // Then remove child tables
   await db.delete(schema.leiding);
   await db.delete(schema.lid);
-  await db.delete(schema.lidKamp);
-  await db.delete(schema.leidingKamp);
+  await db.delete(schema.persoon);
+
+  // Finally remove parent tables
+  await db.delete(schema.kampen);
 
   console.log('✅ Database reset completed\n');
 }

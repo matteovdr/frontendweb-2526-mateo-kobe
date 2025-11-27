@@ -1,6 +1,7 @@
 export class createKampRequestDTO {
   naam: string;
   stad: string;
+  beschrijving: string;
   startDatum: Date;
   eindDatum: Date;
 }

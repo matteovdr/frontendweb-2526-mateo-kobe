@@ -5,10 +5,12 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Patch
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { LeidingService } from './leiding.service';
 import {
+  CreateLeidingDto,
   UpdateLeidingDto,
   LeidingListResponseDto,
   LeidingResponseDto
@@ -31,10 +33,10 @@ export class LeidingController {
     return this.leidingService.getById(id);
   }
 
-//   @Post()
-//   async create(@Body() dto: CreateLeidingDto): Promise<LeidingResponseDto> {
-//     return this.leidingService.create(dto);
-//   }
+  @Post()
+  async create(@Body() dto: CreateLeidingDto): Promise<LeidingResponseDto> {
+    return this.leidingService.create(dto);
+  }
 
   @Patch(':id')
   async updateById(
