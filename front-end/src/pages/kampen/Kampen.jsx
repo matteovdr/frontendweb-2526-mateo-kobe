@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import KampenLijst from '../../components/Kampen/KampenLijst';
 import { getAll } from '../../api';
 import { Link } from 'react-router-dom';
+import AsyncData from '../../components/AsyncData';
 
 function Kampen() {
   const {
@@ -32,20 +33,27 @@ function Kampen() {
       </p>
 
       <div className='flex justify-center border-y my-6 2xl:mx-60'>
-        <Link to="add" className='my-6 py-4 px-16 border border-blue-300 rounded-2xl
-        text-blue-500 cursor-pointer hover:bg-blue-500 hover:text-white
-        transition duration-300'>Voeg een kamp toe</Link>
+        <Link
+          to="add"
+          className='my-6 py-4 px-16 border border-blue-300 rounded-2xl
+          text-blue-500 cursor-pointer hover:bg-blue-500 hover:text-white
+          transition duration-300'
+        >
+          Voeg een kamp toe
+        </Link>
       </div>
 
-      <h2 className="text-4xl mb-4 text-blue-500 text-center">
-        Dit zijn de kampen die we gedaan hebben
-      </h2>
-      <KampenLijst kampen={verledenKampen} alGedaan={true} />
+      <AsyncData loading={isLoading} error={error}>
+        <h2 className="text-4xl mb-4 text-blue-500 text-center">
+          Dit zijn de kampen die we gedaan hebben
+        </h2>
+        <KampenLijst kampen={verledenKampen} alGedaan={true} />
 
-      <h2 className="text-4xl mb-4 text-blue-500 text-center mt-14">
-        Dit zijn de kampen die we nog gaan doen!
-      </h2>
-      <KampenLijst kampen={toekomstigeKampen} alGedaan={false} />
+        <h2 className="text-4xl mb-4 text-blue-500 text-center mt-14">
+          Dit zijn de kampen die we nog gaan doen!
+        </h2>
+        <KampenLijst kampen={toekomstigeKampen} alGedaan={false} />
+      </AsyncData>
     </div>
   );
 }
