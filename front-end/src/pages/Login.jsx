@@ -55,7 +55,6 @@ function Login() {
 
   const handleSuccess = (credentialResponse) => {
     console.log('Google login success:', credentialResponse);
-  
   };
 
   const handleError = () => {
@@ -91,6 +90,7 @@ function Login() {
                 type="text"
                 placeholder="Email of gebruikersnaam"
                 {...register('email', validationRules.email)}
+                data-cy="email_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -111,6 +111,7 @@ function Login() {
                 type="password"
                 placeholder="Wachtwoord"
                 {...register('password', validationRules.password)}
+                data-cy="password_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -126,6 +127,7 @@ function Login() {
             <button
               type="submit"
               disabled={loading}
+              data-cy="submit_btn"
               className="bg-blue-500 hover:bg-blue-600 disabled:opacity-60 cursor-pointer text-white
                          py-3 rounded-2xl transition-all shadow-md w-full"
             >

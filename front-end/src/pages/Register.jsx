@@ -80,7 +80,6 @@ export default function Register() {
                      rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
                      h-auto"
         >
-          {/* optioneel: globale fout tonen */}
           {error && (
             <p className="mb-2 text-red-600 text-sm">
               {String(error)}
@@ -105,6 +104,7 @@ export default function Register() {
                 type="text"
                 placeholder="Voornaam"
                 {...register('firstName', validationRules.firstName)}
+                data-cy="voornaam_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -123,6 +123,7 @@ export default function Register() {
                 type="text"
                 placeholder="Achternaam"
                 {...register('lastName', validationRules.lastName)}
+                data-cy="achternaam_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -151,6 +152,7 @@ export default function Register() {
                 type="email"
                 placeholder="E-mail"
                 {...register('email', validationRules.email)}
+                data-cy="email_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -174,6 +176,7 @@ export default function Register() {
                 type="tel"
                 placeholder="Telefoonnummer"
                 {...register('phone', validationRules.phone)}
+                data-cy="telefoon_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -196,6 +199,7 @@ export default function Register() {
               <input
                 type="date"
                 {...register('birthDate', validationRules.birthDate)}
+                data-cy="geboortedatum_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -224,6 +228,7 @@ export default function Register() {
                 type="password"
                 placeholder="Wachtwoord"
                 {...register('password', validationRules.password)}
+                data-cy="wachtwoord_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -247,6 +252,7 @@ export default function Register() {
                 type="password"
                 placeholder="Bevestig wachtwoord"
                 {...register('confirmPassword', validationRules.confirmPassword)}
+                data-cy="bevestig_wachtwoord_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
@@ -261,6 +267,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
+            data-cy="register_btn"
             className="mt-2 bg-blue-500 hover:bg-blue-600 disabled:opacity-60 cursor-pointer text-white
                        py-3 rounded-2xl transition-all shadow-md w-72 md:w-80"
           >
@@ -289,4 +296,3 @@ export default function Register() {
     </FormProvider>
   );
 }
-
