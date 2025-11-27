@@ -538,105 +538,105 @@ console.log("👤 Seeding Lid Kampen...");
 await db.insert(schema.lidKamp).values([
     // Kamp 1: 5 Leden
     {
-      lidId: 1,
+      lidId: 17,
       kampId: 1
     },
     {
-      lidId: 2,
+      lidId: 18,
       kampId: 1
     },
     {
-      lidId: 3,
+      lidId: 19,
       kampId: 1
     },
     {
-      lidId: 4,
+      lidId: 20,
       kampId: 1
     },
     {
-      lidId: 5,
+      lidId: 21,
       kampId: 1
     },
 
     // Kamp 2: 2 Leden
     {
-      lidId: 6,
+      lidId: 22,
       kampId: 2
     },
     {
-      lidId: 7,
+      lidId: 23,
       kampId: 2
     },
 
     // Kamp 3: 7 Leden
     {
-      lidId: 8,
+      lidId: 24,
       kampId: 3
     },
     {
-      lidId: 9,
+      lidId: 25,
       kampId: 3
     },
     {
-      lidId: 10,
+      lidId: 26,
       kampId: 3
     },
     {
-      lidId: 11,
+      lidId: 27,
       kampId: 3
     },
     {
-      lidId: 12,
+      lidId: 28,
       kampId: 3
     },
     {
-      lidId: 1,
+      lidId: 17,
       kampId: 3
     },
     {
-      lidId: 2,
+      lidId: 18,
       kampId: 3
     },
 
     // Kamp 4: 3 Leden
     {
-      lidId: 13,
+      lidId: 29,
       kampId: 4
     },
     {
-      lidId: 14,
+      lidId: 30,
       kampId: 4
     },
     {
-      lidId: 15,
+      lidId: 31,
       kampId: 4
     },
 
     // Kamp 5: 4 Leden
     {
-      lidId: 3,
+      lidId: 19,
       kampId: 5
     },
     {
-      lidId: 5,
+      lidId: 21,
       kampId: 5
     },
     {
-      lidId: 7,
+      lidId: 23,
       kampId: 5
     },
     {
-      lidId: 9,
+      lidId: 25,
       kampId: 5
     },
 
     // Kamp 6: 2 Leden
     {
-      lidId: 11,
+      lidId: 27,
       kampId: 6
     },
     {
-      lidId: 13,
+      lidId: 29,
       kampId: 6
     }
   ]);
