@@ -22,9 +22,8 @@ export const persoonRelations = relations(persoon, ({ many }) => ({
 }));
 /* --------------------------------- */
 export const lid = mysqlTable("lid", {
-  id: int("id", { unsigned: true }).primaryKey().autoincrement(),
-  persoonID: int("persoonID", { unsigned: true })
-    .notNull()
+  persoonId: int("persoonId", { unsigned: true })
+    .primaryKey()
     .references(() => persoon.id, { onDelete: "cascade" }),
 });
 
