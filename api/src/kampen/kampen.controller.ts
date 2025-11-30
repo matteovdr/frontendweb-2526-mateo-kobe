@@ -1,6 +1,12 @@
 import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
 import { KampenService } from './kampen.service';
-import { KampenListResponseDto, KampResponseDto, createKampRequestDTO } from './kamp.dto';
+import {
+  KampenListResponseDto,
+  KampResponseDto,
+  createKampRequestDTO,
+  KampLidResponseDto,
+  KampLeidingResponseDto, // <- bijvoorbeeld
+} from './kamp.dto';
 
 @Controller('kampen')
 export class KampenController {
@@ -18,6 +24,18 @@ export class KampenController {
     return this.kampenService.getKampWithId(Number(id));
   }
 
+
+  @Get(':id/leden')
+  async getLedenVanKamp(
+    @Param('id') id: string,
+  ): Promise<KampLidResponseDto[]> {
+    return this.kampenService.getLedenVanKamp(Number(id));
+  }
+  @Get(':id/leiding')
+async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
+  return this.kampenService.getLeidingVanKamp(Number(id));
+}
+
   // POST /kampen
   @Post()
   async create(@Body() data: createKampRequestDTO): Promise<KampResponseDto> {
@@ -26,7 +44,10 @@ export class KampenController {
 
   // PUT /kampen/:id
   @Put(':id')
-  async update(@Param('id') id: string, @Body() data: createKampRequestDTO): Promise<KampResponseDto> {
+  async update(
+    @Param('id') id: string,
+    @Body() data: createKampRequestDTO,
+  ): Promise<KampResponseDto> {
     return this.kampenService.updateKamp(Number(id), data);
   }
 

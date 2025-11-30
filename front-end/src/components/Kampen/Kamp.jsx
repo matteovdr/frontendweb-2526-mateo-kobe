@@ -1,7 +1,23 @@
 import { deleteData } from '../../api';
 import { mutate } from 'swr';
+import { useNavigate } from 'react-router-dom';
 
+// const fetcher = (url) => fetch(url).then((res) => res.json());
+
+// function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
+//   const [showDetails, setShowDetails] = useState(false);
+
+//   const { data: leden, isLoading: ledenLoading, error: ledenError } = useSWR(
+//     showDetails ? `/api/kampen/${id}/leden` : null,
+//     fetcher,
+//   );
+//   const { data: leiding, isLoading: leidingLoading, error: leidingError } = useSWR(
+//     showDetails ? `/api/kampen/${id}/leiding` : null,
+//     fetcher,
+//   );
 function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
+  const navigate = useNavigate();
+
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
 
@@ -13,10 +29,22 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
       alert('Verwijderen mislukt');
     }
   };
+  const handleDetails = () => {
+    navigate(`/kampen/${id}`);
+  };
+
+  // const handleDetails = () => {
+  //   setShowDetails(true);
+  // };
+
+  // const closeDetails = () => {
+  //   setShowDetails(false);
+  // };
 
   return (
+    
     <div className="flex flex-1 flex-col place-content-center 
-      border border-blue-300 rounded-2xl p-5 bg-gray-100 shadow-xl">
+        border border-blue-300 rounded-2xl p-5 bg-gray-100 shadow-xl">
 
       <h3 className="text-center font-semibold text-xl text-blue-600">
         {naam}
@@ -31,35 +59,47 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
 
         <div className="grid grid-cols-2">
           <label className="font-bold self-center">Start datum</label>
-          <p className="text-right self-center">{new Date(startDatum).toDateString()}</p>
+          <p className="text-right self-center">
+            {new Date(startDatum).toDateString()}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 border-b">
           <label className="font-bold self-center">Eind datum</label>
-          <p className="text-right self-center">{new Date(eindDatum).toDateString()}</p>
+          <p className="text-right self-center">
+            {new Date(eindDatum).toDateString()}
+          </p>
         </div>
       </div>
+
       {/* BUTTONS */}
-      {/*TODO als de gebruiker niet de rechten heeft voor te deleten
-      dan moet delete weg en grid-cols op 1 staan*/}
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-3">
         <button
-          className={`text-white rounded-4xl mt-2 py-1.5 justify-self-center px-4 min-w-1/2
-          ${alGedaan ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600 cursor-pointer'}`}
+          className={`text-white rounded-4xl mt-2 py-1 px-3 text-sm justify-self-center
+            ${alGedaan ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600 cursor-pointer'}`}
         >
           Inschrijven
         </button>
 
         <button
+          onClick={handleDetails}
+          className="bg-yellow-500 text-white rounded-4xl mt-2 py-1 px-3 text-sm
+            justify-self-center hover:bg-yellow-600 cursor-pointer"
+        >
+          Details
+        </button>
+
+        <button
           data-cy={'delete'}
           onClick={handleDelete}
-          className="bg-red-500 text-white rounded-4xl mt-2 py-1.5
-          justify-self-center px-4 min-w-1/2 hover:bg-red-600 cursor-pointer"
+          className="bg-red-500 text-white rounded-4xl mt-2 py-1 px-3 text-sm
+            justify-self-center hover:bg-red-600 cursor-pointer"
         >
           Verwijder
         </button>
       </div>
     </div>
+     
   );
 }
 

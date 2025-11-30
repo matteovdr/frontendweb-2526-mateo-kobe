@@ -13,3 +13,15 @@ export class KampResponseDto extends createKampRequestDTO {
 export class KampenListResponseDto {
   items: KampResponseDto[];
 }
+export class KampLidResponseDto {
+  id: number;
+  voornaam: string;
+  achternaam: string;
+  ageGroup: string;
+}
+export class KampLeidingResponseDto {
+  id: number;
+  voornaam: string;
+  achternaam: string;
+  ageGroup: string;
+}

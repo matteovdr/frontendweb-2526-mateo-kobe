@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './kamp.dto';
+import { KampLeidingResponseDto, KampLidResponseDto, KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './kamp.dto';
 import { InjectDrizzle, type DatabaseProvider } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
-import { kampen } from '../drizzle/schema';
+import { kampen, leiding, leidingKamp, lid, lidKamp, persoon } from '../drizzle/schema';
 
 @Injectable()
 export class KampenService {
@@ -80,4 +80,48 @@ export class KampenService {
       throw new NotFoundException(`Kamp with ID ${id} not found`);
     }
   }
+
+
+async getLedenVanKamp(kampId: number): Promise<KampLidResponseDto[]> {
+  const rows = await this.db
+    .select({
+      lidId: lid.persoonId,
+      voornaam: persoon.voornaam,
+      achternaam: persoon.achternaam,
+      ageGroup: lid.ageGroup,
+    })
+    .from(lidKamp)
+    .innerJoin(lid, eq(lidKamp.lidId, lid.persoonId))
+    .innerJoin(persoon, eq(lid.persoonId, persoon.id))
+    .where(eq(lidKamp.kampId, kampId));
+
+  return rows.map((row) => ({
+    id: row.lidId,
+    voornaam: row.voornaam,
+    achternaam: row.achternaam,
+    ageGroup: row.ageGroup,
+  }));
+}
+async getLeidingVanKamp(kampId: number): Promise<KampLeidingResponseDto[]> {
+  const rows = await this.db
+    .select({
+      leidingId: leiding.persoonId,
+      voornaam: persoon.voornaam,
+      achternaam: persoon.achternaam,
+      ageGroup: leiding.ageGroup,
+    })
+    .from(leidingKamp)
+    .innerJoin(leiding, eq(leidingKamp.leidingId, leiding.persoonId))
+    .innerJoin(persoon, eq(leiding.persoonId, persoon.id))
+    .where(eq(leidingKamp.kampId, kampId));
+
+  return rows.map((row) => ({
+    id: row.leidingId,
+    voornaam: row.voornaam,
+    achternaam: row.achternaam,
+    ageGroup: row.ageGroup,
+  }));
+}
+
+
 }
