@@ -4,13 +4,18 @@ import {
   Logger,
 } from '@nestjs/common';
 import CustomLogger from 'src/core/customLogger';
+import { ConfigService } from '@nestjs/config';
+import { ServerConfig, CorsConfig } from './config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+const config = app.get(ConfigService<ServerConfig>);
+  const port = config.get<number>('port')!;
+  const cors = config.get<CorsConfig>('cors')!;
   app.useLogger(new CustomLogger()); 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: cors.origins,
+    maxAge: cors.maxAge,
     credentials: true,
   });
 

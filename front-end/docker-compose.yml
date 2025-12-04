@@ -1,0 +1,12 @@
+services:
+  ksa-app-frontend:
+    container_name: ksa-app-frontend
+    image: ksa-app-frontend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - VITE_GOOGLE_CLIENT_ID=283896268475-7kd3er7l6lfu5k2q5155p7ct117j9jm0.apps.googleusercontent.com
+        - VITE_API_URL=http://localhost:3000/api
+    ports:
+      - '80:80'

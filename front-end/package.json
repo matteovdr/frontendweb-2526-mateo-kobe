@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "vite build",
     "dev": "vite",
     "test": "cypress open",
     "init-tailwind": "tailwindcss init -p"
