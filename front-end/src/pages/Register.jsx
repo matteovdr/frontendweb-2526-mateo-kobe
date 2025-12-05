@@ -29,13 +29,19 @@ export default function Register() {
   }, [reset]);
 
   const handleRegister = useCallback(
-    async ({ firstName, lastName, email, phone, birthDate, password }) => {
+    async ({ voornaam, achternaam, email, telefoon, geboorteDatum, password }) => {
+      const formattedDate =
+        typeof geboorteDatum === 'string'
+          ? geboorteDatum
+          : geboorteDatum instanceof Date
+            ? geboorteDatum.toISOString().split('T')[0]
+            : '';
       const ok = await registerUser({
-        firstName,
-        lastName,
-        email,
-        phone,
-        birthDate,
+        voornaam, 
+        achternaam, 
+        email, 
+        telefoon,
+        geboorteDatum: formattedDate,
         password,
       });
 
@@ -103,7 +109,7 @@ export default function Register() {
               <input
                 type="text"
                 placeholder="Voornaam"
-                {...register('firstName', validationRules.firstName)}
+                {...register('voornaam', validationRules.firstName)}
                 data-cy="voornaam_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
@@ -122,7 +128,7 @@ export default function Register() {
               <input
                 type="text"
                 placeholder="Achternaam"
-                {...register('lastName', validationRules.lastName)}
+                {...register('achternaam', validationRules.lastName)}
                 data-cy="achternaam_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
@@ -175,7 +181,7 @@ export default function Register() {
               <input
                 type="tel"
                 placeholder="Telefoonnummer"
-                {...register('phone', validationRules.phone)}
+                {...register('telefoon', validationRules.phone)}
                 data-cy="telefoon_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
@@ -198,7 +204,7 @@ export default function Register() {
               <div className="h-6 w-px bg-blue-300 mx-3" />
               <input
                 type="date"
-                {...register('birthDate', validationRules.birthDate)}
+                {...register('geboorteDatum', validationRules.birthDate)}
                 data-cy="geboortedatum_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />

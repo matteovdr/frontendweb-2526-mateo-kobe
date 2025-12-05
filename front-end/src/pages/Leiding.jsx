@@ -80,7 +80,7 @@ export default function Leiding() {
                 <div
                   key={leiding.id}
                   className="bg-white rounded-2xl shadow-md p-6 max-w-xs text-center
-                  hover:shadow-lg transition-shadow duration-200"
+                  hover:shadow-lg transition-shadow duration-200"  
                 >
                   <img
                     src={leiding.imageUrl}

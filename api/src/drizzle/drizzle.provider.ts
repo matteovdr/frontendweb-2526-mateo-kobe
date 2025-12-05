@@ -6,7 +6,7 @@ import { Inject } from '@nestjs/common';
 import * as schema from './schema';
 
 export const DrizzleAsyncProvider = 'DrizzleAsyncProvider';
-// sleutel constante
+
 export const InjectDrizzle = () => Inject(DrizzleAsyncProvider);
 
 export const drizzleProvider = [

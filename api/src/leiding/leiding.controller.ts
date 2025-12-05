@@ -15,12 +15,13 @@ import {
   LeidingListResponseDto,
   LeidingResponseDto
 } from './leiding.dto';
+import { Public } from 'auth/decoraters/public.decorater';
 
 @Controller('leiding')
 export class LeidingController {
   constructor(private readonly leidingService: LeidingService) {}
 
-
+  @Public()
   @Get()
   async getAll(): Promise<LeidingListResponseDto> {
     return this.leidingService.getAll();

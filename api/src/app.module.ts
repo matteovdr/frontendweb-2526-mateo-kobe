@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthController } from './health/health.controller';
@@ -7,6 +7,13 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { KampenModule } from './kampen/kampen.module';
 import { LeidingModule } from './leiding/leiding.module';
+import { PersoonModule } from './persoon/persoon.module';
+import { AuthModule } from 'auth/auth.module';
+import { SessionModule } from 'src/session/session.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'auth/gaurds/auth.guard';
+import { RolesGuard } from 'auth/gaurds/roles.guard';
+import { LoggerMiddleware } from './lib/logger.middleware';
 
 @Module({
   imports: [
@@ -17,8 +24,31 @@ import { LeidingModule } from './leiding/leiding.module';
     DrizzleModule,
     KampenModule,
     LeidingModule,
+    PersoonModule,
+        AuthModule,
+    SessionModule,
+    
+
   ],
   controllers: [AppController, HealthController],
-  providers: [AppService],
+  providers: [
+    {   provide: APP_GUARD,
+       useClass: AuthGuard,
+     },
+         {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+    
+    AppService,
+  ],
 })
-export class AppModule {}
+
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*path');
+  }
+}
+
+    

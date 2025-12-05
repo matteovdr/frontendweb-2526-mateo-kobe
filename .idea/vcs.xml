@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/webservices-budget" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/webservices-budget/frontendweb-budget" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/webservices-budget/webservices-budget" vcs="Git" />
+  </component>
+</project>
