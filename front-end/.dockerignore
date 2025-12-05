@@ -1,0 +1,11 @@
+.env*
+.gitignore
+.git
+.vscode
+.idea
+
+cypress
+cypress.config.js
+dist
+eslint.config.js
+node_modules

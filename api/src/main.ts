@@ -6,18 +6,22 @@ import {
   ValidationError,
   ValidationPipe
 } from '@nestjs/common';
-
-import { HttpExceptionFilter } from './lib/http-exception.filter';
-import { DrizzleQueryErrorFilter } from './drizzle/drizzle-query-error-filter';
-import helmet from 'helmet';
-import CustomLogger from './core/customLogger';
+import CustomLogger from 'src/core/customLogger';
+import { ConfigService } from '@nestjs/config';
+import { ServerConfig, CorsConfig } from './config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+const config = app.get(ConfigService<ServerConfig>);
+  const port = config.get<number>('port')!;
+  const cors = config.get<CorsConfig>('cors')!;
+  app.useLogger(new CustomLogger()); 
+  app.enableCors({
+    origin: cors.origins,
+    maxAge: cors.maxAge,
+    credentials: true,
+  });
 
-  //
-  // GLOBAL PREFIX
-  //
   app.setGlobalPrefix('api');
 
   //

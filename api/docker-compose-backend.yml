@@ -1,0 +1,15 @@
+services:
+  ksa-app-backend:
+    container_name: ksa-app-backend
+    image: ksa-app-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      CORS_ORIGINS: "[\"http://localhost:5173\", \"http://localhost\"]"
+      CORS_MAX_AGE: 10800
+      DATABASE_URL: mysql://devusr:devpwd@host.docker.internal:3307/ksa
+    ports:
+      - '3000:3000'
