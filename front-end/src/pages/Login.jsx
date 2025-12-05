@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
-import { GoogleLogin } from '@react-oauth/google';
 import { CgProfile } from 'react-icons/cg';
 import { PiLockLight } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
@@ -53,13 +52,13 @@ function Login() {
     [login, navigate, search],
   );
 
-  const handleSuccess = (credentialResponse) => {
-    console.log('Google login success:', credentialResponse);
-  };
+  // const handleSuccess = (credentialResponse) => {
+  //   console.log('Google login success:', credentialResponse);
+  // };
 
-  const handleError = () => {
-    console.log('Google login failed');
-  };
+  // const handleError = () => {
+  //   console.log('Google login failed');
+  // };
 
   return (
     <FormProvider {...methods}>
@@ -151,7 +150,7 @@ function Login() {
           </div>
 
           {/* Google Sign In */}
-          <div
+          {/* <div
             className="w-72 md:w-80 mt-1 flex justify-center"
             style={{ height: '46px' }}
           >
@@ -164,7 +163,7 @@ function Login() {
                 shape="rectangular"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Links */}
           <div className="flex flex-col items-center mt-6 text-sm">

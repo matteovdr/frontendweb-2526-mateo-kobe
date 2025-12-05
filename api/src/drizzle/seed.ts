@@ -1,6 +1,9 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import * as mysql from 'mysql2/promise';
 import * as schema from './schema';
+import * as argon2 from "argon2";
+import { Role } from 'auth/roles';
+
 
 const connection = mysql.createPool({
   uri: process.env.DATABASE_URL,
@@ -11,6 +14,15 @@ const db = drizzle(connection, {
   schema,
   mode: 'default',
 });
+async function hashPassword(password: string): Promise<string> {
+  return argon2.hash(password, {
+    type: argon2.argon2id,
+    hashLength: 32,
+    timeCost: 2,
+    memoryCost: 2 ** 16,
+  });
+}
+
 
 async function main() {
   console.log('🌱 Starting database seeding...\n');
@@ -113,132 +125,164 @@ console.log("👤 Seeding Personen...");
 
 await db.insert(schema.persoon).values([
   {
-    id: 1,
+    id: 14,
     voornaam: "Beau",
     achternaam: "D’Hondt",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0471 22 33 44",
     email: "beau.dhondt@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+      roles: [Role.HOOFDLEIDING],
 },
 {
-    id: 2,
+    id: 13,
     voornaam: "Matteo",
     achternaam: "Van Droogenbroeck",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0472 11 22 33",
     email: "matteo.vandroogenbroeck@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+    roles: [Role.LEIDING],
 },
 {
-    id: 3,
+    id: 12,
     voornaam: "Laure",
-    achternaam: "Van Wesemael",
+    achternaam: "De brul",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0473 55 66 77",
     email: "laure.vanwesemael@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+    roles: [Role.LEIDING],
 },
 {
-    id: 4,
+    id: 15,
     voornaam: "Chloë",
     achternaam: "Dekoster",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0474 77 88 99",
     email: "chloe.dekoster@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 5,
+    id: 16,
     voornaam: "Jorben",
-    achternaam: "Ruysseveldt",
+    achternaam: "Van impe",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0479 12 34 56",
     email: "jorben.ruysseveldt@gmail.com",
-},
-{
-    id: 6,
-    voornaam: "Sarah",
-    achternaam: "Van Syngel",
-    geboorteDatum: new Date("2005-04-07"),
-    telefoon: "0480 44 55 66",
-    email: "sarah.vansyngel@gmail.com",
-},
-{
-    id: 7,
-    voornaam: "Michiel",
-    achternaam: "De Boeck",
-    geboorteDatum: new Date("2005-04-07"),
-    telefoon: "0481 66 77 88",
-    email: "michiel.deboeck@gmail.com",
-},
-{
-    id: 8,
-    voornaam: "Lauren",
-    achternaam: "Van Godtsenhoven",
-    geboorteDatum: new Date("2005-04-07"),
-    telefoon: "0482 33 44 55",
-    email: "lauren.vangodtsenhoven@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
     id: 9,
+    voornaam: "Sarah",
+    achternaam: "Eeckhout",
+    geboorteDatum: new Date("2005-04-07"),
+    telefoon: "0480 44 55 66",
+    email: "sarah.vansyngel@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
+},
+{
+    id: 10,
+    voornaam: "Michiel",
+    achternaam: "De forche",
+    geboorteDatum: new Date("2005-04-07"),
+    telefoon: "0481 66 77 88",
+    email: "michiel.deboeck@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
+},
+{
+    id: 11,
+    voornaam: "Lauren",
+    achternaam: "Van schaik",
+    geboorteDatum: new Date("2005-04-07"),
+    telefoon: "0482 33 44 55",
+    email: "lauren.vangodtsenhoven@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
+},
+{
+    id: 8,
     voornaam: "Sander",
     achternaam: "van Schaik",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0483 55 66 77",
     email: "sander.vanschaik@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 10,
+    id: 7,
     voornaam: "Senne",
-    achternaam: "Le Percq",
+    achternaam: "de clerq",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0484 99 00 11",
     email: "senne.lepercq@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 11,
+    id: 6,
     voornaam: "Inge",
-    achternaam: "Baetens",
+    achternaam: "Eeckhout",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0485 12 87 33",
     email: "inge.baetens@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 12,
+    id: 5,
     voornaam: "Maud",
     achternaam: "Keppens",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0486 66 12 98",
     email: "maud.keppens@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 13,
+    id: 4,
     voornaam: "Jos",
     achternaam: "Traas",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0487 45 33 21",
     email: "jos.traas@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 14,
+    id: 3,
     voornaam: "Liam",
     achternaam: "Robyns",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0488 99 88 77",
     email: "liam.robyns@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
-    id: 15,
+    id: 2,
     voornaam: "Lotte",
     achternaam: "Staes",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0489 11 22 44",
     email: "lotte.staes@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.HOOFDLEIDING],
 },
 {
-    id: 16,
+    id: 1,
     voornaam: "Helena",
     achternaam: "Miserez",
     geboorteDatum: new Date("2005-04-07"),
     telefoon: "0490 77 44 11",
     email: "helena.miserez@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LEIDING],
 },
 {
     id: 17,
@@ -247,6 +291,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2018-01-12"),
     telefoon: "0471 20 30 40",
     email: "finn.verstraeten@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+        roles: [Role.LID],
 },
 {
     id: 18,
@@ -255,6 +301,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2017-06-03"),
     telefoon: "0472 21 31 41",
     email: "nora.debruyn@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 19,
@@ -263,6 +311,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2016-11-20"),
     telefoon: "0473 22 32 42",
     email: "mats.lefevre@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 20,
@@ -271,6 +321,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2015-08-09"),
     telefoon: "0474 23 33 43",
     email: "ella.deprez@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 21,
@@ -279,6 +331,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2014-03-27"),
     telefoon: "0475 24 34 44",
     email: "victor.deridder@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 22,
@@ -287,6 +341,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2013-10-15"),
     telefoon: "0476 25 35 45",
     email: "lotte.declercq@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 23,
@@ -295,6 +351,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2012-05-06"),
     telefoon: "0477 26 36 46",
     email: "jasper.vanhoutte@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 24,
@@ -303,6 +361,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2011-09-28"),
     telefoon: "0478 27 37 47",
     email: "amelie.depauw@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 25,
@@ -311,6 +371,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2010-02-18"),
     telefoon: "0479 28 38 48",
     email: "robbe.vandamme@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 26,
@@ -319,6 +381,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2009-11-07"),
     telefoon: "0480 29 39 49",
     email: "hanne.devos@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+       roles: [Role.LID],
 },
 {
     id: 27,
@@ -327,6 +391,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2008-04-30"),
     telefoon: "0481 30 40 50",
     email: "simon.wouters@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+    roles: [Role.LID],
 },
 {
     id: 28,
@@ -335,6 +401,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2007-09-11"),
     telefoon: "0482 31 41 51",
     email: "jade.debacker@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+    roles: [Role.LID],
 },
 {
     id: 29,
@@ -343,6 +411,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2017-02-22"),
     telefoon: "0483 32 42 52",
     email: "tibo.demeyer@gmail.com",
+     passwordHash: await hashPassword("12345678"),
+     roles: [Role.LID],
 },
 {
     id: 30,
@@ -351,6 +421,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2015-12-01"),
     telefoon: "0484 33 43 53",
     email: "mira.degraeve@gmail.com",
+   passwordHash: await hashPassword("12345678"),
+   roles: [Role.LID],
 },
 {
     id: 31,
@@ -359,6 +431,8 @@ await db.insert(schema.persoon).values([
     geboorteDatum: new Date("2013-06-19"),
     telefoon: "0485 34 44 54",
     email: "owen.claes@gmail.com",
+    passwordHash: await hashPassword("12345678"),
+    roles: [Role.LID],
 },
 
 ]);

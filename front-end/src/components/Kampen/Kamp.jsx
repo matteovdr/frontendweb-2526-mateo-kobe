@@ -1,4 +1,4 @@
-import { deleteData } from '../../api';
+import { deleteById } from '../../api';
 import { mutate } from 'swr';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
 
     try {
-      await deleteData(`kampen/${id}`);
+      await deleteById(`kampen/${id}`);
       mutate('kampen');
     } catch (err) {
       console.error(err);

@@ -1,0 +1,1 @@
+ALTER TABLE `persoon` ADD `roles` json NOT NULL;

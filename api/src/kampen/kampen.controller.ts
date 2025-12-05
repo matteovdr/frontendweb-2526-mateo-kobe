@@ -7,12 +7,14 @@ import {
   KampLidResponseDto,
   KampLeidingResponseDto, // <- bijvoorbeeld
 } from './kamp.dto';
+import { Public } from 'auth/decoraters/public.decorater';
 
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
 
   // GET /kampen
+    @Public()
   @Get()
   async getAll(): Promise<KampenListResponseDto> {
     return this.kampenService.getAll();
@@ -31,6 +33,7 @@ export class KampenController {
   ): Promise<KampLidResponseDto[]> {
     return this.kampenService.getLedenVanKamp(Number(id));
   }
+    @Public()
   @Get(':id/leiding')
 async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
   return this.kampenService.getLeidingVanKamp(Number(id));
