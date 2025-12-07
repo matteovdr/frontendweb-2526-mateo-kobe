@@ -7,8 +7,10 @@ import {
   ValidationPipe
 } from '@nestjs/common';
 import CustomLogger from 'src/core/customLogger';
-import { ConfigService } from '@nestjs/config';
 import { ServerConfig, CorsConfig } from './config/configuration';
+import helmet from 'helmet';
+import { DrizzleQueryErrorFilter } from './drizzle/drizzle-query-error-filter';
+import { HttpExceptionFilter } from './lib/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -57,24 +59,6 @@ const config = app.get(ConfigService<ServerConfig>);
   //
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalFilters(new DrizzleQueryErrorFilter());
-
-  //
-  // CONFIG SERVICE
-  //
-  const config = app.get(ConfigService);
-
-  const port = config.get<number>('port') ?? 3000;
-  const cors = config.get('cors');
-  const log = config.get('log');
-
-  
-  // LOGGER
-  
-  app.useLogger(
-    new CustomLogger({
-      logLevels: log?.levels ?? ['log', 'error', 'warn'],
-    }),
-  );
 
   //
   // FIXED CORS (WERKT 100% MET REACT)
