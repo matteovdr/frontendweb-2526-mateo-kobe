@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { postData } from '../../api';
+import { post } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { mutate } from 'swr';
 
@@ -54,7 +54,7 @@ function KampForm() {
       validationSchema={kampSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          await postData('kampen', {
+          await post('kampen', {
             naam: values.naam,
             stad: values.stad,
             beschrijving: values.beschrijving,

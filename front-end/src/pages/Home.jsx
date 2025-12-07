@@ -1,8 +1,15 @@
+import { useAuth } from '../contexts/Auth.context';
+
 function Home() {
+  const { user} = useAuth();
+
   return (
     <div className="p-8 text-center">
-      <h2 className="text-3xl font-semibold mb-4 text-[#004C97]">Home</h2>
+      <h2 className="text-3xl font-semibold mb-4 text-[#004C97]">
+        {user ? `Welkom, ${user.voornaam}!` : 'Welkom!'}
+      </h2>
     </div>
   );
 }
+
 export default Home;

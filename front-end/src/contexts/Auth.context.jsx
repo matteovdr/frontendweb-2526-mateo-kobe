@@ -4,15 +4,21 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import * as api from '../api';
 import { JWT_TOKEN_KEY, AuthContext } from './auth';
+import { useContext } from 'react';
+
+export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem(JWT_TOKEN_KEY));
- 
-  const {
-    data: user,
-    isLoading: userLoading,
-    error: userError,
-  } = useSWR(token ? 'users/me' : null, api.getById);
+
+  const fetcher = async () => {
+    if (!token) return null;
+    return api.getMe(token); // getMe moet token accepteren
+  };
+  const { data: user, isLoading: userLoading, error: userError, mutate: mutateUser } = useSWR(
+    token ? 'personen/me' : null,
+    fetcher,
+  );
 
   const {
     trigger: doLogin,
@@ -24,16 +30,17 @@ const AuthProvider = ({ children }) => {
     trigger: doRegister,
     isMutating: registerLoading,
     error: registerError,
-  } = useSWRMutation('users', api.post);
+  } = useSWRMutation('personen/register', api.post);
 
   const setSession = useCallback((newToken) => {
     setToken(newToken);
     if (newToken) {
       localStorage.setItem(JWT_TOKEN_KEY, newToken);
+      mutateUser(); // refresh SWR user data
     } else {
       localStorage.removeItem(JWT_TOKEN_KEY);
     }
-  }, []);
+  }, [mutateUser]);
 
   const login = useCallback(
     async (email, password) => {
@@ -51,6 +58,7 @@ const AuthProvider = ({ children }) => {
 
   const register = useCallback(
     async (data) => {
+      
       try {
         const { token: newToken } = await doRegister(data);
         setSession(newToken);

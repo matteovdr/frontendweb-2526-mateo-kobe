@@ -6,6 +6,8 @@ import {
   date,
   primaryKey,
   boolean,
+  uniqueIndex,
+  json
 } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 
@@ -13,14 +15,21 @@ import { relations } from "drizzle-orm";
 /* PERSOON                           */
 /* --------------------------------- */
 
-export const persoon = mysqlTable("persoon", {
-  id: int("id", { unsigned: true }).primaryKey().autoincrement(),
-  voornaam: varchar("voornaam", { length: 255 }).notNull(),
-  achternaam: varchar("achternaam", { length: 255 }).notNull(),
-  geboorteDatum: date("geboorteDatum").notNull(),
-  telefoon: varchar("telefoon", { length: 50 }),
-  email: varchar("email", { length: 255 }).notNull(),
-});
+export const persoon = mysqlTable(
+  "persoon",
+  {
+    id: int("id", { unsigned: true }).primaryKey().autoincrement(),
+    voornaam: varchar("voornaam", { length: 255 }).notNull(),
+    achternaam: varchar("achternaam", { length: 255 }).notNull(),
+    geboorteDatum: date("geboorteDatum").notNull(),
+    telefoon: varchar("telefoon", { length: 50 }),
+    email: varchar("email", { length: 255 }).notNull(),
+    passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+    roles: json('roles').notNull(),
+
+  },
+  (table) => [uniqueIndex("idx_persoon_email_unique").on(table.email)],
+);
 
 export const persoonRelations = relations(persoon, ({ many }) => ({
   leden: many(lid),
