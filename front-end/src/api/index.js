@@ -39,7 +39,7 @@ axios.interceptors.request.use((config) => {
 // API FUNCTIONS
 // ---------------------
 export const getMe = async (token) => {
-  const res = await fetch('/api/personen/me', {
+  const res = await fetch('/personen/me', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

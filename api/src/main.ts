@@ -11,6 +11,7 @@ import { ServerConfig, CorsConfig } from './config/configuration';
 import helmet from 'helmet';
 import { DrizzleQueryErrorFilter } from './drizzle/drizzle-query-error-filter';
 import { HttpExceptionFilter } from './lib/http-exception.filter';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -82,6 +83,17 @@ app.enableCors({
   // SECURITY
   //
   app.use(helmet());
+
+
+    const swaggerConfig = new DocumentBuilder()
+    .setTitle('Budget Web Services')
+    .setDescription('The Budget API application')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('docs', app, document);
 
   //
   // START SERVER
