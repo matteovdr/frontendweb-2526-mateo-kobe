@@ -1,5 +1,5 @@
 import type { ExceptionFilter, ArgumentsHost } from '@nestjs/common';
-import { Catch, HttpException } from '@nestjs/common';
+import { Catch, HttpException, Logger } from '@nestjs/common';
 import type { Response } from 'express';
 
 interface HttpExceptionResponse {
@@ -45,6 +45,27 @@ export class HttpExceptionFilter implements ExceptionFilter {
       }
     }
 
+    // Logging-formatter gemaakt door Mauro Clement, gebruikt met toestemming
+    function responseFormatter(object: object, layer: number = 0): string {
+      return Object.entries(object)
+        .map(([key, value]) => {
+          if (typeof value === 'object' && value !== null) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            const newValue = responseFormatter(value, layer + 1); // Ge zijt een object whether you like it or not
+            return '\t'.repeat(layer) + `${key}:\n` + `${newValue}`;
+          }
+          return value ? '\t'.repeat(layer) + `${key} - ${value}` : '';
+        })
+        .join('\n');
+    }
+
+    // Log hem
+    new Logger('HttpExceptionFilter').error(
+      // `HTTP Exception: ${JSON.stringify(responseBody)}`,
+      `HTTP Exception!\n\n` +
+        `Details:\n` +
+        `${responseFormatter(responseBody)}`,
+    );
     response.status(status).json(responseBody);
   }
 }
