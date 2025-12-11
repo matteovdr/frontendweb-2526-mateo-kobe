@@ -1,5 +1,5 @@
 describe('KampForm', () => {
-  beforeEach(() => {
+  it('should show validation errors when fields are empty', () => {
     // Intercept login request
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
     
@@ -17,9 +17,7 @@ describe('KampForm', () => {
     
     // Finally go to kamp form page
     cy.visit('http://localhost:5173/kampen/add');
-  });
 
-  it('should show validation errors when fields are empty', () => {
     cy.get('[data-cy="submit-button"]').click();
 
     cy.contains('Naam is verplicht');
@@ -30,19 +28,69 @@ describe('KampForm', () => {
   });
 
   it('should not allow selecting past dates', () => {
+    // Intercept login request
+    cy.intercept('POST', '**/api/sessions').as('loginRequest');
+    
+    // Login
+    cy.visit('http://localhost:5173/login');
+    cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
+    cy.get('[data-cy=password_input]').type('12345678');
+    cy.get('[data-cy=submit_btn]').click();
+    
+    // IMPORTANT: Wait for login API call to complete
+    cy.wait('@loginRequest');
+    
+    // Then wait for navigation to complete
+    cy.url().should('not.include', '/login', { timeout: 5000 });
+    
+    // Finally go to kamp form page
+    cy.visit('http://localhost:5173/kampen/add');
     cy.get('[data-cy="input-start"]').type('2020-01-01');
     cy.get('[data-cy="submit-button"]').click();
     cy.contains('Startdatum moet in de toekomst liggen');
   });
 
   it('should validate that end date is after start date', () => {
+    // Intercept login request
+    cy.intercept('POST', '**/api/sessions').as('loginRequest');
+    
+    // Login
+    cy.visit('http://localhost:5173/login');
+    cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
+    cy.get('[data-cy=password_input]').type('12345678');
+    cy.get('[data-cy=submit_btn]').click();
+    
+    // IMPORTANT: Wait for login API call to complete
+    cy.wait('@loginRequest');
+    
+    // Then wait for navigation to complete
+    cy.url().should('not.include', '/login', { timeout: 5000 });
+    
+    // Finally go to kamp form page
+    cy.visit('http://localhost:5173/kampen/add');
     cy.get('[data-cy="input-start"]').type('2030-01-10');
     cy.get('[data-cy="input-eind"]').type('2030-01-10');
     cy.get('[data-cy="submit-button"]').click();
     cy.contains('Einddatum moet later zijn dan de startdatum');
   });
 
-  it('should successfully create a kamp', () => {
+  it('should successfully create a kamp', () => {// Intercept login request
+    cy.intercept('POST', '**/api/sessions').as('loginRequest');
+    
+    // Login
+    cy.visit('http://localhost:5173/login');
+    cy.get('[data-cy=email_input]').type('lotte.staes@gmail.com');
+    cy.get('[data-cy=password_input]').type('12345678');
+    cy.get('[data-cy=submit_btn]').click();
+    
+    // IMPORTANT: Wait for login API call to complete
+    cy.wait('@loginRequest');
+    
+    // Then wait for navigation to complete
+    cy.url().should('not.include', '/login', { timeout: 5000 });
+    
+    // Finally go to kamp form page
+    cy.visit('http://localhost:5173/kampen/add');
     cy.get('[data-cy="input-naam"]').type('Cypress Kamp');
     cy.get('[data-cy="input-stad"]').type('Gent');
     cy.get('[data-cy="input-start"]').type('2030-01-10');
