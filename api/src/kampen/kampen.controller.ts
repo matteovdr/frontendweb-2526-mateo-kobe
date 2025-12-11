@@ -8,6 +8,7 @@ import {
   KampLeidingResponseDto, // <- bijvoorbeeld
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
+import { Roles } from 'auth/decoraters/roles.decorator';
 
 @Controller('kampen')
 export class KampenController {
@@ -55,6 +56,7 @@ async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
   }
 
   // DELETE /kampen/:id
+  @Roles('hoofdleiding')
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<{ message: string }> {
     await this.kampenService.deleteKamp(Number(id));
