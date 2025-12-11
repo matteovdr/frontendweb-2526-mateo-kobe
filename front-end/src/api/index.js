@@ -1,26 +1,7 @@
-// import axios from 'axios';
-
-// const baseUrl = import.meta.env.VITE_API_URL;
-
-// export async function getAll(url) {
-//   const { data } = await axios.get(`${baseUrl}/${url}`);
-//   return data.items;
-// }
-
-// export async function postData(url, body) {
-//   const { data } = await axios.post(`${baseUrl}/${url}`, body);
-//   return data;
-// }
-
-// export async function deleteData(url) {
-//   const { data } = await axios.delete(`${baseUrl}/${url}`);
-//   return data;
-// }
 import axiosRoot from 'axios';
 import { JWT_TOKEN_KEY } from '../contexts/auth';
 
-const baseUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}`;
-console.log('🔧 [API] Initialized with baseURL:', baseUrl);
+const baseUrl = import.meta.env.VITE_API_URL;
 
 export const axios = axiosRoot.create({
   baseURL: baseUrl,
@@ -28,7 +9,6 @@ export const axios = axiosRoot.create({
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem(JWT_TOKEN_KEY);
-  console.log('🔧 [API] Request interceptor - token exists:', !!token);
 
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`;
@@ -47,7 +27,6 @@ export const getMe = async (token) => {
     },
   }).then((res) => res.data)
     .catch((err) => {
-      console.error('getMe error:', err);
       throw err;
     });
 };

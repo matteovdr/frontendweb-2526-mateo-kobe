@@ -54,14 +54,7 @@ export class KampenService {
 
     return this.getKampWithId(nieuwKamp.id);
 }
-// async create(place: CreatePlaceRequestDto): Promise<PlaceDetailResponseDto> {
-//     const [newPlace] = await this.db
-//       .insert(places)
-//       .values(place)
-//       .$returningId();
 
-//     return this.getById(newPlace.id);
-//   }
   async updateKamp(id: number, data: createKampRequestDTO): Promise<KampResponseDto> {
     await this.db
       .update(kampen)

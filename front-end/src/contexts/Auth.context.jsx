@@ -43,29 +43,17 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (email, password) => {
       try {
-        console.log('🔐 [Auth] Login attempt', { email, masked_password: '***' });
-        console.log('🔐 [Auth] doLogin function:', typeof doLogin);
-        
         const response = await doLogin({ email, password });
-        
-        console.log('✅ [Auth] Login response received:', response);
-        console.log('✅ [Auth] Response type:', typeof response);
-        console.log('✅ [Auth] Response keys:', Object.keys(response || {}));
-        
+
         const { token: newToken } = response;
-        console.log('✅ [Auth] Extracted token:', newToken ? newToken.substring(0, 20) + '...' : 'NO TOKEN!');
-        
+
         if (!newToken) {
-          console.error('❌ [Auth] No token in response!');
           return false;
         }
         
         setSession(newToken);
-        console.log('✅ [Auth] setSession called');
         return true;
-      } catch (error) {
-        console.error('❌ [Auth] Login failed with error:', error.message || String(error));
-        console.error('❌ [Auth] Error details:', error);
+      } catch {
         return false;
       }
     },
@@ -79,8 +67,7 @@ const AuthProvider = ({ children }) => {
         const { token: newToken } = await doRegister(data);
         setSession(newToken);
         return true;
-      } catch (error) {
-        console.error('Register failed', error);
+      } catch {
         return false;
       }
     },
