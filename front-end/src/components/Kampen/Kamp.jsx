@@ -1,22 +1,14 @@
 import { deleteById } from '../../api';
 import { mutate } from 'swr';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
 
-// const fetcher = (url) => fetch(url).then((res) => res.json());
-
-// function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
-//   const [showDetails, setShowDetails] = useState(false);
-
-//   const { data: leden, isLoading: ledenLoading, error: ledenError } = useSWR(
-//     showDetails ? `/api/kampen/${id}/leden` : null,
-//     fetcher,
-//   );
-//   const { data: leiding, isLoading: leidingLoading, error: leidingError } = useSWR(
-//     showDetails ? `/api/kampen/${id}/leiding` : null,
-//     fetcher,
-//   );
 function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  // Check if user is hoofdleiding
+  const isHoofleiding = user && Array.isArray(user.roles) && user.roles.includes('hoofdleiding');
 
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
@@ -32,14 +24,6 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
   const handleDetails = () => {
     navigate(`/kampen/${id}`);
   };
-
-  // const handleDetails = () => {
-  //   setShowDetails(true);
-  // };
-
-  // const closeDetails = () => {
-  //   setShowDetails(false);
-  // };
 
   return (
     
@@ -73,7 +57,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
       </div>
 
       {/* BUTTONS */}
-      <div className="grid grid-cols-3">
+      <div className={`grid ${isHoofleiding ? 'grid-cols-3' : 'grid-cols-2'}`}>
         <button
           className={`text-white rounded-4xl mt-2 py-1 px-3 text-sm justify-self-center
             ${alGedaan ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600 cursor-pointer'}`}
@@ -89,14 +73,16 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
           Details
         </button>
 
-        <button
-          data-cy={'delete'}
-          onClick={handleDelete}
-          className="bg-red-500 text-white rounded-4xl mt-2 py-1 px-3 text-sm
-            justify-self-center hover:bg-red-600 cursor-pointer"
-        >
-          Verwijder
-        </button>
+        {isHoofleiding && (
+          <button
+            data-cy={'delete'}
+            onClick={handleDelete}
+            className="bg-red-500 text-white rounded-4xl mt-2 py-1 px-3 text-sm
+              justify-self-center hover:bg-red-600 cursor-pointer"
+          >
+            Verwijder
+          </button>
+        )}
       </div>
     </div>
      

@@ -34,29 +34,34 @@ export class KampenService {
       id: item.id,
       naam: item.naam,
       stad: item.stad,
+      startDatum: new Date(item.startDatum).toISOString(),
+      eindDatum: new Date(item.eindDatum).toISOString(),
       beschrijving: item.beschrijving,
-      startDatum: item.startDatum,
-      eindDatum: item.eindDatum,
     };
   }
 
-  async createKamp(data: createKampRequestDTO): Promise<KampResponseDto> {
-    const [insertResult] = await this.db
+  async createKamp({naam, stad, startDatum, eindDatum, beschrijving}: createKampRequestDTO): Promise<KampResponseDto> {
+    const [nieuwKamp] = await this.db
       .insert(kampen)
       .values({
-        naam: data.naam,
-        stad: data.stad,
-        beschrijving: data.beschrijving,
-        startDatum: data.startDatum,
-        eindDatum: data.eindDatum,
+        naam,
+        stad,
+        startDatum: new Date(startDatum),
+        eindDatum: new Date(eindDatum),
+        beschrijving,
       })
       .$returningId();
 
-    // insertResult may be an object containing the generated id
-    const newId = insertResult?.id ?? (insertResult as any)?.insertId;
-    return this.getKampWithId(Number(newId));
+    return this.getKampWithId(nieuwKamp.id);
 }
+// async create(place: CreatePlaceRequestDto): Promise<PlaceDetailResponseDto> {
+//     const [newPlace] = await this.db
+//       .insert(places)
+//       .values(place)
+//       .$returningId();
 
+//     return this.getById(newPlace.id);
+//   }
   async updateKamp(id: number, data: createKampRequestDTO): Promise<KampResponseDto> {
     await this.db
       .update(kampen)
@@ -64,8 +69,8 @@ export class KampenService {
         naam: data.naam,
         stad: data.stad,
         beschrijving: data.beschrijving,
-        startDatum: data.startDatum,
-        eindDatum: data.eindDatum,
+        startDatum: new Date(data.startDatum),
+        eindDatum: new Date(data.eindDatum),
       })
       .where(eq(kampen.id, id));
 

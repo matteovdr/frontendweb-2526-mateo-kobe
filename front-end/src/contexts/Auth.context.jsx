@@ -4,17 +4,15 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import * as api from '../api';
 import { JWT_TOKEN_KEY, AuthContext } from './auth';
-import { useContext } from 'react';
-
-export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem(JWT_TOKEN_KEY));
 
-  const fetcher = async () => {
+  const fetcher = useCallback(async () => {
     if (!token) return null;
-    return api.getMe(token); // getMe moet token accepteren
-  };
+    return api.getMe(token);
+  }, [token]);
+
   const { data: user, isLoading: userLoading, error: userError, mutate: mutateUser } = useSWR(
     token ? 'personen/me' : null,
     fetcher,
@@ -45,11 +43,29 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (email, password) => {
       try {
-        const { token: newToken } = await doLogin({ email, password });
+        console.log('🔐 [Auth] Login attempt', { email, masked_password: '***' });
+        console.log('🔐 [Auth] doLogin function:', typeof doLogin);
+        
+        const response = await doLogin({ email, password });
+        
+        console.log('✅ [Auth] Login response received:', response);
+        console.log('✅ [Auth] Response type:', typeof response);
+        console.log('✅ [Auth] Response keys:', Object.keys(response || {}));
+        
+        const { token: newToken } = response;
+        console.log('✅ [Auth] Extracted token:', newToken ? newToken.substring(0, 20) + '...' : 'NO TOKEN!');
+        
+        if (!newToken) {
+          console.error('❌ [Auth] No token in response!');
+          return false;
+        }
+        
         setSession(newToken);
+        console.log('✅ [Auth] setSession called');
         return true;
       } catch (error) {
-        console.error('Login failed', error);
+        console.error('❌ [Auth] Login failed with error:', error.message || String(error));
+        console.error('❌ [Auth] Error details:', error);
         return false;
       }
     },

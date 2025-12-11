@@ -1,5 +1,21 @@
 describe('KampForm', () => {
   beforeEach(() => {
+    // Intercept login request
+    cy.intercept('POST', '**/api/sessions').as('loginRequest');
+    
+    // Login
+    cy.visit('http://localhost:5173/login');
+    cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
+    cy.get('[data-cy=password_input]').type('12345678');
+    cy.get('[data-cy=submit_btn]').click();
+    
+    // IMPORTANT: Wait for login API call to complete
+    cy.wait('@loginRequest');
+    
+    // Then wait for navigation to complete
+    cy.url().should('not.include', '/login', { timeout: 5000 });
+    
+    // Finally go to kamp form page
     cy.visit('http://localhost:5173/kampen/add');
   });
 

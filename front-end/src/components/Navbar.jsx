@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts';
+import { useAuth } from '../contexts/auth';
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { darkmode, toggleDarkmode } = useTheme();
+  const { user } = useAuth();
 
   return (
     <nav className="bg-[#004C97] dark:bg-gray-900 text-white p-4 shadow-md transition-colors">
@@ -112,7 +114,9 @@ function Navbar() {
           <Link onClick={() => setMenuOpen(false)} to="/kampen" 
             className="hover:text-yellow-300 transition p-2">Kampen</Link>
           <Link onClick={() => setMenuOpen(false)} to="/login" 
-            className="hover:text-yellow-300 font-semibold transition p-2">Login</Link>
+            className="hover:text-yellow-300 font-semibold transition p-2">
+            {user ? `${user.voornaam}` : 'Login'}
+          </Link>
         </div>
       )}
     </nav>

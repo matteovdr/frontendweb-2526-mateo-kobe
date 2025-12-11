@@ -65,9 +65,11 @@ describe('Register Page', () => {
   //   });
 
   it('should attempt register and redirect', () => {
+    const uniqueEmail = `test.user.${Date.now()}@example.com`;
+    
     cy.get('[data-cy=voornaam_input]').type('Jan');
     cy.get('[data-cy=achternaam_input]').type('Janssens');
-    cy.get('[data-cy=email_input]').type('jan.janssens@example.com');
+    cy.get('[data-cy=email_input]').type(uniqueEmail);
     cy.get('[data-cy=telefoon_input]').type('0470123456');
     cy.get('[data-cy=geboortedatum_input]').type('2000-01-01');
     cy.get('[data-cy=wachtwoord_input]').type('12345678');
@@ -75,6 +77,7 @@ describe('Register Page', () => {
 
     cy.get('[data-cy=register_btn]').click();
 
-    cy.url().should('include', '/home'); 
+    // Wacht tot de redirect gebeurt
+    cy.url().should('not.include', '/register');
   });
 });

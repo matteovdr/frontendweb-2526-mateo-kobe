@@ -1,12 +1,35 @@
+import {
+  IsString,
+  IsDateString,
+  MaxLength,
+  MinLength
+} from 'class-validator';
+
 export class createKampRequestDTO {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(40)
   naam: string;
+
+  @IsString()
+  @MinLength(1)
+  @MaxLength(20)
   stad: string;
+
+  @IsDateString()
+  startDatum: string;
+
+  @IsDateString()
+  eindDatum: string;
+  
+  @IsString()
+  @MinLength(1)
+  @MaxLength(1000)
   beschrijving: string;
-  startDatum: Date;
-  eindDatum: Date;
 }
 
 export class KampResponseDto extends createKampRequestDTO {
+  @IsString()
   id: number;
 }
 

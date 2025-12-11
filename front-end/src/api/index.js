@@ -19,7 +19,8 @@
 import axiosRoot from 'axios';
 import { JWT_TOKEN_KEY } from '../contexts/auth';
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}`;
+console.log('🔧 [API] Initialized with baseURL:', baseUrl);
 
 export const axios = axiosRoot.create({
   baseURL: baseUrl,
@@ -27,6 +28,7 @@ export const axios = axiosRoot.create({
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem(JWT_TOKEN_KEY);
+  console.log('🔧 [API] Request interceptor - token exists:', !!token);
 
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`;
@@ -39,15 +41,15 @@ axios.interceptors.request.use((config) => {
 // API FUNCTIONS
 // ---------------------
 export const getMe = async (token) => {
-  const res = await fetch('/api/personen/me', {
+  return axios.get('personen/me', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
-
-  if (!res.ok) throw new Error('Failed to fetch user');
-
-  return res.json();
+  }).then((res) => res.data)
+    .catch((err) => {
+      console.error('getMe error:', err);
+      throw err;
+    });
 };
 
 export async function getAll(url) {
@@ -67,6 +69,7 @@ export const deleteById = async (url) => {
 
 export const post = async (url, { arg }) => {
   const { data } = await axios.post(url, arg);
+
   return data;
 };
 
