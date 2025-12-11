@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD:src/api/mock-data.json
-  "ouders": [
-=======
   "Kampen": [
     {
       "id": 1,
@@ -34,7 +31,7 @@
   ],
 
   "Ouder": [
->>>>>>> refs/remotes/origin/main:front-end/src/api/mock-data.json
+
     {
       "id": 1,
       "persoonId": 101,

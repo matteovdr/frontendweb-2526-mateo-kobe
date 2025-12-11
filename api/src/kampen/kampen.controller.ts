@@ -1,63 +1,149 @@
-import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Delete,
+  HttpStatus,
+  HttpCode,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { KampenService } from './kampen.service';
 import {
   KampenListResponseDto,
   KampResponseDto,
-  createKampRequestDTO,
+  CreateKampRequestDto,
   KampLidResponseDto,
-  KampLeidingResponseDto, // <- bijvoorbeeld
+  KampLeidingResponseDto,
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Kampen')
+@ApiBearerAuth()
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized - you need to be signed in',
+})
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
 
-  // GET /kampen
-    @Public()
+  @ApiResponse({
+    status: 200,
+    description: 'Get all kampen',
+    type: KampenListResponseDto,
+  })
+  @Public()
   @Get()
   async getAll(): Promise<KampenListResponseDto> {
     return this.kampenService.getAll();
   }
 
-  // GET /kampen/:id
+  @ApiResponse({
+    status: 200,
+    description: 'Get kamp by ID',
+    type: KampResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Kamp not found',
+  })
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<KampResponseDto> {
-    return this.kampenService.getKampWithId(Number(id));
+  async getOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<KampResponseDto> {
+    return this.kampenService.getKampWithId(id);
   }
 
-
+  @ApiResponse({
+    status: 200,
+    description: 'Get leden of a kamp',
+    type: KampLidResponseDto,
+    isArray: true,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Kamp not found',
+  })
   @Get(':id/leden')
   async getLedenVanKamp(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
   ): Promise<KampLidResponseDto[]> {
-    return this.kampenService.getLedenVanKamp(Number(id));
+    return this.kampenService.getLedenVanKamp(id);
   }
-    @Public()
-  @Get(':id/leiding')
-async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
-  return this.kampenService.getLeidingVanKamp(Number(id));
-}
 
-  // POST /kampen
+  @ApiResponse({
+    status: 200,
+    description: 'Get leiding of a kamp',
+    type: KampLeidingResponseDto,
+    isArray: true,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Kamp not found',
+  })
+  @Public()
+  @Get(':id/leiding')
+  async getLeiding(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<KampLeidingResponseDto[]> {
+    return this.kampenService.getLeidingVanKamp(id);
+  }
+
+  @ApiResponse({
+    status: 201,
+    description: 'Create kamp',
+    type: KampResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid input data',
+  })
   @Post()
-  async create(@Body() data: createKampRequestDTO): Promise<KampResponseDto> {
+  @HttpCode(HttpStatus.CREATED)
+  async create(
+    @Body() data: CreateKampRequestDto,
+  ): Promise<KampResponseDto> {
     return this.kampenService.createKamp(data);
   }
 
-  // PUT /kampen/:id
+  @ApiResponse({
+    status: 200,
+    description: 'Update kamp',
+    type: KampResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Kamp not found',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid input data',
+  })
   @Put(':id')
   async update(
-    @Param('id') id: string,
-    @Body() data: createKampRequestDTO,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: CreateKampRequestDto,
   ): Promise<KampResponseDto> {
-    return this.kampenService.updateKamp(Number(id), data);
+    return this.kampenService.updateKamp(id, data);
   }
 
-  // DELETE /kampen/:id
+  @ApiResponse({
+    status: 204,
+    description: 'Delete kamp',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Kamp not found',
+  })
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<{ message: string }> {
-    await this.kampenService.deleteKamp(Number(id));
-    return { message: `Kamp with ID ${id} deleted successfully` };
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<void> {
+    await this.kampenService.deleteKamp(id);
   }
 }

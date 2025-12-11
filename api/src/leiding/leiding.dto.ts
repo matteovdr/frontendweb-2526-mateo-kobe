@@ -101,13 +101,13 @@ export class LeidingResponseDto {
   id: number;
 
   @ApiProperty({
-    example: 'Emma',
+    example: 'liam',
     description: 'Voornaam van de leiding',
   })
   voornaam: string;
 
   @ApiProperty({
-    example: 'Vermeulen',
+    example: 'Van de walle',
     description: 'Achternaam van de leiding',
   })
   achternaam: string;
@@ -119,7 +119,7 @@ export class LeidingResponseDto {
   ageGroup: string;
 
   @ApiProperty({
-    example: 'https://example.com/images/leiding-emma.jpg',
+    example: '/src/images/liam.png',
     description: 'URL naar de profielfoto van de leiding',
   })
   imageUrl: string;
