@@ -97,7 +97,9 @@ function Navbar() {
             <Link to="/leiding" className="hover:text-yellow-300 transition p-2">Leiding</Link>
             <Link to="/about" className="hover:text-yellow-300 transition p-2">About Us</Link>
             <Link to="/kampen" className="hover:text-yellow-300 transition p-2">Kampen</Link>
-            <Link to="/login" className="hover:text-yellow-300 font-semibold transition p-2">Login</Link>
+            <Link to="/login" className="hover:text-yellow-300 font-semibold transition p-2">
+              {user ? `${user.voornaam}` : 'Login'}
+            </Link>
           </div>
         </div>
       </div>
