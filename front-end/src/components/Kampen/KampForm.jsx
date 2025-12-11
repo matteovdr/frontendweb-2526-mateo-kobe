@@ -54,13 +54,7 @@ function KampForm() {
       validationSchema={kampSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          await post('kampen', {
-            naam: values.naam,
-            stad: values.stad,
-            beschrijving: values.beschrijving,
-            startDatum: values.startDatum,
-            eindDatum: values.eindDatum,
-          });
+          await post('kampen', { arg: values });
 
           mutate('kampen');
           navigate('/kampen');
@@ -73,7 +67,7 @@ function KampForm() {
       }}
     >
       {({ isSubmitting }) => (
-        <Form className="flex justify-center items-center min-h-full">
+        <Form className="flex justify-center items-center min-h-full">  
           <div
             className="flex flex-col border-4 border-blue-300 rounded-4xl p-8 
             w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm"

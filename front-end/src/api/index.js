@@ -1,21 +1,3 @@
-// import axios from 'axios';
-
-// const baseUrl = import.meta.env.VITE_API_URL;
-
-// export async function getAll(url) {
-//   const { data } = await axios.get(`${baseUrl}/${url}`);
-//   return data.items;
-// }
-
-// export async function postData(url, body) {
-//   const { data } = await axios.post(`${baseUrl}/${url}`, body);
-//   return data;
-// }
-
-// export async function deleteData(url) {
-//   const { data } = await axios.delete(`${baseUrl}/${url}`);
-//   return data;
-// }
 import axiosRoot from 'axios';
 import { JWT_TOKEN_KEY } from '../contexts/auth';
 
@@ -39,15 +21,14 @@ axios.interceptors.request.use((config) => {
 // API FUNCTIONS
 // ---------------------
 export const getMe = async (token) => {
-  const res = await fetch('/api/personen/me', {
+  return axios.get('personen/me', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
-
-  if (!res.ok) throw new Error('Failed to fetch user');
-
-  return res.json();
+  }).then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
 };
 
 export async function getAll(url) {
@@ -67,6 +48,7 @@ export const deleteById = async (url) => {
 
 export const post = async (url, { arg }) => {
   const { data } = await axios.post(url, arg);
+
   return data;
 };
 

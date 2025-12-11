@@ -12,6 +12,10 @@ const validationRules = {
   },
   password: {
     required: 'Wachtwoord is verplicht',
+    minLength: {
+      value: 6,
+      message: 'Wachtwoord moet minimaal 6 tekens lang zijn',
+    },
   },
 };
 

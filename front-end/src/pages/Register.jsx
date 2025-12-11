@@ -54,8 +54,8 @@ export default function Register() {
 
   const validationRules = useMemo(
     () => ({
-      firstName: { required: 'Voornaam is verplicht' },
-      lastName: { required: 'Achternaam is verplicht' },
+      voornaam: { required: 'Voornaam is verplicht' },
+      achternaam: { required: 'Achternaam is verplicht' },
       email: {
         required: 'E-mail is verplicht',
         pattern: {
@@ -63,9 +63,24 @@ export default function Register() {
           message: 'Ongeldig e-mailadres',
         },
       },
-      phone: { required: 'Telefoonnummer is verplicht' },
-      birthDate: { required: 'Geboortedatum is verplicht' },
-      password: { required: 'Wachtwoord is verplicht' },
+      telefoon: { required: 'Telefoonnummer is verplicht' },
+      geboorteDatum: {
+        required: 'Geboortedatum is verplicht',
+        validate: (value) => {
+          if (!value) return true;
+          const selectedDate = new Date(value);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return selectedDate < today || 'Geboortedatum kan niet vandaag of in de toekomst liggen';
+        },
+      },
+      password: {
+        required: 'Wachtwoord is verplicht',
+        minLength: {
+          value: 6,
+          message: 'Wachtwoord moet minimaal 6 tekens lang zijn',
+        },
+      },
       confirmPassword: {
         required: 'Bevestig je wachtwoord',
         validate: (value) => {
@@ -109,14 +124,14 @@ export default function Register() {
               <input
                 type="text"
                 placeholder="Voornaam"
-                {...register('voornaam', validationRules.firstName)}
+                {...register('voornaam', validationRules.voornaam)}
                 data-cy="voornaam_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
-            {errors.firstName && (
+            {errors.voornaam && (
               <p className="text-red-500 text-xs mt-1">
-                {errors.firstName.message}
+                {errors.voornaam.message}
               </p>
             )}
 
@@ -128,14 +143,14 @@ export default function Register() {
               <input
                 type="text"
                 placeholder="Achternaam"
-                {...register('achternaam', validationRules.lastName)}
+                {...register('achternaam', validationRules.achternaam)}
                 data-cy="achternaam_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
-            {errors.lastName && (
+            {errors.achternaam && (
               <p className="text-red-500 text-xs mt-1">
-                {errors.lastName.message}
+                {errors.achternaam.message}
               </p>
             )}
           </div>
@@ -181,14 +196,14 @@ export default function Register() {
               <input
                 type="tel"
                 placeholder="Telefoonnummer"
-                {...register('telefoon', validationRules.phone)}
+                {...register('telefoon', validationRules.telefoon)}
                 data-cy="telefoon_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
-            {errors.phone && (
+            {errors.telefoon && (
               <p className="text-red-500 text-xs mt-1">
-                {errors.phone.message}
+                {errors.telefoon.message}
               </p>
             )}
           </div>
@@ -204,14 +219,14 @@ export default function Register() {
               <div className="h-6 w-px bg-blue-300 mx-3" />
               <input
                 type="date"
-                {...register('geboorteDatum', validationRules.birthDate)}
+                {...register('geboorteDatum', validationRules.geboorteDatum)}
                 data-cy="geboortedatum_input"
                 className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
               />
             </div>
-            {errors.birthDate && (
+            {errors.geboorteDatum && (
               <p className="text-red-500 text-xs mt-1">
-                {errors.birthDate.message}
+                {errors.geboorteDatum.message}
               </p>
             )}
           </div>

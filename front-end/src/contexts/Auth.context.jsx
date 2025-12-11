@@ -4,17 +4,15 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import * as api from '../api';
 import { JWT_TOKEN_KEY, AuthContext } from './auth';
-import { useContext } from 'react';
-
-export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem(JWT_TOKEN_KEY));
 
-  const fetcher = async () => {
+  const fetcher = useCallback(async () => {
     if (!token) return null;
-    return api.getMe(token); // getMe moet token accepteren
-  };
+    return api.getMe(token);
+  }, [token]);
+
   const { data: user, isLoading: userLoading, error: userError, mutate: mutateUser } = useSWR(
     token ? 'personen/me' : null,
     fetcher,
@@ -45,11 +43,17 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (email, password) => {
       try {
-        const { token: newToken } = await doLogin({ email, password });
+        const response = await doLogin({ email, password });
+
+        const { token: newToken } = response;
+
+        if (!newToken) {
+          return false;
+        }
+        
         setSession(newToken);
         return true;
-      } catch (error) {
-        console.error('Login failed', error);
+      } catch {
         return false;
       }
     },
@@ -63,8 +67,7 @@ const AuthProvider = ({ children }) => {
         const { token: newToken } = await doRegister(data);
         setSession(newToken);
         return true;
-      } catch (error) {
-        console.error('Register failed', error);
+      } catch {
         return false;
       }
     },

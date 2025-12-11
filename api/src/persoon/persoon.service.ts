@@ -25,11 +25,15 @@ export class PersoonService {
   async getAll(): Promise<PersoonListResponseDto> {
     const personenList = await this.db.query.persoon.findMany();
 
-    const items = personenList.map((p) =>
-      plainToInstance(PublicPersoonResponseDto, p, {
+    const items = personenList.map((p) => {
+      // Zorg dat roles een echte array is (MySQL JSON kan stringified komen)
+      if (p.roles && typeof p.roles === 'string') {
+        p.roles = JSON.parse(p.roles);
+      }
+      return plainToInstance(PublicPersoonResponseDto, p, {
         excludeExtraneousValues: true,
-      }),
-    );
+      });
+    });
 
     return { items };
   }
@@ -42,6 +46,11 @@ export class PersoonService {
 
     if (!item) {
       throw new NotFoundException('Geen persoon gevonden met dit ID');
+    }
+
+    // Zorg dat roles een echte array is (MySQL JSON kan stringified komen)
+    if (item.roles && typeof item.roles === 'string') {
+      item.roles = JSON.parse(item.roles);
     }
 
     return plainToInstance(PublicPersoonResponseDto, item, {

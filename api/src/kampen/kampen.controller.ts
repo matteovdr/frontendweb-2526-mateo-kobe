@@ -8,13 +8,14 @@ import {
   KampLeidingResponseDto, // <- bijvoorbeeld
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
+import { Roles } from 'auth/decoraters/roles.decorator';
 
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
 
   // GET /kampen
-    @Public()
+  @Public()
   @Get()
   async getAll(): Promise<KampenListResponseDto> {
     return this.kampenService.getAll();
@@ -26,26 +27,29 @@ export class KampenController {
     return this.kampenService.getKampWithId(Number(id));
   }
 
-
+  @Roles('leiding', 'hoofdleiding')
   @Get(':id/leden')
   async getLedenVanKamp(
     @Param('id') id: string,
   ): Promise<KampLidResponseDto[]> {
     return this.kampenService.getLedenVanKamp(Number(id));
   }
-    @Public()
+  @Public()
   @Get(':id/leiding')
-async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
-  return this.kampenService.getLeidingVanKamp(Number(id));
-}
+  async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
+    return this.kampenService.getLeidingVanKamp(Number(id));
+  }
 
   // POST /kampen
+  @Roles('hoofdleiding')
   @Post()
   async create(@Body() data: createKampRequestDTO): Promise<KampResponseDto> {
+    console.log('Received data in controller:', data);
     return this.kampenService.createKamp(data);
   }
 
   // PUT /kampen/:id
+  @Roles('hoofdleiding')
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -55,6 +59,7 @@ async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
   }
 
   // DELETE /kampen/:id
+  @Roles('hoofdleiding')
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<{ message: string }> {
     await this.kampenService.deleteKamp(Number(id));
