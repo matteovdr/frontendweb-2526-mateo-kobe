@@ -41,6 +41,7 @@ const config = app.get(ConfigService<ServerConfig>);
       exceptionFactory: (errors: ValidationError[] = []) => {
         const formattedErrors = errors.reduce(
           (acc, err) => {
+            console.log(err);
             acc[err.property] = Object.values(err.constraints || {});
             return acc;
           },

@@ -19,8 +19,8 @@ export class KampenService {
         naam: item.naam,
         stad: item.stad,
         beschrijving: item.beschrijving,
-        startDatum: item.startDatum,
-        eindDatum: item.eindDatum,
+        startDatum: item.startDatum.toISOString(),
+        eindDatum: item.eindDatum.toISOString(),
       })),
     };
   }
