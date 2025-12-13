@@ -2,27 +2,33 @@ import {
   IsString,
   IsDateString,
   MaxLength,
-  MinLength
+  IsNotEmpty,
+  MinLength,
 } from 'class-validator';
 
 export class createKampRequestDTO {
   @IsString()
+  @IsNotEmpty()
   @MinLength(1)
   @MaxLength(40)
   naam: string;
 
   @IsString()
+  @IsNotEmpty()
   @MinLength(1)
   @MaxLength(20)
   stad: string;
 
   @IsDateString()
+  @IsNotEmpty()
   startDatum: string;
 
   @IsDateString()
+  @IsNotEmpty()
   eindDatum: string;
   
   @IsString()
+  @IsNotEmpty()
   @MinLength(1)
   @MaxLength(1000)
   beschrijving: string;
@@ -30,6 +36,7 @@ export class createKampRequestDTO {
 
 export class KampResponseDto extends createKampRequestDTO {
   @IsString()
+  @IsNotEmpty()
   id: number;
 }
 
