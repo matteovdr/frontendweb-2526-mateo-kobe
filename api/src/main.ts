@@ -13,11 +13,12 @@ import { DrizzleQueryErrorFilter } from './drizzle/drizzle-query-error-filter';
 import { HttpExceptionFilter } from './lib/http-exception.filter';
 
 async function bootstrap() {
+  const logger = new CustomLogger();
   const app = await NestFactory.create(AppModule);
-const config = app.get(ConfigService<ServerConfig>);
+  const config = app.get(ConfigService<ServerConfig>);
   const port = config.get<number>('port')!;
   const cors = config.get<CorsConfig>('cors')!;
-  app.useLogger(new CustomLogger()); 
+  app.useLogger(logger); 
   app.enableCors({
     origin: cors.origins,
     maxAge: cors.maxAge,
@@ -87,7 +88,7 @@ app.enableCors({
   // START SERVER
   //
   await app.listen(port);
-  console.log(`🚀 Server running at http://localhost:${port}/api`);
+  logger.log(`🚀 Server running at http://localhost:${port}/api`);
 }
 
 bootstrap();
