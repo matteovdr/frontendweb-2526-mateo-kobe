@@ -31,9 +31,9 @@ const config = app.get(ConfigService<ServerConfig>);
   //
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      forbidUnknownValues: true,
+      whitelist: true, // verwijdert de properties die niet in de DTO staan
+      forbidNonWhitelisted: true, // gooit fout als er foute properties binnenkomen
+      forbidUnknownValues: true, // gooit fout bij onbekende types/waarden
       transform: true,
             transformOptions: {
         enableImplicitConversion: true, // converteert ook zonder @Type
