@@ -4,6 +4,10 @@ import {
 export class CreateLeidingDto {
   @IsString()
   @IsNotEmpty()
+  persoonId: number;
+
+  @IsString()
+  @IsNotEmpty()
   voornaam?: string;
   
   @IsString()
