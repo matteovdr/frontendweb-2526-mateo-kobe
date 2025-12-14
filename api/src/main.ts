@@ -7,18 +7,23 @@ import {
   ValidationPipe
 } from '@nestjs/common';
 import CustomLogger from 'src/core/customLogger';
-import { ServerConfig, CorsConfig } from './config/configuration';
+import { ServerConfig, CorsConfig, LogConfig } from './config/configuration';
 import helmet from 'helmet';
 import { DrizzleQueryErrorFilter } from './drizzle/drizzle-query-error-filter';
 import { HttpExceptionFilter } from './lib/http-exception.filter';
 
 async function bootstrap() {
-  const logger = new CustomLogger();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
   const config = app.get(ConfigService<ServerConfig>);
   const port = config.get<number>('port')!;
   const cors = config.get<CorsConfig>('cors')!;
-  app.useLogger(logger); 
+
+  const logConfig = config.get<LogConfig>('log')!;
+  const logger = new CustomLogger();
+  logger.setLogLevels(logConfig.levels);
+  app.useLogger(logger);
   app.enableCors({
     origin: cors.origins,
     maxAge: cors.maxAge,
@@ -88,7 +93,7 @@ app.enableCors({
   // START SERVER
   //
   await app.listen(port);
-  logger.log(`🚀 Server running at http://localhost:${port}/api`);
+  logger.log(`Server started on http://localhost:${port}/api`);
 }
 
 bootstrap();
