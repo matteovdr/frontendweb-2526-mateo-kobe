@@ -25,10 +25,8 @@ import { LoggerMiddleware } from './lib/logger.middleware';
     KampenModule,
     LeidingModule,
     PersoonModule,
-        AuthModule,
+    AuthModule,
     SessionModule,
-    
-
   ],
   controllers: [AppController, HealthController],
   providers: [
@@ -44,11 +42,8 @@ import { LoggerMiddleware } from './lib/logger.middleware';
   ],
 })
 
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*path');
   }
 }
-
-    
