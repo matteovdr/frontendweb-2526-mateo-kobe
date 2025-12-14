@@ -43,9 +43,7 @@ export class PersoonController {
 
 @Get('me')
 @UseGuards(AuthGuard)
-async getMe(
-  @CurrentUser() personen: any,
-): Promise<PublicPersoonResponseDto> {
+async getMe(@CurrentUser() personen: any): Promise<PublicPersoonResponseDto> {
   return this.persoonService.getById(personen.id);
 }
 
@@ -87,12 +85,9 @@ async getById(
     @Post('register')
   @Public()
   @UseInterceptors(AuthDelayInterceptor)
-  async registerPersoon(
-    @Body() registerDto: RegisterPersoonRequestDto,
-  ): Promise<LoginResponseDto> {
+  async registerPersoon(@Body() registerDto: RegisterPersoonRequestDto): Promise<LoginResponseDto> {
       console.log('registerDto backend:', registerDto);
     const token = await this.authService.register(registerDto);
     return { token };
   }
-
 }

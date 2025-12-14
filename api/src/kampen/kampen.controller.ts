@@ -1,15 +1,14 @@
-import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Delete, ParseIntPipe } from '@nestjs/common';
 import { KampenService } from './kampen.service';
 import {
   KampenListResponseDto,
   KampResponseDto,
   createKampRequestDTO,
   KampLidResponseDto,
-  KampLeidingResponseDto, // <- bijvoorbeeld
+  KampLeidingResponseDto,
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
 import { Roles } from 'auth/decoraters/roles.decorator';
-
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
@@ -23,28 +22,25 @@ export class KampenController {
 
   // GET /kampen/:id
   @Get(':id')
-  async getOne(@Param('id') id: string): Promise<KampResponseDto> {
-    return this.kampenService.getKampWithId(Number(id));
+  async getOne(@Param('id', ParseIntPipe) id: number): Promise<KampResponseDto> {
+    return this.kampenService.getKampWithId(id);
   }
 
   @Roles('leiding', 'hoofdleiding')
   @Get(':id/leden')
-  async getLedenVanKamp(
-    @Param('id') id: string,
-  ): Promise<KampLidResponseDto[]> {
-    return this.kampenService.getLedenVanKamp(Number(id));
+  async getLedenVanKamp(@Param('id', ParseIntPipe) id: number): Promise<KampLidResponseDto[]> {
+    return this.kampenService.getLedenVanKamp(id);
   }
   @Public()
   @Get(':id/leiding')
-  async getLeiding(@Param('id') id: string): Promise<KampLeidingResponseDto[]> {
-    return this.kampenService.getLeidingVanKamp(Number(id));
+  async getLeiding(@Param('id', ParseIntPipe) id: number): Promise<KampLeidingResponseDto[]> {
+    return this.kampenService.getLeidingVanKamp(id);
   }
 
   // POST /kampen
   @Roles('hoofdleiding')
   @Post()
   async create(@Body() data: createKampRequestDTO): Promise<KampResponseDto> {
-    console.log('Received data in controller:', data);
     return this.kampenService.createKamp(data);
   }
 
@@ -52,17 +48,17 @@ export class KampenController {
   @Roles('hoofdleiding')
   @Put(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: createKampRequestDTO,
   ): Promise<KampResponseDto> {
-    return this.kampenService.updateKamp(Number(id), data);
+    return this.kampenService.updateKamp(id, data);
   }
 
   // DELETE /kampen/:id
   @Roles('hoofdleiding')
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<{ message: string }> {
-    await this.kampenService.deleteKamp(Number(id));
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<{ message: string }> {
+    await this.kampenService.deleteKamp(id);
     return { message: `Kamp with ID ${id} deleted successfully` };
   }
 }

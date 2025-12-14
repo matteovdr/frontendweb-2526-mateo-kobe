@@ -4,6 +4,7 @@ import KampenLijst from '../../components/Kampen/KampenLijst';
 import { getAll } from '../../api';
 import { Link } from 'react-router-dom';
 import AsyncData from '../../components/AsyncData';
+import { useAuth } from '../../contexts/auth';
 
 function Kampen() {
   const {
@@ -22,6 +23,8 @@ function Kampen() {
     [kampen],
   );
 
+  const { user } = useAuth();
+
   return (
     <div className="p-3">
       <h1 className="text-6xl font-semibold mb-4 text-[#004C97] text-center">Kampen</h1>
@@ -32,7 +35,7 @@ function Kampen() {
         In geval van ziekte worden de ouders gebeld en moet het kind worden opgehaald.
       </p>
 
-      <div className='flex justify-center border-y my-6 2xl:mx-60'>
+      {user ? <div className='flex justify-center border-y my-6 2xl:mx-60'>
         <Link
           to="add"
           className='my-6 py-4 px-16 border border-blue-300 rounded-2xl
@@ -41,7 +44,7 @@ function Kampen() {
         >
           Voeg een kamp toe
         </Link>
-      </div>
+      </div>: ''}
 
       <AsyncData loading={isLoading} error={error}>
         <h2 className="text-4xl mb-4 text-blue-500 text-center">

@@ -1,19 +1,57 @@
+import {
+  IsString, IsNotEmpty, IsBoolean
+} from 'class-validator';
 export class CreateLeidingDto {
-  persoonId?: number;
+  @IsString()
+  @IsNotEmpty()
+  persoonId: number;
+
+  @IsString()
+  @IsNotEmpty()
   voornaam?: string;
+  
+  @IsString()
+  @IsNotEmpty()
   achternaam?: string;
+  
+  @IsString()
+  @IsNotEmpty()
   ageGroup: string;
+  
+  @IsString()
   imageUrl: string;
+  
+  @IsString()
+  @IsNotEmpty()
   description: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
   isHoofdleiding?: boolean;
 }
 
 export class UpdateLeidingDto {
+  @IsString()
+  @IsNotEmpty()
   voornaam?: string;
+  
+  @IsString()
+  @IsNotEmpty()
   achternaam?: string;
+  
+  @IsString()
+  @IsNotEmpty()
   ageGroup?: string;
+  
+  @IsString()
   imageUrl?: string;
+  
+  @IsString()
+  @IsNotEmpty()
   description?: string;
+  
+  @IsBoolean()
+  @IsNotEmpty()
   isHoofdleiding?: boolean;
 }
 

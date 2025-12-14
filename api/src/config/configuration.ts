@@ -25,29 +25,30 @@ export interface AuthConfig {
 export interface ServerConfig {
   env: string;
   port: number;
-  database: DatabaseConfig;
   cors: CorsConfig;
+  database: DatabaseConfig;
+  log: LogConfig;
   auth: AuthConfig;
 }
 
-export default (): ServerConfig => ({
-  env: process.env.NODE_ENV || 'development',
-  port: parseInt(process.env.PORT || '3000', 10),
+export interface LogConfig {
+  levels: LogLevel[];
+}
 
-  database: {
-    url: process.env.DATABASE_URL || '',
-  },
+type LogLevel = 'log' | 'error' | 'warn' | 'debug' | 'verbose' | 'fatal';
 
+export default () => ({
+  env: process.env.NODE_ENV,
+  port: parseInt(process.env.PORT || '9000'),
   cors: {
     origins: process.env.CORS_ORIGINS
       ? (JSON.parse(process.env.CORS_ORIGINS) as string[])
       : [],
-    maxAge: parseInt(
-      process.env.CORS_MAX_AGE || String(3 * 60 * 60),
-      10,
-    ),
+    maxAge: parseInt(process.env.CORS_MAX_AGE || String(3 * 60 * 60)),
   },
-
+  database: {
+    url: process.env.DATABASE_URL,
+  },
   auth: {
     hashLength: parseInt(process.env.AUTH_HASH_LENGTH || '32', 10),
     timeCost: parseInt(process.env.AUTH_HASH_TIME_COST || '6', 10),
@@ -59,5 +60,10 @@ export default (): ServerConfig => ({
       audience: process.env.AUTH_JWT_AUDIENCE || 'budget.hogent.be',
       issuer: process.env.AUTH_JWT_ISSUER || 'budget.hogent.be',
     },
+  },
+  log: {
+    levels: process.env.LOG_LEVELS
+      ? (JSON.parse(process.env.LOG_LEVELS) as LogLevel[])
+      : ['log', 'error', 'warn'],
   },
 });
