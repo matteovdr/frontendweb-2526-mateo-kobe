@@ -30,7 +30,7 @@ export interface ServerConfig {
   log: LogConfig;
   auth: AuthConfig;
 }
-// ...
+
 export interface LogConfig {
   levels: LogLevel[];
 }
