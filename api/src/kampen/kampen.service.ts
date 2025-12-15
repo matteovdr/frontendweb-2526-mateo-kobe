@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { KampLeidingResponseDto, KampLidResponseDto, KampResponseDto, KampenListResponseDto, CreateKampRequestDto } from './kamp.dto';
+import { KampLeidingResponseDto, KampLidResponseDto, KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './kamp.dto';
 import { InjectDrizzle, type DatabaseProvider } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
 import { kampen, leiding, leidingKamp, lid, lidKamp, persoon } from '../drizzle/schema';
@@ -40,8 +40,8 @@ export class KampenService {
     };
   }
 
-  async createKamp(data: CreateKampRequestDto): Promise<KampResponseDto> {
-    const [insertResult] = await this.db
+  async createKamp({naam, stad, startDatum, eindDatum, beschrijving}: createKampRequestDTO): Promise<KampResponseDto> {
+    const [nieuwKamp] = await this.db
       .insert(kampen)
       .values({
         naam,
@@ -55,7 +55,7 @@ export class KampenService {
     return this.getKampWithId(nieuwKamp.id);
 }
 
-  async updateKamp(id: number, data: CreateKampRequestDto): Promise<KampResponseDto> {
+  async updateKamp(id: number, data: createKampRequestDTO): Promise<KampResponseDto> {
     await this.db
       .update(kampen)
       .set({

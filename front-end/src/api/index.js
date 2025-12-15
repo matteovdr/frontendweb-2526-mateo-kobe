@@ -21,7 +21,7 @@ axios.interceptors.request.use((config) => {
 // API FUNCTIONS
 // ---------------------
 export const getMe = async (token) => {
-  const res = await fetch('/personen/me', {
+  return axios.get('personen/me', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

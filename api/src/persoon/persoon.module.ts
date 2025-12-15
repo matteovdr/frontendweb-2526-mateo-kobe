@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DrizzleModule } from '../drizzle/drizzle.module';
 import { PersoonController } from './persoon.controller';
 import { PersoonService } from './persoon.service';
-import { AuthModule } from 'auth/auth.module';
+import { AuthModule } from '../../auth/auth.module';
 
 @Module({
   imports: [DrizzleModule,AuthModule],

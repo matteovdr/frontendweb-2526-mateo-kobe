@@ -5,8 +5,8 @@ import { login } from './helpers/login';
 import testAuthHeader from './helpers/testAuthHeader';
 
 import {
-    DatabaseProvider,
-    DrizzleAsyncProvider,
+  DatabaseProvider,
+  DrizzleAsyncProvider,
 } from '../src/drizzle/drizzle.provider';
 
 import { seedPersoon, clearPersoon } from './seeds/personen';
@@ -23,15 +23,18 @@ describe('Leden', () => {
     app = await createTestApp();
     drizzle = app.get(DrizzleAsyncProvider);
 
-    await seedPersoon();
-    await seedLid();
+      await clearLid(drizzle);
+  await clearPersoon(drizzle);
+
+    await seedPersoon(drizzle);
+    await seedLid(drizzle);
 
     userAuthToken = await login(app);
   });
 
   afterAll(async () => {
-    await clearLid();
-    await clearPersoon();
+    await clearLid(drizzle);
+    await clearPersoon(drizzle);
     await app.close();
   });
 

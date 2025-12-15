@@ -22,11 +22,11 @@ import {
 import { PersoonService } from './persoon.service';
 import { Public } from '../../auth/decoraters/public.decorater';
 import { AuthDelayInterceptor } from '../../auth/interceptors/authDelay.interceptor';
-import { LoginResponseDto } from 'src/session/session.dto';
-import { AuthService } from 'auth/auth.service';
-import { CurrentUser } from 'auth/decoraters/currentUser.decorator';
-import { ParseUserIdPipe } from 'auth/decoraters/parseUserid.pipe';
-import { AuthGuard } from 'auth/gaurds/auth.guard';
+import { LoginResponseDto } from '../../src/session/session.dto';
+import { AuthService } from '../../auth/auth.service';
+import { CurrentUser } from '../../auth/decoraters/currentUser.decorator';
+import { ParseUserIdPipe } from '../../auth/decoraters/parseUserid.pipe';
+import { AuthGuard } from '../../auth/gaurds/auth.guard';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Personen')

@@ -5,8 +5,8 @@ import { login } from './helpers/login';
 import testAuthHeader from './helpers/testAuthHeader';
 
 import {
-    DatabaseProvider,
-    DrizzleAsyncProvider,
+  DatabaseProvider,
+  DrizzleAsyncProvider,
 } from '../src/drizzle/drizzle.provider';
 
 import { seedPersoon, clearPersoon } from './seeds/personen';
@@ -22,22 +22,29 @@ describe('LeidingKamp', () => {
   const url = '/api/leiding-kamp';
 
   beforeAll(async () => {
-    app = await createTestApp();
-    drizzle = app.get(DrizzleAsyncProvider);
+  app = await createTestApp();
+  drizzle = app.get(DrizzleAsyncProvider);
 
-    await seedPersoon();
-    await seedLeiding();
-    await seedKampen();
-    await seedLeidingKamp();
 
-    userAuthToken = await login(app);
-  });
+  await clearLeidingKamp(drizzle);
+  await clearLeiding(drizzle);
+  await clearKampen(drizzle);
+  await clearPersoon(drizzle);
+
+
+  await seedPersoon(drizzle);
+  await seedLeiding(drizzle);     
+  await seedKampen(drizzle);       
+  await seedLeidingKamp(drizzle);
+
+  userAuthToken = await login(app);
+});
 
   afterAll(async () => {
-    await clearLeidingKamp();
-    await clearLeiding();
-    await clearKampen();
-    await clearPersoon();
+    await clearLeidingKamp(drizzle);
+    await clearLeiding(drizzle);
+    await clearKampen(drizzle);
+    await clearPersoon(drizzle);
     await app.close();
   });
 

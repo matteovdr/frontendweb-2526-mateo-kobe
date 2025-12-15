@@ -1,5 +1,3 @@
-import { LogLevel } from "@nestjs/common";
-
 // src/config/configuration.ts
 export interface DatabaseConfig {
   url: string;
@@ -31,28 +29,17 @@ export interface ServerConfig {
   database: DatabaseConfig;
   log: LogConfig;
   auth: AuthConfig;
-  log: LogConfig;
 }
 
 export interface LogConfig {
   levels: LogLevel[];
-  disabled: boolean; // 👈
 }
 
-export default (): ServerConfig => ({
-  env: process.env.NODE_ENV || 'development',
-  port: parseInt(process.env.PORT || '3000', 10),
+type LogLevel = 'log' | 'error' | 'warn' | 'debug' | 'verbose' | 'fatal';
 
-  database: {
-    url: process.env.DATABASE_URL || '',
-  },
-    log: {
-    levels: process.env.LOG_LEVELS
-      ? (JSON.parse(process.env.LOG_LEVELS) as LogLevel[])
-      : ['log', 'error', 'warn'],
-    disabled: process.env.LOG_DISABLED === 'true', // 👈
-  },
-
+export default () => ({
+  env: process.env.NODE_ENV,
+  port: parseInt(process.env.PORT || '9000'),
   cors: {
     origins: process.env.CORS_ORIGINS
       ? (JSON.parse(process.env.CORS_ORIGINS) as string[])

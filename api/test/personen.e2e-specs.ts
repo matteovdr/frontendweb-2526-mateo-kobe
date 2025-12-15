@@ -19,7 +19,7 @@ describe('Personen', () => {
     app = await createTestApp();
     drizzle = app.get(DrizzleAsyncProvider);
 
-    await seedLeiding();
+    await seedLeiding(drizzle);
 
     // Login een gewone gebruiker en een admin (je kan hier je eerste HOOFDLEIDING gebruiken als admin)
     userAuthToken = await login(app);  // moet een LID/LEIDING token zijn
@@ -27,7 +27,7 @@ describe('Personen', () => {
   });
 
   afterAll(async () => {
-    await clearLeiding();
+    await clearLeiding(drizzle);
     await app.close();
   });
 

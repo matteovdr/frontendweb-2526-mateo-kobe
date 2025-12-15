@@ -18,7 +18,7 @@ import {
   KampLidResponseDto,
   KampLeidingResponseDto,
 } from './kamp.dto';
-import { Public } from 'auth/decoraters/public.decorater';
+import { Public } from '../../auth/decoraters/public.decorater';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Kampen')

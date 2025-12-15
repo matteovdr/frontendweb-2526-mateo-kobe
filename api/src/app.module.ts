@@ -6,11 +6,11 @@ import configuration from './config/configuration';
 import { KampenModule } from './kampen/kampen.module';
 import { LeidingModule } from './leiding/leiding.module';
 import { PersoonModule } from './persoon/persoon.module';
-import { AuthModule } from 'auth/auth.module';
-import { SessionModule } from 'src/session/session.module';
+import { AuthModule } from '../auth/auth.module';
+import { SessionModule } from '../src/session/session.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from 'auth/gaurds/auth.guard';
-import { RolesGuard } from 'auth/gaurds/roles.guard';
+import { AuthGuard } from '../auth/gaurds/auth.guard';
+import { RolesGuard } from '../auth/gaurds/roles.guard';
 import { LoggerMiddleware } from './lib/logger.middleware';
 
 @Module({

@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import { persoon } from 'src/drizzle/schema';
+import { persoon } from '../src/drizzle/schema';
 import { Role } from './roles';
 import * as argon2 from 'argon2';
 import { LoginRequestDto, RegisterPersoonRequestDto } from '../src/persoon/persoon.dto';
-import { InjectDrizzle, type DatabaseProvider } from 'src/drizzle/drizzle.provider';
+import { InjectDrizzle, type DatabaseProvider } from '../src/drizzle/drizzle.provider';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig, ServerConfig } from 'src/config/configuration';

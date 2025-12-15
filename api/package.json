@@ -17,7 +17,7 @@
     "test:watch": "pnpm test --watch",
     "test:cov": "pnpm test --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "pnpm test --config ./jest-e2e.config.ts",
+    "test:e2e": "pnpm test --config ./test/jest-e2e.config.ts",
     "test:e2e:cov": "pnpm test --config ./jest-e2e.config.ts --runInBand --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -25,6 +25,7 @@
     "db:wait": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./scripts/wait-for-db.ps1",
     "db:reset": "docker compose down -v && docker compose up -d && pnpm db:wait && pnpm db:migrate && pnpm db:seed",
     "db:migrate:test": "env-cmd -f .env.test drizzle-kit migrate"
+    
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

@@ -1,30 +1,18 @@
-import * as schema from "../../src/drizzle/schema";
-import { drizzle } from 'drizzle-orm/mysql2';
-import * as mysql from 'mysql2/promise';
+import * as schema from '../../src/drizzle/schema';
+import { DatabaseProvider } from '../../src/drizzle/drizzle.provider';
 
-const connection = mysql.createPool({
-  uri: process.env.DATABASE_URL,
-  connectionLimit: 5,
-});
+export async function seedLidKamp(drizzle: DatabaseProvider) {
+  console.log('🔵 Seeding lid-kamp...');
 
-const db = drizzle(connection, {
-  schema,
-  mode: 'default',
-});
-
-export async function seedLidKamp() {
-  console.log("🔵 Seeding lid-kamp...");
-
-  await db.insert(schema.lidKamp).values([
+  await drizzle.insert(schema.lidKamp).values([
     { lidId: 17, kampId: 1 },
-    // …
   ]);
 
-  console.log("✅ Lid-Kamp seeded!\n");
+  console.log('✅ Lid-Kamp seeded!\n');
 }
 
-export async function clearLidKamp() {
-  console.log("🗑️ Clearing lid-kamp...");
-  await db.delete(schema.lidKamp);
-  console.log("✅ Lid-Kamp cleared!\n");
+export async function clearLidKamp(drizzle: DatabaseProvider) {
+  console.log('🗑️ Clearing lid-kamp...');
+  await drizzle.delete(schema.lidKamp);
+  console.log('✅ Lid-Kamp cleared!\n');
 }

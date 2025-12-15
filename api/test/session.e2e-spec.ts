@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import {
-    DatabaseProvider,
-    DrizzleAsyncProvider,
+  DatabaseProvider,
+  DrizzleAsyncProvider,
 } from '../src/drizzle/drizzle.provider';
 import { createTestApp } from './helpers/create-app';
 import { seedPersoon, clearPersoon } from './seeds/personen';
@@ -11,29 +11,30 @@ describe('Sessions', () => {
   let app: INestApplication;
   let drizzle: DatabaseProvider;
 
-  const url = '/api/src/session';
+  const url = '/api/sessions';
 
   beforeAll(async () => {
     app = await createTestApp();
     drizzle = app.get(DrizzleAsyncProvider);
 
-    await seedPersoon();
+    // eerst leegmaken, dan seeden, en gebruik dezelfde drizzle instance
+    await clearPersoon(drizzle);
+    await seedPersoon(drizzle);
   });
 
   afterAll(async () => {
-    await clearPersoon();
-
+    await clearPersoon(drizzle);
     await app.close();
   });
 
   describe('POST /api/sessions', () => {
     it('should 200 and return the token when succesfully logged in', async () => {
       const response = await request(app.getHttpServer()).post(url).send({
-        email: 'test.user@hogent.be',
+        email: 'hoofd.leiding@test.be', 
         password: '12345678',
       });
 
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
       expect(response.body.token).toBeTruthy();
     });
 
@@ -53,8 +54,8 @@ describe('Sessions', () => {
 
     it('should 401 with wrong password', async () => {
       const response = await request(app.getHttpServer()).post(url).send({
-        email: 'test.user@hogent.be',
-        password: 'invalidpassword',
+        email: 'hoofd.leiding@test.be', // geldig e‑mail
+        password: 'invalidpassword',    // verkeerde password
       });
 
       expect(response.statusCode).toBe(401);
@@ -72,7 +73,6 @@ describe('Sessions', () => {
       });
 
       expect(response.statusCode).toBe(400);
-
       expect(response.body.details.body).toHaveProperty('email');
     });
 
@@ -82,7 +82,6 @@ describe('Sessions', () => {
         .send({ email: 'login@hogent.be' });
 
       expect(response.statusCode).toBe(400);
-
       expect(response.body.details.body).toHaveProperty('password');
     });
 
@@ -92,7 +91,6 @@ describe('Sessions', () => {
         .send({ password: '12345678' });
 
       expect(response.statusCode).toBe(400);
-
       expect(response.body.details.body).toHaveProperty('email');
     });
   });
