@@ -18,7 +18,7 @@ import {
   LeidingResponseDto,
 } from './leiding.dto';
 import { Public } from '../../auth/decoraters/public.decorater';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('Leiding')
 @ApiBearerAuth()
@@ -30,9 +30,13 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class LeidingController {
   constructor(private readonly leidingService: LeidingService) {}
 
+  @ApiOperation({
+    summary: 'Alle leiding ophalen',
+    description: 'Haalt een lijst op van alle beschikbare leiding',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Get all leiding',
+    description: 'Alle leiding ophalen',
     type: LeidingListResponseDto,
   })
   @Public()
@@ -41,14 +45,23 @@ export class LeidingController {
     return this.leidingService.getAll();
   }
 
+  @ApiOperation({
+    summary: 'Leiding ophalen op ID',
+    description: 'Haalt de details op van een specifieke leidingspersoon',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van de leiding',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Get leiding by ID',
+    description: 'Leiding details',
     type: LeidingResponseDto,
   })
   @ApiResponse({
     status: 404,
-    description: 'Leiding not found',
+    description: 'Leiding niet gevonden',
   })
   @Get(':id')
   async getById(
@@ -57,14 +70,18 @@ export class LeidingController {
     return this.leidingService.getById(id);
   }
 
+  @ApiOperation({
+    summary: 'Nieuwe leiding aanmaken',
+    description: 'Maak een nieuw leidingspersoon aan met de opgegeven gegevens',
+  })
   @ApiResponse({
     status: 201,
-    description: 'Create leiding',
+    description: 'Leiding succesvol aangemaakt',
     type: LeidingResponseDto,
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -72,18 +89,27 @@ export class LeidingController {
     return this.leidingService.create(dto);
   }
 
+  @ApiOperation({
+    summary: 'Leiding bijwerken',
+    description: 'Update de gegevens van een bestaande leidingspersoon',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van de leiding',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Update leiding',
+    description: 'Leiding succesvol bijgewerkt',
     type: LeidingResponseDto,
   })
   @ApiResponse({
     status: 404,
-    description: 'Leiding not found',
+    description: 'Leiding niet gevonden',
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Patch(':id')
   async updateById(
@@ -93,13 +119,22 @@ export class LeidingController {
     return this.leidingService.updateById(id, dto);
   }
 
+  @ApiOperation({
+    summary: 'Leiding verwijderen',
+    description: 'Verwijder een bestaande leidingspersoon',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van de leiding',
+  })
   @ApiResponse({
     status: 204,
-    description: 'Delete leiding',
+    description: 'Leiding succesvol verwijderd',
   })
   @ApiResponse({
     status: 404,
-    description: 'Leiding not found',
+    description: 'Leiding niet gevonden',
   })
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)

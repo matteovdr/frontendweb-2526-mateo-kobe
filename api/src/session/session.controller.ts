@@ -3,25 +3,29 @@ import { AuthService } from '../../auth/auth.service';
 import { LoginRequestDto, LoginResponseDto } from './session.dto';
 import { Public } from '../../auth/decoraters/public.decorater';
 import { AuthDelayInterceptor } from '../../auth/interceptors/authDelay.interceptor';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('Sessions')
 @Controller('sessions')
 export class SessionController {
   constructor(private authService: AuthService) {}
 
+  @ApiOperation({
+    summary: 'Gebruiker inloggen',
+    description: 'Login met e-mailadres en wachtwoord en ontvang een JWT token',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Login',
+    description: 'Login succesvol, JWT token ontvangen',
     type: LoginResponseDto,
   })
   @ApiResponse({
     status: 401,
-    description: 'Invalid credentials',
+    description: 'Ongeldige inloggegevens',
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Post()
   @Public()
