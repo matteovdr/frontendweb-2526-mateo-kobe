@@ -3,7 +3,6 @@ import { KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './
 import { InjectDrizzle, type DatabaseProvider } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
 import { kampen } from '../drizzle/schema';
-
 @Injectable()
 export class KampenService {
   constructor(
@@ -25,7 +24,10 @@ export class KampenService {
     };
   }
 
-  async getKampWithId(id: number): Promise<KampResponseDto> {
+  async getKampWithId(
+    id: number,
+    user?: { roles: string[] },
+  ): Promise<KampResponseDto> {
     const kamp = await this.db.query.kampen.findFirst({
       where: eq(kampen.id, id),
       with: {
@@ -53,6 +55,19 @@ export class KampenService {
     if (!kamp) {
       throw new NotFoundException(`Kamp with ID ${id} not found`);
     }
+    
+    function isLid(user?: any) {  
+      // 🔥🔥 TIJDELIJKE DEBUG LOG 🔥🔥
+      console.log(user);
+      // 🔥🔥 EINDE LOG 🔥🔥
+      return user?.roles?.includes('lid');
+    }
+
+    function isLeiding(user?: any) {
+      return user?.roles?.includes('leiding') || user?.roles?.includes('hoofdleiding');
+    }
+    const magLeidingZien = isLid(user) || isLeiding(user);
+    const magLedenZien = isLeiding(user);
 
     return {
       id: kamp.id,
@@ -62,20 +77,23 @@ export class KampenService {
       startDatum: kamp.startDatum.toISOString(),
       eindDatum: kamp.eindDatum.toISOString(),
 
-      leden: kamp.leden.map((lk) => ({
-        id: lk.lid.persoon.id,
-        voornaam: lk.lid.persoon.voornaam,
-        achternaam: lk.lid.persoon.achternaam,
-      })),
+      leiding: magLeidingZien
+        ? kamp.leiding.map((lk) => ({
+            id: lk.leiding.persoon.id,
+            voornaam: lk.leiding.persoon.voornaam,
+            achternaam: lk.leiding.persoon.achternaam,
+          }))
+        : [],
 
-      leiding: kamp.leiding.map((lk) => ({
-        id: lk.leiding.persoon.id,
-        voornaam: lk.leiding.persoon.voornaam,
-        achternaam: lk.leiding.persoon.achternaam,
-      })),
+      leden: magLedenZien
+        ? kamp.leden.map((lk) => ({
+            id: lk.lid.persoon.id,
+            voornaam: lk.lid.persoon.voornaam,
+            achternaam: lk.lid.persoon.achternaam,
+          }))
+        : [],
     };
   }
-
 
   async createKamp({naam, stad, startDatum, eindDatum, beschrijving}: createKampRequestDTO): Promise<KampResponseDto> {
     const [nieuwKamp] = await this.db

@@ -7,6 +7,8 @@ import {
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
 import { Roles } from 'auth/decoraters/roles.decorator';
+import { CurrentUser } from 'auth/decoraters/currentUser.decorator';
+import type { AuthUser } from 'auth/auth.types';
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
@@ -20,10 +22,14 @@ export class KampenController {
 
   // GET /kampen/:id
   @Public()
-  @Get(':id')
-  async getOne(@Param('id', ParseIntPipe) id: number): Promise<KampResponseDto> {
-    return this.kampenService.getKampWithId(id);
-  }
+  @Get(':id')
+  async getOne(
+    @Param('id', ParseIntPipe) id: number,
+    // Maak de user type optioneel
+    @CurrentUser() user?: AuthUser, 
+  ): Promise<KampResponseDto> {
+    return this.kampenService.getKampWithId(id, user);
+  }
 
   // POST /kampen
   @Roles('hoofdleiding')
