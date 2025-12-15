@@ -15,17 +15,12 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
 
   const kanInschrijven = !alGedaan && user && (isLid || isLeidingOrHoofdleiding);
 
-  let activeButtons = 0;
-  // Inschrijfknop
-  if (!alGedaan) {
-    activeButtons += 1;
-  }
-  // Details knop is altijd aanwezig
-  activeButtons += 1;
-  // Verwijder knop
-  if (isHoofleiding) {
-    activeButtons += 1;
-  }
+  // Tel enkel knoppen die effectief gerenderd worden
+  const activeButtons = (
+    (kanInschrijven ? 1 : 0) + // inschrijfknop enkel als mogelijk
+    1 +                          // details knop altijd
+    (isHoofleiding ? 1 : 0)     // verwijderknop voor hoofdleiding
+  );
 
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
@@ -42,9 +37,12 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
     navigate(`/kampen/${id}`);
   };
 
+  const colsClass = activeButtons === 1 ? 'grid-cols-1' : activeButtons === 2 ? 'grid-cols-2' : 'grid-cols-3';
+
   return (
     <div className="flex flex-1 flex-col place-content-center 
-        border border-blue-300 dark:border-gray-700 rounded-2xl p-5 bg-gray-100 dark:bg-gray-800 shadow-xl transition-colors">
+        border border-blue-300 dark:border-gray-700 rounded-2xl p-5
+        bg-gray-100 dark:bg-gray-800 shadow-xl transition-colors">
 
       <h3 className="text-center font-semibold text-xl text-blue-600 dark:text-blue-300">
         {naam}
@@ -73,7 +71,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
       </div>
 
       {/* BUTTONS */}
-      <div className={`grid grid-cols-${activeButtons} gap-2 mt-2`}>
+      <div className={`grid ${colsClass} gap-2 mt-2`}>
         {kanInschrijven && (
           <InschrijvenKnop
             kampId={id}
