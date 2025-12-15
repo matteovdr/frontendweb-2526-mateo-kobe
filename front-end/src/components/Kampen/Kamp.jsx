@@ -2,13 +2,16 @@ import { deleteById } from '../../api';
 import { mutate } from 'swr';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth';
+import InschrijvenKnop from './InschrijvenKnop';
 
-function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
+function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, isBusy }) {
   const navigate = useNavigate();
   const { user } = useAuth();
   
   // Check if user is hoofdleiding
   const isHoofleiding = user && Array.isArray(user.roles) && user.roles.includes('hoofdleiding');
+  const isLid = user && Array.isArray(user.roles) && user.roles.includes('lid');
+  const kanInschrijven = !alGedaan && user && isLid; // 🛑 Kan inschrijven is alleen voor Leden en Toekomstige kampen
 
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
@@ -26,7 +29,6 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
   };
 
   return (
-    
     <div className="flex flex-1 flex-col place-content-center 
         border border-blue-300 rounded-2xl p-5 bg-gray-100 shadow-xl">
 
@@ -58,12 +60,23 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan }) {
 
       {/* BUTTONS */}
       <div className={`grid ${isHoofleiding ? 'grid-cols-3' : 'grid-cols-2'}`}>
-        <button
-          className={`text-white rounded-4xl mt-2 py-1 px-3 text-sm justify-self-center
-            ${alGedaan ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600 cursor-pointer'}`}
-        >
-          Inschrijven
-        </button>
+        {kanInschrijven && (
+          <InschrijvenKnop
+            kampId={id}
+            onInschrijven={onInschrijven}
+            isBusy={isBusy}
+          />
+        )}
+
+        {!kanInschrijven && (
+          <button
+            className={`text-white rounded-4xl py-1 px-3 text-sm justify-self-center
+                      ${alGedaan ? 'bg-gray-400 cursor-default' : 'bg-blue-500 cursor-default'}`}
+            disabled={true}
+          >
+            {alGedaan ? 'Afgewerkt' : 'Inschrijven'}
+          </button>
+        )}
 
         <button
           onClick={handleDetails}

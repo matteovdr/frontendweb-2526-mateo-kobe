@@ -3,7 +3,8 @@ import { KampenService } from './kampen.service';
 import {
   KampenListResponseDto,
   KampResponseDto,
-  createKampRequestDTO
+  createKampRequestDTO,
+  InschrijvingResponseDto,
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
 import { Roles } from 'auth/decoraters/roles.decorator';
@@ -30,6 +31,16 @@ export class KampenController {
   ): Promise<KampResponseDto> {
     return this.kampenService.getKampWithId(id, user);
   }
+
+  // POST /kampen/:id/inschrijven
+  @Roles('lid', 'leiding', 'hoofdleiding')
+  @Post(':id/inschrijven')
+  async inschrijven(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: AuthUser,
+  ): Promise<InschrijvingResponseDto> {
+    return this.kampenService.inschrijvenVoorKamp(id, user);
+  }
 
   // POST /kampen
   @Roles('hoofdleiding')

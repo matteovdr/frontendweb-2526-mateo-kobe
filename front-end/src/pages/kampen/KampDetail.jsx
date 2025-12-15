@@ -2,8 +2,25 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import Error from '../../components/Error';
 
-const fetcher = (url) =>
-  fetch(`http://localhost:3000${url}`).then((res) => res.json());
+const getToken = () => localStorage.getItem('jwtToken'); // Gebruik JWT_TOKEN_KEY string
+
+// De fetcher past nu de Authorization header toe
+const fetcher = (url) => {
+  const token = getToken();
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+  
+  return fetch(`http://localhost:3000${url}`, { headers })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    });
+};
 
 function KampDetail() {
   const { id } = useParams();
@@ -14,75 +31,63 @@ function KampDetail() {
     fetcher,
   );
 
-  const { data: leden, isLoading: ledenLoading, error: ledenError } = useSWR(
-    `/api/kampen/${id}/leden`,
-    fetcher,
-  );
-  const { data: leiding, isLoading: leidingLoading, error: leidingError } = useSWR(
-    `/api/kampen/${id}/leiding`,
-    fetcher,
-  );
-
   if (kampLoading) return <div>Laden...</div>;
   if (kampError) return <Error error={kampError} />;
 
-  const { naam, stad, startDatum, eindDatum } = kamp;
+  console.log(kamp);
+  const { naam, stad, startDatum, eindDatum, beschrijving, leden, leiding } = kamp;
 
   return (
-    
     <div className="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow-xl p-6">
-      <h2 className="text-xl font-semibold mb-4 text-blue-600">
-        Details van {naam}
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">
+        Details van {naam} ({stad})
       </h2>
+      
+      <p className="mb-4 text-gray-700 whitespace-pre-wrap">{beschrijving}</p>
 
-      <div className="space-y-2">
-        <p><span className="font-bold">Stad:</span> {stad}</p>
+      <div className="space-y-3 border-t pt-4">
         <p>
-          <span className="font-bold">Start datum:</span>{' '}
-          {new Date(startDatum).toDateString()}
-        </p>
-        <p>
-          <span className="font-bold">Eind datum:</span>{' '}
-          {new Date(eindDatum).toDateString()}
+          <span className="font-bold text-gray-600">Periode:</span>{' '}
+          {new Date(startDatum).toLocaleDateString()} <span className="font-bold">t/m</span>{' '}
+          {new Date(eindDatum).toLocaleDateString()}
         </p>
 
-        <p>
-          <span className="font-bold">Leden:</span>{' '}
-          {ledenLoading && 'Laden...'}
-          <Error error={ledenError} />
-          {leden && leden.length === 0 && 'Geen leden gevonden'}
-        </p>
+        {/* Leden Lijst */}
         {leden && leden.length > 0 && (
-          <ul className="list-disc list-inside">
-            {leden.map((lid) => (
-              <li key={lid.id}>
-                {lid.voornaam} {lid.achternaam} ({lid.ageGroup})
-              </li>
-            ))}
-          </ul>
+          <div className="border p-3 rounded-lg bg-gray-50">
+            <span className="font-bold text-lg text-red-600">Leden ({leden.length}):</span>
+            <ul className="list-disc list-inside mt-1 ml-4 space-y-1">
+              {leden.map((lid) => (
+                // Zorg ervoor dat de lid structuur overeenkomt met de DTO
+                <li key={lid.id}>
+                  {lid.voornaam} {lid.achternaam}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
-
-        <p>
-          <span className="font-bold">Leiding:</span>{' '}
-          {leidingLoading && 'Laden...'}
-          <Error error={leidingError} />
-          {leiding && leiding.length === 0 && 'Geen leiding gevonden'}
-        </p>
+        
+        {/* Leiding Lijst */}
         {leiding && leiding.length > 0 && (
-          <ul>
-            {leiding.map((leider) => (
-              <li key={leider.id}>
-                {leider.voornaam} {leider.achternaam}
-              </li>
-            ))}
-          </ul>
+          <div className="border p-3 rounded-lg bg-gray-50">
+            <span className="font-bold text-lg text-green-600">Leiding ({leiding.length}):</span>
+            <ul className="list-disc list-inside mt-1 ml-4 space-y-1">
+              {leiding.map((leider) => (
+                // Zorg ervoor dat de leider structuur overeenkomt met de DTO
+                <li key={leider.id}>
+                  {leider.voornaam} {leider.achternaam}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
+
       <button
         onClick={() => navigate(-1)}
         className="mt-6 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm"
       >
-        Terug
+        Terug naar overzicht
       </button>
     </div>
   );

@@ -63,3 +63,8 @@ export class KampLeidingResponseDto {
   voornaam: string;
   achternaam: string;
 }
+
+export class InschrijvingResponseDto {
+  id: number;
+  kampid: number;
+}

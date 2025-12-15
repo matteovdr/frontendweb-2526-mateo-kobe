@@ -1,8 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './kamp.dto';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { KampResponseDto, KampenListResponseDto, createKampRequestDTO, InschrijvingResponseDto } from './kamp.dto';
 import { InjectDrizzle, type DatabaseProvider } from '../drizzle/drizzle.provider';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { kampen } from '../drizzle/schema';
+import { lidKamp } from '../drizzle/schema';
+import { leidingKamp } from '../drizzle/schema';
 @Injectable()
 export class KampenService {
   constructor(
@@ -56,10 +58,7 @@ export class KampenService {
       throw new NotFoundException(`Kamp with ID ${id} not found`);
     }
     
-    function isLid(user?: any) {  
-      // 🔥🔥 TIJDELIJKE DEBUG LOG 🔥🔥
-      console.log(user);
-      // 🔥🔥 EINDE LOG 🔥🔥
+    function isLid(user?: any) {
       return user?.roles?.includes('lid');
     }
 
@@ -92,6 +91,53 @@ export class KampenService {
             achternaam: lk.lid.persoon.achternaam,
           }))
         : [],
+    };
+  }
+
+  async inschrijvenVoorKamp(id: number, user: { id: number; roles: string[] }): Promise<InschrijvingResponseDto> {
+    const kampId = id;
+    const userId = user.id;
+
+    if (user.roles.includes('lid')) {
+        // Controleer of de inschrijving (lidKamp) al bestaat
+        const existingInschrijving = await this.db.query.lidKamp.findFirst({
+            where: and(eq(lidKamp.lidId, userId), eq(lidKamp.kampId, kampId)),
+        });
+
+        if (existingInschrijving) {
+            // Als het al bestaat, gooi een Conflict exception
+            throw new ConflictException('U bent al ingeschreven voor dit kamp.');
+        }
+
+        // Voeg inschrijving toe
+        await this.db.insert(lidKamp).values({
+            lidId: userId,
+            kampId: kampId,
+        });
+
+    } else if (user.roles.includes('leiding') || user.roles.includes('hoofdleiding')) {
+        // Controleer of de inschrijving (leidingKamp) al bestaat
+        const existingInschrijving = await this.db.query.leidingKamp.findFirst({
+            where: and(eq(leidingKamp.leidingId, userId), eq(leidingKamp.kampId, kampId)),
+        });
+
+        if (existingInschrijving) {
+            throw new ConflictException('U bent al als leiding ingeschreven voor dit kamp.');
+        }
+
+        // Voeg inschrijving toe
+        await this.db.insert(leidingKamp).values({
+            leidingId: userId,
+            kampId: kampId,
+        });
+    } else {
+        throw new NotFoundException(`User with ID ${userId} does not have a valid role to inschrijven`);
+    }
+
+    // Retourneer DTO
+    return {
+        id: userId,
+        kampid: kampId,
     };
   }
 
