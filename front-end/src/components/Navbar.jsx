@@ -1,12 +1,19 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts';
 import { useAuth } from '../contexts/auth';
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const { darkmode, toggleDarkmode } = useTheme();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="bg-[#004C97] dark:bg-gray-900 text-white p-4 shadow-md transition-colors">
@@ -92,14 +99,28 @@ function Navbar() {
             </svg>
           </button>
 
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden md:flex space-x-6 items-center">
             <Link to="/home" className="hover:text-yellow-300 transition p-2">Home</Link>
             <Link to="/leiding" className="hover:text-yellow-300 transition p-2">Leiding</Link>
             <Link to="/about" className="hover:text-yellow-300 transition p-2">About Us</Link>
             <Link to="/kampen" className="hover:text-yellow-300 transition p-2">Kampen</Link>
-            <Link to="/login" className="hover:text-yellow-300 font-semibold transition p-2">
-              {user ? `${user.voornaam}` : 'Login'}
-            </Link>
+            {user ? (
+              <>
+                <span className="hover:text-yellow-300 font-semibold transition p-2">
+                  {user.voornaam}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="hover:text-yellow-300 font-semibold transition p-2">
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -115,10 +136,24 @@ function Navbar() {
             className="hover:text-yellow-300 transition p-2">About Us</Link>
           <Link onClick={() => setMenuOpen(false)} to="/kampen" 
             className="hover:text-yellow-300 transition p-2">Kampen</Link>
-          <Link onClick={() => setMenuOpen(false)} to="/login" 
-            className="hover:text-yellow-300 font-semibold transition p-2">
-            {user ? `${user.voornaam}` : 'Login'}
-          </Link>
+          {user ? (
+            <>
+              <span className="hover:text-yellow-300 font-semibold transition p-2">
+                {user.voornaam}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition text-left"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link onClick={() => setMenuOpen(false)} to="/login" 
+              className="hover:text-yellow-300 font-semibold transition p-2">
+              Login
+            </Link>
+          )}
         </div>
       )}
     </nav>
