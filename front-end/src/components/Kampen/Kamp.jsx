@@ -92,7 +92,8 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
           <button
             data-cy={'delete'}
             onClick={handleDelete}
-            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm hover:bg-red-600 cursor-pointer dark:bg-red-600 dark:hover:bg-red-500"
+            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm hover:bg-red-600 cursor-pointer 
+            dark:bg-red-600 dark:hover:bg-red-500"
           >
             Verwijder
           </button>
