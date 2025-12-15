@@ -23,7 +23,7 @@ async function hashPassword(password: string): Promise<string> {
     memoryCost: 2 ** 16,
   });
 }
-export async function seedLeiding() {
+export async function seedPersoon() {
   console.log("🟦 Seeding persoon...");
 
   await db.insert(schema.persoon).values([
@@ -340,7 +340,7 @@ export async function seedLeiding() {
   ]);
 }
 
-export async function clearLeiding() {
+export async function clearPersoon() {
   console.log("🗑️ Clearing persoon...");
   await db.delete(schema.persoon);
   console.log("✅ persoon cleared!\n");
