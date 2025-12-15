@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { KampLeidingResponseDto, KampLidResponseDto, KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './kamp.dto';
+import { KampResponseDto, KampenListResponseDto, createKampRequestDTO } from './kamp.dto';
 import { InjectDrizzle, type DatabaseProvider } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
-import { kampen, leiding, leidingKamp, lid, lidKamp, persoon } from '../drizzle/schema';
+import { kampen } from '../drizzle/schema';
 
 @Injectable()
 export class KampenService {
@@ -26,19 +26,56 @@ export class KampenService {
   }
 
   async getKampWithId(id: number): Promise<KampResponseDto> {
-    const item = await this.db.query.kampen.findFirst({
+    const kamp = await this.db.query.kampen.findFirst({
       where: eq(kampen.id, id),
+      with: {
+        leden: {
+          with: {
+            lid: {
+              with: {
+                persoon: true,
+              },
+            },
+          },
+        },
+        leiding: {
+          with: {
+            leiding: {
+              with: {
+                persoon: true,
+              },
+            },
+          },
+        },
+      },
     });
-    if (!item) throw new NotFoundException(`Kamp with ID ${id} not found`);
+
+    if (!kamp) {
+      throw new NotFoundException(`Kamp with ID ${id} not found`);
+    }
+
     return {
-      id: item.id,
-      naam: item.naam,
-      stad: item.stad,
-      startDatum: new Date(item.startDatum).toISOString(),
-      eindDatum: new Date(item.eindDatum).toISOString(),
-      beschrijving: item.beschrijving,
+      id: kamp.id,
+      naam: kamp.naam,
+      stad: kamp.stad,
+      beschrijving: kamp.beschrijving,
+      startDatum: kamp.startDatum.toISOString(),
+      eindDatum: kamp.eindDatum.toISOString(),
+
+      leden: kamp.leden.map((lk) => ({
+        id: lk.lid.persoon.id,
+        voornaam: lk.lid.persoon.voornaam,
+        achternaam: lk.lid.persoon.achternaam,
+      })),
+
+      leiding: kamp.leiding.map((lk) => ({
+        id: lk.leiding.persoon.id,
+        voornaam: lk.leiding.persoon.voornaam,
+        achternaam: lk.leiding.persoon.achternaam,
+      })),
     };
   }
+
 
   async createKamp({naam, stad, startDatum, eindDatum, beschrijving}: createKampRequestDTO): Promise<KampResponseDto> {
     const [nieuwKamp] = await this.db
@@ -78,48 +115,4 @@ export class KampenService {
       throw new NotFoundException(`Kamp with ID ${id} not found`);
     }
   }
-
-
-async getLedenVanKamp(kampId: number): Promise<KampLidResponseDto[]> {
-  const rows = await this.db
-    .select({
-      lidId: lid.persoonId,
-      voornaam: persoon.voornaam,
-      achternaam: persoon.achternaam,
-      ageGroup: lid.ageGroup,
-    })
-    .from(lidKamp)
-    .innerJoin(lid, eq(lidKamp.lidId, lid.persoonId))
-    .innerJoin(persoon, eq(lid.persoonId, persoon.id))
-    .where(eq(lidKamp.kampId, kampId));
-
-  return rows.map((row) => ({
-    id: row.lidId,
-    voornaam: row.voornaam,
-    achternaam: row.achternaam,
-    ageGroup: row.ageGroup,
-  }));
-}
-async getLeidingVanKamp(kampId: number): Promise<KampLeidingResponseDto[]> {
-  const rows = await this.db
-    .select({
-      leidingId: leiding.persoonId,
-      voornaam: persoon.voornaam,
-      achternaam: persoon.achternaam,
-      ageGroup: leiding.ageGroup,
-    })
-    .from(leidingKamp)
-    .innerJoin(leiding, eq(leidingKamp.leidingId, leiding.persoonId))
-    .innerJoin(persoon, eq(leiding.persoonId, persoon.id))
-    .where(eq(leidingKamp.kampId, kampId));
-
-  return rows.map((row) => ({
-    id: row.leidingId,
-    voornaam: row.voornaam,
-    achternaam: row.achternaam,
-    ageGroup: row.ageGroup,
-  }));
-}
-
-
 }

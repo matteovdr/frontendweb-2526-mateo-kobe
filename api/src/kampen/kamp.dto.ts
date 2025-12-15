@@ -35,10 +35,12 @@ export class createKampRequestDTO {
 }
 
 export class KampResponseDto extends createKampRequestDTO {
-  @IsString()
-  @IsNotEmpty()
   id: number;
+
+  leden: KampLidResponseDto[];
+  leiding: KampLeidingResponseDto[];
 }
+
 
 export class KampenListResponseDto {
   items: KampResponseDto[];
@@ -47,11 +49,9 @@ export class KampLidResponseDto {
   id: number;
   voornaam: string;
   achternaam: string;
-  ageGroup: string;
 }
 export class KampLeidingResponseDto {
   id: number;
   voornaam: string;
   achternaam: string;
-  ageGroup: string;
 }
