@@ -14,14 +14,23 @@ import { ServerConfig, AuthConfig } from '../src/config/configuration';
       useFactory: (configService: ConfigService<ServerConfig>) => {
         const authConfig = configService.get<AuthConfig>('auth')!;
 
+        const jwtOptions = {
+          // Opties die zowel voor signen als verifiëren gelden
+          audience: authConfig.jwt.audience,
+          issuer: authConfig.jwt.issuer,
+        };
         return {
-          secret: authConfig.jwt.secret,
-          signOptions: {
-            expiresIn: `${authConfig.jwt.expirationInterval}s`,
-            audience: authConfig.jwt.audience,
-            issuer: authConfig.jwt.issuer,
-          },
-        };
+          secret: authConfig.jwt.secret,
+          
+          signOptions: {
+            expiresIn: `${authConfig.jwt.expirationInterval}s`,
+            ...jwtOptions,
+          },
+          
+          verifyOptions: {
+            ...jwtOptions,
+          },
+        };
       },
     }),
     DrizzleModule, 

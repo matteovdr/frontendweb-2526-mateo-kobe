@@ -15,18 +15,13 @@ import {
   KampenListResponseDto,
   KampResponseDto,
   CreateKampRequestDto,
-  KampLidResponseDto,
-  KampLeidingResponseDto,
+  InschrijvingResponseDto,
 } from './kamp.dto';
-import { Public } from '../../auth/decoraters/public.decorater';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-
-@ApiTags('Kampen')
-@ApiBearerAuth()
-@ApiResponse({
-  status: 401,
-  description: 'Unauthorized - you need to be signed in',
-})
+import { ApiResponse } from '@nestjs/swagger';
+import { Public } from 'auth/decoraters/public.decorater';
+import { Roles } from 'auth/decoraters/roles.decorator';
+import { CurrentUser } from 'auth/decoraters/currentUser.decorator';
+import type { AuthUser } from 'auth/auth.types';
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
@@ -42,55 +37,25 @@ export class KampenController {
     return this.kampenService.getAll();
   }
 
-  @ApiResponse({
-    status: 200,
-    description: 'Get kamp by ID',
-    type: KampResponseDto,
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Kamp not found',
-  })
-  @Get(':id')
-  async getOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<KampResponseDto> {
-    return this.kampenService.getKampWithId(id);
-  }
-
-  @ApiResponse({
-    status: 200,
-    description: 'Get leden of a kamp',
-    type: KampLidResponseDto,
-    isArray: true,
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Kamp not found',
-  })
-  @Get(':id/leden')
-  async getLedenVanKamp(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<KampLidResponseDto[]> {
-    return this.kampenService.getLedenVanKamp(id);
-  }
-
-  @ApiResponse({
-    status: 200,
-    description: 'Get leiding of a kamp',
-    type: KampLeidingResponseDto,
-    isArray: true,
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Kamp not found',
-  })
+  // GET /kampen/:id
   @Public()
-  @Get(':id/leiding')
-  async getLeiding(
+  @Get(':id')
+  async getOne(
+    @Param('id', ParseIntPipe) id: number,
+    // Maak de user type optioneel
+    @CurrentUser() user?: AuthUser, 
+  ): Promise<KampResponseDto> {
+    return this.kampenService.getKampWithId(id, user);
+  }
+
+  // POST /kampen/:id/inschrijven
+  @Roles('lid', 'leiding', 'hoofdleiding')
+  @Post(':id/inschrijven')
+  async inschrijven(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<KampLeidingResponseDto[]> {
-    return this.kampenService.getLeidingVanKamp(id);
+    @CurrentUser() user: AuthUser,
+  ): Promise<InschrijvingResponseDto> {
+    return this.kampenService.inschrijvenVoorKamp(id, user);
   }
 
   @ApiResponse({
