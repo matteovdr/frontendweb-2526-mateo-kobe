@@ -21,6 +21,7 @@ import {
 } from './persoon.dto';
 import { PersoonService } from './persoon.service';
 import { Public } from '../../auth/decoraters/public.decorater';
+import { Roles } from 'auth/decoraters/roles.decorator';
 import { AuthDelayInterceptor } from '../../auth/interceptors/authDelay.interceptor';
 import { LoginResponseDto } from '../../src/session/session.dto';
 import { AuthService } from '../../auth/auth.service';
@@ -51,6 +52,7 @@ export class PersoonController {
     description: 'Alle personen ophalen',
     type: PersoonListResponseDto,
   })
+  @Roles('hoofdleiding')
   @Get()
   async getAll(): Promise<PersoonListResponseDto> {
     return this.persoonService.getAll();
@@ -97,6 +99,7 @@ export class PersoonController {
     status: 401,
     description: 'Niet geauthoriseerd',
   })
+  @Roles('hoofdleiding')
   @Get(':id')
   @UseGuards(AuthGuard)
   async getById(
@@ -120,6 +123,7 @@ export class PersoonController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
+  @Roles('hoofdleiding')
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(
@@ -150,6 +154,7 @@ export class PersoonController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
+  @Roles('hoofdleiding')
   @Patch(':id')
   async updateById(
     @Param('id', ParseIntPipe) id: number,
@@ -175,6 +180,7 @@ export class PersoonController {
     status: 404,
     description: 'Persoon niet gevonden',
   })
+  @Roles('hoofdleiding')
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteById(
