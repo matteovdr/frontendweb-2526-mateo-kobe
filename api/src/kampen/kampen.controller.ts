@@ -17,15 +17,26 @@ import {
   CreateKampRequestDto,
   InschrijvingResponseDto,
 } from './kamp.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags, ApiOperation, ApiParam, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { Public } from 'auth/decoraters/public.decorater';
 import { Roles } from 'auth/decoraters/roles.decorator';
 import { CurrentUser } from 'auth/decoraters/currentUser.decorator';
 import type { AuthUser } from 'auth/auth.types';
+
+@ApiTags('Kampen')
+@ApiBearerAuth()
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized - you need to be signed in',
+})
 @Controller('kampen')
 export class KampenController {
   constructor(private readonly kampenService: KampenService) {}
 
+  @ApiOperation({
+    summary: 'Alle kampen ophalen',
+    description: 'Haalt een lijst op van alle beschikbare kampen',
+  })
   @ApiResponse({
     status: 200,
     description: 'Get all kampen',
@@ -37,18 +48,52 @@ export class KampenController {
     return this.kampenService.getAll();
   }
 
-  // GET /kampen/:id
+  @ApiOperation({
+    summary: 'Kamp ophalen op ID',
+    description: 'Haalt de details op van een specifiek kamp',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van het kamp',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Kamp details',
+    type: KampResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Kamp not found',
+  })
   @Public()
-  @Get(':id')
-  async getOne(
-    @Param('id', ParseIntPipe) id: number,
-    // Maak de user type optioneel
-    @CurrentUser() user?: AuthUser, 
-  ): Promise<KampResponseDto> {
-    return this.kampenService.getKampWithId(id, user);
-  }
+  @Get(':id')
+  async getOne(
+    @Param('id', ParseIntPipe) id: number,
+    // Maak de user type optioneel
+    @CurrentUser() user?: AuthUser, 
+  ): Promise<KampResponseDto> {
+    return this.kampenService.getKampWithId(id, user);
+  }
 
-  // POST /kampen/:id/inschrijven
+  @ApiOperation({
+    summary: 'Inschrijven voor kamp',
+    description: 'Schrijf de huidige gebruiker in voor een kamp',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van het kamp',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Inschrijving succesvol',
+    type: InschrijvingResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Ongeldig verzoek',
+  })
   @Roles('lid', 'leiding', 'hoofdleiding')
   @Post(':id/inschrijven')
   async inschrijven(
@@ -58,14 +103,22 @@ export class KampenController {
     return this.kampenService.inschrijvenVoorKamp(id, user);
   }
 
+  @ApiOperation({
+    summary: 'Nieuw kamp aanmaken',
+    description: 'Maak een nieuw kamp aan met de opgegeven gegevens',
+  })
+  @ApiBody({
+    description: 'Gegevens voor het nieuwe kamp',
+    type: CreateKampRequestDto,
+  })
   @ApiResponse({
     status: 201,
-    description: 'Create kamp',
+    description: 'Kamp succesvol aangemaakt',
     type: KampResponseDto,
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -75,18 +128,31 @@ export class KampenController {
     return this.kampenService.createKamp(data);
   }
 
+  @ApiOperation({
+    summary: 'Kamp bijwerken',
+    description: 'Update de gegevens van een bestaand kamp',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van het kamp',
+  })
+  @ApiBody({
+    description: 'Bijgewerkte gegevens voor het kamp',
+    type: CreateKampRequestDto,
+  })
   @ApiResponse({
     status: 200,
-    description: 'Update kamp',
+    description: 'Kamp succesvol bijgewerkt',
     type: KampResponseDto,
   })
   @ApiResponse({
     status: 404,
-    description: 'Kamp not found',
+    description: 'Kamp niet gevonden',
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Put(':id')
   async update(
@@ -96,13 +162,22 @@ export class KampenController {
     return this.kampenService.updateKamp(id, data);
   }
 
+  @ApiOperation({
+    summary: 'Kamp verwijderen',
+    description: 'Verwijder een bestaand kamp',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van het kamp',
+  })
   @ApiResponse({
     status: 204,
-    description: 'Delete kamp',
+    description: 'Kamp succesvol verwijderd',
   })
   @ApiResponse({
     status: 404,
-    description: 'Kamp not found',
+    description: 'Kamp niet gevonden',
   })
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)

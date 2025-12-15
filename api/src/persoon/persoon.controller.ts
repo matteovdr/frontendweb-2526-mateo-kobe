@@ -27,7 +27,7 @@ import { AuthService } from '../../auth/auth.service';
 import { CurrentUser } from '../../auth/decoraters/currentUser.decorator';
 import { ParseUserIdPipe } from '../../auth/decoraters/parseUserid.pipe';
 import { AuthGuard } from '../../auth/gaurds/auth.guard';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('Personen')
 @ApiBearerAuth()
@@ -42,9 +42,13 @@ export class PersoonController {
     private readonly authService: AuthService,
   ) {}
 
+  @ApiOperation({
+    summary: 'Alle personen ophalen',
+    description: 'Haalt een lijst op van alle geregistreerde personen',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Get all personen',
+    description: 'Alle personen ophalen',
     type: PersoonListResponseDto,
   })
   @Get()
@@ -52,15 +56,18 @@ export class PersoonController {
     return this.persoonService.getAll();
   }
 
-  // GET /api/personen/me
+  @ApiOperation({
+    summary: 'Huidige gebruiker ophalen',
+    description: 'Haalt de gegevens op van de ingelogde gebruiker',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Get current ingelogde persoon',
+    description: 'Huidige gebruiker ophalen',
     type: PublicPersoonResponseDto,
   })
   @ApiResponse({
     status: 401,
-    description: 'Unauthorized - no valid token provided',
+    description: 'Niet geauthoriseerd - geen geldige token',
   })
   @Get('me')
   @UseGuards(AuthGuard)
@@ -68,19 +75,27 @@ export class PersoonController {
     return this.persoonService.getById(personen.id);
   }
 
-  // GET /api/personen/:id
+  @ApiOperation({
+    summary: 'Persoon ophalen op ID',
+    description: 'Haalt de details op van een specifieke persoon, of "me" voor huidige gebruiker',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'Unieke ID van de persoon of "me" voor huidige gebruiker',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Get persoon by ID of "me"',
+    description: 'Persoon details',
     type: PublicPersoonResponseDto,
   })
   @ApiResponse({
     status: 404,
-    description: 'Persoon not found',
+    description: 'Persoon niet gevonden',
   })
   @ApiResponse({
     status: 401,
-    description: 'Unauthorized',
+    description: 'Niet geauthoriseerd',
   })
   @Get(':id')
   @UseGuards(AuthGuard)
@@ -92,14 +107,18 @@ export class PersoonController {
     return this.persoonService.getById(persoonId);
   }
 
+  @ApiOperation({
+    summary: 'Nieuwe persoon aanmaken',
+    description: 'Maak een nieuwe persoon aan met de opgegeven gegevens',
+  })
   @ApiResponse({
     status: 201,
-    description: 'Create persoon',
+    description: 'Persoon succesvol aangemaakt',
     type: PublicPersoonResponseDto,
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -109,18 +128,27 @@ export class PersoonController {
     return this.persoonService.create(dto);
   }
 
+  @ApiOperation({
+    summary: 'Persoon bijwerken',
+    description: 'Update de gegevens van een bestaande persoon',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van de persoon',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Update persoon',
+    description: 'Persoon succesvol bijgewerkt',
     type: PublicPersoonResponseDto,
   })
   @ApiResponse({
     status: 404,
-    description: 'Persoon not found',
+    description: 'Persoon niet gevonden',
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Patch(':id')
   async updateById(
@@ -130,13 +158,22 @@ export class PersoonController {
     return this.persoonService.updateById(id, dto);
   }
 
+  @ApiOperation({
+    summary: 'Persoon verwijderen',
+    description: 'Verwijder een bestaande persoon',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van de persoon',
+  })
   @ApiResponse({
     status: 204,
-    description: 'Delete persoon',
+    description: 'Persoon succesvol verwijderd',
   })
   @ApiResponse({
     status: 404,
-    description: 'Persoon not found',
+    description: 'Persoon niet gevonden',
   })
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -146,14 +183,18 @@ export class PersoonController {
     return this.persoonService.deleteById(id);
   }
 
+  @ApiOperation({
+    summary: 'Gebruiker registreren',
+    description: 'Registreer een nieuwe gebruiker en ontvang een JWT token',
+  })
   @ApiResponse({
     status: 201,
-    description: 'Register persoon en geef JWT token terug',
+    description: 'Registratie succesvol, JWT token ontvangen',
     type: LoginResponseDto,
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid input data',
+    description: 'Ongeldige invoergegevens',
   })
   @Public()
   @Post('register')

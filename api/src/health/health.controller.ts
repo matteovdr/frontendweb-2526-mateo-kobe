@@ -1,14 +1,23 @@
 import { Controller, Get } from '@nestjs/common';
 import { Public } from '../../auth/decoraters/public.decorater';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('Health')
 @Controller('health')
 export class HealthController {
+  @ApiOperation({
+    summary: 'Gezondheidscontrole',
+    description: 'Controleert of de API beschikbaar is',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Health check endpoint',
-    type: String,
+    description: 'API is gezond',
+    schema: {
+      type: 'object',
+      properties: {
+        pong: { type: 'boolean', example: true },
+      },
+    },
   })
   @Public()
   @Get('ping')

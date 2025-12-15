@@ -43,15 +43,54 @@ export class KampResponseDto extends CreateKampRequestDto {
   })
   id: number;
 
+  @ApiProperty({
+    description: 'Lijst van leden in dit kamp',
+    type: () => KampLidResponseDto,
+    isArray: true,
+  })
   leden: KampLidResponseDto[];
+
+  @ApiProperty({
+    description: 'Lijst van leiding in dit kamp',
+    type: () => KampLeidingResponseDto,
+    isArray: true,
+  })
   leiding: KampLeidingResponseDto[];
 }
 
 export class KampListItemDto {
+  @ApiProperty({
+    example: 1,
+    description: 'Unieke ID van het kamp',
+  })
   id: number;
+
+  @ApiProperty({
+    example: 'Zomerkamp 2025',
+    description: 'Naam van het kamp',
+  })
   naam: string;
+
+  @ApiProperty({
+    example: 'Gent',
+    description: 'Stad waar het kamp doorgaat',
+  })
   stad: string;
+
+  @ApiProperty({
+    example: '2025-07-15',
+    description: 'Startdatum van het kamp',
+    type: String,
+    format: 'date',
+  })
   startDatum: string;
+
+  @ApiProperty({
+    example: '2025-07-22',
+    description: 'Einddatum van het kamp',
+    type: String,
+    format: 'date',
+  })
   eindDatum: string;
 }
 
@@ -105,6 +144,15 @@ export class KampLeidingResponseDto {
 }
 
 export class InschrijvingResponseDto {
+  @ApiProperty({
+    example: 1,
+    description: 'Unieke ID van de inschrijving',
+  })
   id: number;
+
+  @ApiProperty({
+    example: 1,
+    description: 'ID van het kamp',
+  })
   kampid: number;
 }
