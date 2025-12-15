@@ -106,12 +106,15 @@ function Navbar() {
             <Link to="/kampen" className="hover:text-yellow-300 transition p-2">Kampen</Link>
             {user ? (
               <>
-                <span className="hover:text-yellow-300 font-semibold transition p-2">
+                <span className={`font-semibold transition p-2 
+                  ${user?.voornaam?.toLowerCase() === 'lotte' ? 'text-green-300 hover:text-green-200' : 
+                'hover:text-yellow-300'}`}>
                   {user.voornaam}
                 </span>
                 <button
                   onClick={handleLogout}
-                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition"
+                  className="bg-red-500 hover:bg-red-600 hover:cursor-pointer
+                  text-white font-semibold py-1 px-3 rounded transition"
                 >
                   Logout
                 </button>
@@ -138,12 +141,15 @@ function Navbar() {
             className="hover:text-yellow-300 transition p-2">Kampen</Link>
           {user ? (
             <>
-              <span className="hover:text-yellow-300 font-semibold transition p-2">
+              <span className={`font-semibold transition p-2 
+              ${user?.voornaam?.toLowerCase() === 'lotte' ? 'text-green-300 hover:text-green-200' : 
+              'hover:text-yellow-300'}`}>
                 {user.voornaam}
               </span>
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition text-left"
+                className="bg-red-500 hover:bg-red-600 hover:cursor-pointer text-white
+                font-medium px-3 py-1 rounded transition text-left w-fit self-start text-sm"
               >
                 Logout
               </button>
