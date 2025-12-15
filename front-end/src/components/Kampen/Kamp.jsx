@@ -8,9 +8,12 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
   const navigate = useNavigate();
   const { user } = useAuth();
   
-  // Check if user is hoofdleiding
   const isHoofleiding = user && Array.isArray(user.roles) && user.roles.includes('hoofdleiding');
+  const isLeidingOrHoofdleiding = user && Array.isArray(user.roles) && 
+  (user.roles.includes('leiding') || user.roles.includes('hoofdleiding'));
+  const isLid = user && Array.isArray(user.roles) && user.roles.includes('lid');
 
+  const kanInschrijven = !alGedaan && user && (isLid || isLeidingOrHoofdleiding);
   let activeButtons = 0;
   // Inschrijfknop OF de statische knop is altijd aanwezig
   activeButtons += 1; 
@@ -20,8 +23,6 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
   if (isHoofleiding) {
     activeButtons += 1;
   }
-  const isLid = user && Array.isArray(user.roles) && user.roles.includes('lid');
-  const kanInschrijven = !alGedaan && user && isLid; // 🛑 Kan inschrijven is alleen voor Leden en Toekomstige kampen
 
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
