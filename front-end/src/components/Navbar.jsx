@@ -107,8 +107,7 @@ function Navbar() {
             {user ? (
               <>
                 <span className={`font-semibold transition p-2 
-                  ${user?.voornaam?.toLowerCase() === 'lotte' ? 'text-green-300 hover:text-green-200' : 
-                'hover:text-yellow-300'}`}>
+                  text-green-300 hover:text-green-200`}>
                   {user.voornaam}
                 </span>
                 <button
@@ -142,8 +141,7 @@ function Navbar() {
           {user ? (
             <>
               <span className={`font-semibold transition p-2 
-              ${user?.voornaam?.toLowerCase() === 'lotte' ? 'text-green-300 hover:text-green-200' : 
-              'hover:text-yellow-300'}`}>
+                  text-green-300 hover:text-green-200`}>
                 {user.voornaam}
               </span>
               <button
