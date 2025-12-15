@@ -18,6 +18,7 @@ import {
   LeidingResponseDto,
 } from './leiding.dto';
 import { Public } from '../../auth/decoraters/public.decorater';
+import { Roles } from 'auth/decoraters/roles.decorator';
 import { ApiBearerAuth, ApiResponse, ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('Leiding')
@@ -39,6 +40,7 @@ export class LeidingController {
     description: 'Alle leiding ophalen',
     type: LeidingListResponseDto,
   })
+  @Roles('hoofdleiding')
   @Public()
   @Get()
   async getAll(): Promise<LeidingListResponseDto> {
@@ -83,6 +85,7 @@ export class LeidingController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
+  @Roles('hoofdleiding')
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateLeidingDto): Promise<LeidingResponseDto> {
@@ -111,6 +114,7 @@ export class LeidingController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
+  @Roles('hoofdleiding')
   @Patch(':id')
   async updateById(
     @Param('id', ParseIntPipe) id: number,
@@ -136,6 +140,7 @@ export class LeidingController {
     status: 404,
     description: 'Leiding niet gevonden',
   })
+  @Roles('hoofdleiding')
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteById(@Param('id', ParseIntPipe) id: number): Promise<void> {
