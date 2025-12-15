@@ -41,10 +41,18 @@ export class KampResponseDto extends createKampRequestDTO {
   leiding: KampLeidingResponseDto[];
 }
 
+export class KampListItemDto {
+  id: number;
+  naam: string;
+  stad: string;
+  startDatum: string;
+  eindDatum: string;
+}
 
 export class KampenListResponseDto {
-  items: KampResponseDto[];
+  items: KampListItemDto[];
 }
+
 export class KampLidResponseDto {
   id: number;
   voornaam: string;

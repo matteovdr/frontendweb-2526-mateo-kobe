@@ -3,9 +3,7 @@ import { KampenService } from './kampen.service';
 import {
   KampenListResponseDto,
   KampResponseDto,
-  createKampRequestDTO,
-  KampLidResponseDto,
-  KampLeidingResponseDto,
+  createKampRequestDTO
 } from './kamp.dto';
 import { Public } from 'auth/decoraters/public.decorater';
 import { Roles } from 'auth/decoraters/roles.decorator';
@@ -21,20 +19,10 @@ export class KampenController {
   }
 
   // GET /kampen/:id
+  @Public()
   @Get(':id')
   async getOne(@Param('id', ParseIntPipe) id: number): Promise<KampResponseDto> {
     return this.kampenService.getKampWithId(id);
-  }
-
-  @Roles('leiding', 'hoofdleiding')
-  @Get(':id/leden')
-  async getLedenVanKamp(@Param('id', ParseIntPipe) id: number): Promise<KampLidResponseDto[]> {
-    return this.kampenService.getLedenVanKamp(id);
-  }
-  @Public()
-  @Get(':id/leiding')
-  async getLeiding(@Param('id', ParseIntPipe) id: number): Promise<KampLeidingResponseDto[]> {
-    return this.kampenService.getLeidingVanKamp(id);
   }
 
   // POST /kampen
