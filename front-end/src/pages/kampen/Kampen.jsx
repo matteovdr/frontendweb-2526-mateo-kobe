@@ -53,9 +53,9 @@ function Kampen() {
   }, [user, token, inschrijvenTrigger]);
 
   return (
-    <div className="p-3">
-      <h1 className="text-6xl font-semibold mb-4 text-[#004C97] text-center">Kampen</h1>
-      <p className="text-center py-4">
+    <div className="p-3 text-gray-800 dark:text-gray-100">
+      <h1 className="text-6xl font-semibold mb-4 text-[#004C97] dark:text-blue-200 text-center">Kampen</h1>
+      <p className="text-center py-4 text-gray-700 dark:text-gray-200">
         Dit zijn onze kampen die we gedaan hebben en die ingepland zijn. <br />
         Deze kampen zijn voor eens veel plezier te hebben! <br />
         Er moet wel altijd inschrijvingsgeld betaald worden.
@@ -68,8 +68,8 @@ function Kampen() {
           <Link
             to="add"
             className='my-6 py-4 px-16 border border-blue-300 rounded-2xl
-          text-blue-500 cursor-pointer hover:bg-blue-500 hover:text-white
-          transition duration-300'
+          text-blue-500 dark:text-blue-200 cursor-pointer hover:bg-blue-500 hover:text-white
+          dark:border-blue-500 dark:hover:bg-blue-600 transition duration-300'
           >
             Voeg een kamp toe
           </Link>
@@ -80,12 +80,12 @@ function Kampen() {
       )}
 
       <AsyncData loading={isLoading} error={error}>
-        <h2 className="text-4xl mb-4 text-blue-500 text-center">
+        <h2 className="text-4xl mb-4 text-blue-500 dark:text-blue-200 text-center">
           Dit zijn de kampen die we gedaan hebben
         </h2>
         <KampenLijst kampen={verledenKampen} alGedaan={true} />
 
-        <h2 className="text-4xl mb-4 text-blue-500 text-center mt-14">
+        <h2 className="text-4xl mb-4 text-blue-500 dark:text-blue-200 text-center mt-14">
           Dit zijn de kampen die we nog gaan doen!
         </h2>
         <KampenLijst 

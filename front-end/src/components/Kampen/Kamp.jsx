@@ -44,29 +44,29 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
 
   return (
     <div className="flex flex-1 flex-col place-content-center 
-        border border-blue-300 rounded-2xl p-5 bg-gray-100 shadow-xl">
+        border border-blue-300 dark:border-gray-700 rounded-2xl p-5 bg-gray-100 dark:bg-gray-800 shadow-xl transition-colors">
 
-      <h3 className="text-center font-semibold text-xl text-blue-600">
+      <h3 className="text-center font-semibold text-xl text-blue-600 dark:text-blue-300">
         {naam}
       </h3>
 
       {/* DATA */}
       <div>
-        <div className="grid grid-cols-2 border-t">
-          <label className="font-bold self-center">Stad</label>
-          <p className="text-right self-center">{stad}</p>
+        <div className="grid grid-cols-2 border-t border-gray-200 dark:border-gray-700">
+          <label className="font-bold self-center text-gray-700 dark:text-gray-200">Stad</label>
+          <p className="text-right self-center text-gray-800 dark:text-gray-100">{stad}</p>
         </div>
 
         <div className="grid grid-cols-2">
-          <label className="font-bold self-center">Start datum</label>
-          <p className="text-right self-center">
+          <label className="font-bold self-center text-gray-700 dark:text-gray-200">Start datum</label>
+          <p className="text-right self-center text-gray-800 dark:text-gray-100">
             {new Date(startDatum).toDateString()}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 border-b">
-          <label className="font-bold self-center">Eind datum</label>
-          <p className="text-right self-center">
+        <div className="grid grid-cols-2 border-b border-gray-200 dark:border-gray-700">
+          <label className="font-bold self-center text-gray-700 dark:text-gray-200">Eind datum</label>
+          <p className="text-right self-center text-gray-800 dark:text-gray-100">
             {new Date(eindDatum).toDateString()}
           </p>
         </div>
@@ -85,7 +85,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
         <button
           onClick={handleDetails}
           className="bg-yellow-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
-            hover:bg-yellow-600 cursor-pointer"
+            hover:bg-yellow-600 cursor-pointer dark:bg-yellow-600 dark:hover:bg-yellow-500"
         >
           Details
         </button>
@@ -94,7 +94,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
           <button
             data-cy={'delete'}
             onClick={handleDelete}
-            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm hover:bg-red-600 cursor-pointer"
+            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm hover:bg-red-600 cursor-pointer dark:bg-red-600 dark:hover:bg-red-500"
           >
             Verwijder
           </button>
