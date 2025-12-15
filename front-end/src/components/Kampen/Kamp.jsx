@@ -14,12 +14,15 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
   const isLid = user && Array.isArray(user.roles) && user.roles.includes('lid');
 
   const kanInschrijven = !alGedaan && user && (isLid || isLeidingOrHoofdleiding);
+
   let activeButtons = 0;
-  // Inschrijfknop OF de statische knop is altijd aanwezig
-  activeButtons += 1; 
+  // Inschrijfknop
+  if (!alGedaan) {
+    activeButtons += 1;
+  }
   // Details knop is altijd aanwezig
-  activeButtons += 1; 
-  // Verwijder knop is optioneel
+  activeButtons += 1;
+  // Verwijder knop
   if (isHoofleiding) {
     activeButtons += 1;
   }
@@ -79,16 +82,6 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
           />
         )}
 
-        {!kanInschrijven && (
-          <button
-            className={`text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
-                      ${alGedaan ? 'bg-gray-400 cursor-default' : 'bg-blue-500 cursor-default'}`}
-            disabled={true}
-          >
-            {alGedaan ? 'Afgewerkt' : 'Inschrijven'}
-          </button>
-        )}
-
         <button
           onClick={handleDetails}
           className="bg-yellow-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
@@ -101,8 +94,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
           <button
             data-cy={'delete'}
             onClick={handleDelete}
-            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
-              justify-self-center hover:bg-red-600 cursor-pointer"
+            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm hover:bg-red-600 cursor-pointer"
           >
             Verwijder
           </button>
