@@ -1,6 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { HealthController } from './health/health.controller';
 import { DrizzleModule } from './drizzle/drizzle.module';
 import { ConfigModule } from '@nestjs/config';
@@ -28,7 +26,7 @@ import { LoggerMiddleware } from './lib/logger.middleware';
     AuthModule,
     SessionModule,
   ],
-  controllers: [AppController, HealthController],
+  controllers: [HealthController],
   providers: [
     {   provide: APP_GUARD,
        useClass: AuthGuard,
@@ -38,7 +36,7 @@ import { LoggerMiddleware } from './lib/logger.middleware';
       useClass: RolesGuard,
     },
     
-    AppService,
+    
   ],
 })
 

@@ -1,57 +1,106 @@
-import {
-  IsString,
-  IsDateString,
-  MaxLength,
-  IsNotEmpty,
-  MinLength,
-} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class createKampRequestDTO {
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(40)
+export class CreateKampRequestDto {
+  @ApiProperty({
+    example: 'Zomerkamp 2025',
+    description: 'Naam van het kamp',
+  })
   naam: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(20)
+  @ApiProperty({
+    example: 'Gent',
+    description: 'Stad waar het kamp doorgaat',
+  })
   stad: string;
 
-  @IsDateString()
-  @IsNotEmpty()
-  startDatum: string;
-
-  @IsDateString()
-  @IsNotEmpty()
-  eindDatum: string;
-  
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(1000)
+  @ApiProperty({
+    example: 'Een week vol activiteiten voor jongeren.',
+    description: 'Korte beschrijving van het kamp',
+  })
   beschrijving: string;
+
+  @ApiProperty({
+    example: '2025-07-15',
+    description: 'Startdatum van het kamp',
+    type: String,
+    format: 'date',
+  })
+  startDatum: Date;
+
+  @ApiProperty({
+    example: '2025-07-22',
+    description: 'Einddatum van het kamp',
+    type: String,
+    format: 'date',
+  })
+  eindDatum: Date;
 }
 
-export class KampResponseDto extends createKampRequestDTO {
-  @IsString()
-  @IsNotEmpty()
+export class KampResponseDto extends CreateKampRequestDto {
+  @ApiProperty({
+    example: 1,
+    description: 'Unieke ID van het kamp',
+  })
   id: number;
 }
 
 export class KampenListResponseDto {
+  @ApiProperty({
+    description: 'Lijst van kampen',
+    type: () => KampResponseDto,
+    isArray: true,
+  })
   items: KampResponseDto[];
 }
+
 export class KampLidResponseDto {
+  @ApiProperty({
+    example: 1,
+    description: 'Unieke ID van het kamp-lid',
+  })
   id: number;
+
+  @ApiProperty({
+    example: 'Lars',
+    description: 'Voornaam van het kamp-lid',
+  })
   voornaam: string;
+
+  @ApiProperty({
+    example: 'Janssens',
+    description: 'Achternaam van het kamp-lid',
+  })
   achternaam: string;
+
+  @ApiProperty({
+    example: '10-12',
+    description: 'Leeftijdsgroep van het kamp-lid',
+  })
   ageGroup: string;
 }
+
 export class KampLeidingResponseDto {
+  @ApiProperty({
+    example: 1,
+    description: 'Unieke ID van de leiding',
+  })
   id: number;
+
+  @ApiProperty({
+    example: 'Emma',
+    description: 'Voornaam van de leiding',
+  })
   voornaam: string;
+
+  @ApiProperty({
+    example: 'Vermeulen',
+    description: 'Achternaam van de leiding',
+  })
   achternaam: string;
+
+  @ApiProperty({
+    example: '16+',
+    description: 'Leeftijdsgroep van de leiding',
+  })
   ageGroup: string;
 }
