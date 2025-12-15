@@ -40,7 +40,6 @@ export class LeidingController {
     description: 'Alle leiding ophalen',
     type: LeidingListResponseDto,
   })
-  @Roles('hoofdleiding')
   @Public()
   @Get()
   async getAll(): Promise<LeidingListResponseDto> {
