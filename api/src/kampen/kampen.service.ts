@@ -94,7 +94,10 @@ export class KampenService {
     };
   }
 
-  async inschrijvenVoorKamp(id: number, user: { id: number; roles: string[] }): Promise<InschrijvingResponseDto> {
+  async inschrijvenVoorKamp(
+    id: number,
+    user: { id: number; roles: string[] }
+  ): Promise<InschrijvingResponseDto> {
     const kampId = id;
     const userId = user.id;
 

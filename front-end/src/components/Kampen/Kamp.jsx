@@ -10,6 +10,16 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
   
   // Check if user is hoofdleiding
   const isHoofleiding = user && Array.isArray(user.roles) && user.roles.includes('hoofdleiding');
+
+  let activeButtons = 0;
+  // Inschrijfknop OF de statische knop is altijd aanwezig
+  activeButtons += 1; 
+  // Details knop is altijd aanwezig
+  activeButtons += 1; 
+  // Verwijder knop is optioneel
+  if (isHoofleiding) {
+    activeButtons += 1;
+  }
   const isLid = user && Array.isArray(user.roles) && user.roles.includes('lid');
   const kanInschrijven = !alGedaan && user && isLid; // 🛑 Kan inschrijven is alleen voor Leden en Toekomstige kampen
 
@@ -59,7 +69,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
       </div>
 
       {/* BUTTONS */}
-      <div className={`grid ${isHoofleiding ? 'grid-cols-3' : 'grid-cols-2'}`}>
+      <div className={`grid grid-cols-${activeButtons} gap-2 mt-2`}>
         {kanInschrijven && (
           <InschrijvenKnop
             kampId={id}
@@ -70,7 +80,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
 
         {!kanInschrijven && (
           <button
-            className={`text-white rounded-4xl py-1 px-3 text-sm justify-self-center
+            className={`text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
                       ${alGedaan ? 'bg-gray-400 cursor-default' : 'bg-blue-500 cursor-default'}`}
             disabled={true}
           >
@@ -80,8 +90,8 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
 
         <button
           onClick={handleDetails}
-          className="bg-yellow-500 text-white rounded-4xl mt-2 py-1 px-3 text-sm
-            justify-self-center hover:bg-yellow-600 cursor-pointer"
+          className="bg-yellow-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
+            hover:bg-yellow-600 cursor-pointer"
         >
           Details
         </button>
@@ -90,7 +100,7 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
           <button
             data-cy={'delete'}
             onClick={handleDelete}
-            className="bg-red-500 text-white rounded-4xl mt-2 py-1 px-3 text-sm
+            className="bg-red-500 text-white rounded-4xl mt-2 mx-2 py-1 px-3 text-sm
               justify-self-center hover:bg-red-600 cursor-pointer"
           >
             Verwijder

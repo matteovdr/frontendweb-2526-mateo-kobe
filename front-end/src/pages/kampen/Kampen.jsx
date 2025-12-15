@@ -25,16 +25,19 @@ function Kampen() {
   );
 
   const { user, token } = useAuth();
+
   const { trigger: inschrijvenTrigger, isMutating: isBusy } = useSWRMutation(
-    'inschrijven', 
-    (url, { arg }) => post(`kampen/${arg.kampId}/inschrijven`),
+    'kampen/inschrijven',
+    (url, { arg: kampId }) =>
+      post(`kampen/${kampId}/inschrijven`, { arg: null }),
   );
 
   const handleInschrijven = useCallback(async (kampId) => {
     if (!user || !token) return alert('U moet ingelogd zijn om in te schrijven.');
 
     try {
-      await inschrijvenTrigger({ kampId });
+      console.log(kampId);
+      await inschrijvenTrigger(kampId);
 
       alert('🥳 Inschrijving is gelukt!');
     } catch (e) {
