@@ -112,40 +112,30 @@ Ik zou meer tijd geven voor de lessen of de cursus verklijnen want het is wel ec
 
 ### Matteo van droogenbroeck
 
-// TODO verwijder dit na invulling
-> **Instructie:** Reflecteer eerlijk over je leerproces en het project. Dit helpt zowel jezelf als de docenten om de cursus te verbeteren.
 
 **Wat heb je geleerd?**
 
-[Beschrijf je belangrijkste leermoment...]
+Tijdens dit project heb ik leren samenwerken via GitHub en Git. Ik leerde hoe we samen aan één codebase konden werken door gebruik te maken van branches, commits en pull requests.
+Ik heb ook leren werken met react, tailwind, formik, yup, swr, axios, postman, swagger, authenticatie, autorisatie, rollen,... .
 
 **Wat vond je goed aan dit project?**
 
-[Positieve aspecten...]
-
+Ik vond het positief dat we een examenopdracht kregen en vond dit ook leuker en leerzamer als gewoon studeren voor een examen.
 **Wat zou je anders doen?**
-
-[Verbeterpunten voor jezelf...]
+Meer overleggen voor het coderen zodat we een duidelijker plan hebben.
 
 **Wat waren de grootste uitdagingen?**
-
-[Moeilijkheden die je bent tegengekomen...]
+Ik vond persoonlijke HF9 de back-end testen het moeilijkste om te snappen.
 
 **Wat zou je behouden aan de cursus?**
-
-[Wat werkt goed...]
+De oplossingen als voorbeeld zijn zeer handig om het te kunnen implementeren in je eigen project.
 
 **Wat zou je toevoegen/aanpassen?**
+Meer mogen aan werken tijdens de les, het was soms veel werk buiten de lessen.
 
-[Suggesties voor verbetering...]
 
 ### Reflectie groepswerk
 
-// TODO verwijder dit na invulling
-> **Instructies:**
->
-> - Vul dit eerlijk in, we controleren ook de GitHub contributions en pull requests.
-> - Verwijder deze sectie als je alleen hebt gewerkt.
 
 **Hoe verliep het groepswerk?**
 
@@ -160,7 +150,7 @@ Ik zou meer tijd geven voor de lessen of de cursus verklijnen want het is wel ec
 
 - **Matteo van Droogenbroeck:**
   - [ ] Ik heb minder bijgedragen dan mijn groepsgenoot
-  - [ ] Ik heb evenveel bijgedragen als mijn groepsgenoot
+  - [x] Ik heb evenveel bijgedragen als mijn groepsgenoot
   - [ ] Ik heb meer bijgedragen dan mijn groepsgenoot
 
 **Welke functionaliteiten heeft elk groepslid toegevoegd voor Web Services?**
@@ -213,7 +203,9 @@ Ik zou meer tijd geven voor de lessen of de cursus verklijnen want het is wel ec
   - React router ingesteld.
   - About me pagina gemaakt.
   - Leiding pagina gemaakt.
+  - cypress login en register
   - Register gemaakt.
+  - hooks 
   - Theme context gemaakt voor dark/light mode.
   - Authenticatie token beheer met localStorage.
   - Error handling voor API calls.
