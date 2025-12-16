@@ -1,7 +1,5 @@
 # Examenopdracht Front-end Web Development & Web Services
 
-> Schrap hierboven eventueel wat niet past
-
 - Student: Kobe Vlieghe
 - Studentennummer: 202301886
 - E-mailadres: <kobe.vlieghe@student.hogent.be>
@@ -12,15 +10,11 @@
 
 ## Vereisten
 
-> Vul de vereisten eventueel aan
-
 Ik verwacht dat volgende software reeds geïnstalleerd is:
 
 - [NodeJS](https://nodejs.org)
 - [pnpm](https://pnpm.io)
 - [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
-
-> Je kan ook een aparte README per project (in de respectievelijke map) voorzien. Verwijs er dan hier naar.
 
 ## Front-end
 
@@ -39,14 +33,17 @@ pnpm dev
 maak een .env bestand aan in de front-end map met volgende inhoud:
 
 ```env
-VITE_GOOGLE_CLIENT_ID=283896268475-7kd3er7l6lfu5k2q5155p7ct117j9jm0.apps.googleusercontent.com
+VITE_API_URL='http://localhost:3000/api'
 ```
-
-> Schrijf hier hoe we de applicatie starten (.env bestanden aanmaken, commando's om uit te voeren...)
 
 ### Testen
 
-> Schrijf hier hoe we de testen uitvoeren (.env bestanden aanmaken, commando's om uit te voeren...)
+```bash
+cd .\front-end\
+pnpm test
+```
+
+Dan moet je op e2e testen klikken in de terminal, dan de browser die je wilt. En je kunt dan de testen laten runnen.
 
 ## Back-end
 
@@ -69,13 +66,18 @@ maak een .env bestand aan in de api map met volgende inhoud:
 ```env
 NODE_ENV=development
 PORT=3000
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGINS=["http://localhost:5173", "http://localhost"]
 CORS_MAX_AGE=10800
-DATABASE_URL=mysql://devusr:devpwd@localhost:3306/ksa
+AUTH_JWT_SECRET=<JE_EIGEN_SECRET_HIER>
+DATABASE_URL=mysql://<user>:<wachtwoord>@<host>:<database_poort>/<database_naam>
+LOG_LEVELS=["log","error","warn","debug"]
 ```
-
-> Schrijf hier hoe we de applicatie starten (.env bestanden aanmaken, commando's om uit te voeren...)
 
 ### Testen
 
-> Schrijf hier hoe we de testen uitvoeren (.env bestanden aanmaken, commando's om uit te voeren...)
+```bash
+cd .\api\
+pnpm test:e2e
+```
+
+// TODO  NOG NAKIJKEN OF DIT JUIST IS
