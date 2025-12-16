@@ -120,6 +120,7 @@ export class KampenController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
+  @Roles('hoofdleiding')
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(
@@ -154,6 +155,7 @@ export class KampenController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
+  @Roles('hoofdleiding')
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -179,6 +181,7 @@ export class KampenController {
     status: 404,
     description: 'Kamp niet gevonden',
   })
+  @Roles('hoofdleiding')
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(

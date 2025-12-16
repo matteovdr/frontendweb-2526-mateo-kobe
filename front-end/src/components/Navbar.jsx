@@ -24,7 +24,7 @@ function Navbar() {
           <button
             onClick={toggleDarkmode}
             className="flex items-center justify-center w-9 h-9 rounded-full border
-             border-white/50 hover:bg-white/10 transition"
+             border-white/50 hover:bg-white/10 transition hover:cursor-pointer"
             aria-label="Toggle dark mode"
           >
 
@@ -72,7 +72,7 @@ function Navbar() {
           {/* Hamburger menu */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-white focus:outline-none"
+            className="md:hidden text-white focus:outline-none hover:cursor-pointer"
           >
             <svg
               className="w-8 h-8"

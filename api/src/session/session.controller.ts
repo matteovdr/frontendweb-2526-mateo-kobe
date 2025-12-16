@@ -27,8 +27,8 @@ export class SessionController {
     status: 400,
     description: 'Ongeldige invoergegevens',
   })
-  @Post()
   @Public()
+  @Post()
   @UseInterceptors(AuthDelayInterceptor)
   async signIn(@Body() loginDto: LoginRequestDto): Promise<LoginResponseDto> {
     const token = await this.authService.login(loginDto);
