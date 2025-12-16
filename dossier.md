@@ -35,9 +35,18 @@ Het project is een webapplicatie voor KSA Hillegem, een jeugdbeweging die kampen
 
 ![Response diagram](./images/response.svg)
 
-[Korte toelichting bij het ERD...]
+Je kunt het erd ook zelf laten genereren via Postman, ga hiervoor naar erd.md in de root. Hier staat uitgelegd hoe je dat doet.
 
-TODO ervoor zorgen dat de symbolen duidelijk zijn
+Aangezien het tekens zijn dat aan ons gevraagd werd te verduidelijken zal ik dat hier doen.
+
+| Type | Symbol |
+| --- | --- |
+| Zero or One | `\|o--` |
+| Exactly One | `\|\|--` |
+| Zero or Many | `}o--` |
+| One or Many | `}\|--` |
+
+![Cardinaliteiten](images/ERDCardinallity.webp)
 
 De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers en leiding aan een specifiek kamp koppelen. Leden en Leiding maken elk deel uit van een Groep, terwijl Hoofdleiding een gespecialiseerde vorm van leiding is met extra verantwoordelijkheden. Ouders zijn verbonden aan één of meerdere leden en dienen als contactpersonen. Daarnaast is er een Kookploeg die minstens aan 1 of meerdere kampen zijn gekoppeld.
 
@@ -45,6 +54,10 @@ De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers e
 
 - [x] Het project van Web Services voldoet aan **alle** ontvankelijkheidscriteria zoals beschreven in de rubrics.
 - [x] Het project van Front-end Web Development voldoet aan **alle** ontvankelijkheidscriteria zoals beschreven in de rubrics.
+
+## API calls
+
+Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de online versie op <https://api-ksa-hillegem.onrender.com/api/docs/>
 
 ## 🚀 Extra technologieën
 
