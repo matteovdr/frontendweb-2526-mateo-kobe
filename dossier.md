@@ -41,7 +41,7 @@ Het project is een webapplicatie voor KSA Hillegem, een jeugdbeweging die kampen
 
 ![Response diagram](./images/response.svg)
 
-Je kunt het erd ook zelf laten genereren via Postman, ga hiervoor naar erd.md in de root. Hier staat uitgelegd hoe je dat doet.
+Je kunt het ERD ook zelf laten genereren via Postman, ga hiervoor naar erd.md in de root. Hier staat uitgelegd hoe je dat doet.
 
 Aangezien het tekens zijn dat aan ons gevraagd werd te verduidelijken zal ik dat hier doen.
 
@@ -52,7 +52,7 @@ Aangezien het tekens zijn dat aan ons gevraagd werd te verduidelijken zal ik dat
 | Zero or Many | `}o--` |
 | One or Many | `}\|--` |
 
-![Cardinaliteiten](images/ERDCardinallity.webp)
+![Cardinaliteiten](images/ERDCardinality.webp)
 
 De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers en leiding aan een specifiek kamp koppelen. Leden en Leiding maken elk deel uit van een Groep, terwijl Hoofdleiding een gespecialiseerde vorm van leiding is met extra verantwoordelijkheden. Ouders zijn verbonden aan één of meerdere leden en dienen als contactpersonen. Daarnaast is er een Kookploeg die minstens aan 1 of meerdere kampen zijn gekoppeld.
 
@@ -63,7 +63,7 @@ De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers e
 
 ## API calls
 
-Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de online versie op [https://api-ksa-hillegem.onrender.com/api/docs](https://api-ksa-hillegem.onrender.com/docs)
+Kijk hiervoor naar de documentatie van Swagger op localhost:3000/api/docs of de online versie op [https://api-ksa-hillegem.onrender.com/docs](https://api-ksa-hillegem.onrender.com/docs)
 
 ## 🚀 Extra technologieën
 
@@ -72,7 +72,7 @@ Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de 
 - <https://formik.org/docs/overview>
   - De reden dat we Formik hebben gebruikt is om het beheer van formulieren in onze React-applicatie te vereenvoudigen. Formik biedt een gestructureerde manier om formulierstatus, validatie en afhandeling van inzendingen te beheren, wat de ontwikkelingstijd verkort en de code leesbaarder maakt.
   - Een groot pluspunt is de integratie met Yup voor schema-gebaseerde validatie, wat ons in staat stelt om complexe validatieregels op een eenvoudige en onderhoudbare manier te implementeren.
-- Interactieve google maps
+- Interactieve Google Maps
   - De reden is voor een leuk visueel ligging van KSA Hillegem te tonen aan de gebruikers.
   - Een groot pluspunt is dat gebruikers gemakkelijk de locatie kunnen vinden en navigeren naar KSA Hillegem.
 
@@ -81,8 +81,8 @@ Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de 
 - <https://openapi-generator.tech/>
   - De reden dat we OpenAPI Generator hebben gebruikt is om snel en efficiënt een gestructureerde API-documentatie te genereren. Dit helpt bij het communiceren van de API-specificaties naar zowel ontwikkelaars als andere belanghebbenden. Het bespaart tijd en moeite bij het handmatig schrijven van documentatie en zorgt ervoor dat de documentatie altijd up-to-date is met de codebase.
   - Een zeer groot pluspunt is dat we nog steeds swagger kunnen gebruiken om onze API te testen, wat het ontwikkelingsproces vereenvoudigt.
-- Google oAuth2.0
-  - We hebben geprobeerd google oAuth2.0 te implementeren om gebruikers een gemakkelijke en veilige manier te bieden om in te loggen met hun Google-account. Dit vermindert de noodzaak voor gebruikers om aparte inloggegevens te onthouden en verhoogt de gebruiksvriendelijkheid van onze applicatie.
+- Google OAuth2.0
+  - We hebben geprobeerd Google OAuth2.0 te implementeren om gebruikers een gemakkelijke en veilige manier te bieden om in te loggen met hun Google-account. Dit vermindert de noodzaak voor gebruikers om aparte inloggegevens te onthouden en verhoogt de gebruiksvriendelijkheid van onze applicatie.
   - Dit was niet gelukt door gebrek aan tijd, maar we zouden dit in de toekomst willen implementeren omdat het een groot pluspunt zou zijn voor de gebruikerservaring.
   
 ## 🤔 Reflectie
@@ -91,9 +91,9 @@ Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de 
 
 **Wat heb je geleerd?**
 
-In het algemeen werken met react, tailwind, formik, yup, swr, axios, postman, swagger, authenticatie, autorisatie, rollen, etc.
+In het algemeen werken met React, Tailwind, Formik, Yup, SWR, Axios, Postman, Swagger, authenticatie, autorisatie, rollen, etc.
 Eigenlijk zeer veel technologieën die ik nog niet kende.
-Daarnaast ook veel geleerd over samenwerken in een team, git, github, pull requests, code reviews. Ik had vroeger ook dat ik niet goed snapte hoe ik een git merge goed moest doen, maar nu heb ik dat veel beter onder de knie gekregen.
+Daarnaast ook veel geleerd over samenwerken in een team, Git, GitHub, pull requests, code reviews. Ik had vroeger ook dat ik niet goed snapte hoe ik een git merge goed moest doen, maar nu heb ik dat veel beter onder de knie gekregen.
 
 **Wat vond je goed aan dit project?**
 
@@ -205,7 +205,7 @@ Meer mogen aan werken tijdens de les, het was soms veel werk buiten de lessen.
   - Leiding pagina gemaakt.
   - cypress login en register
   - Register gemaakt.
-  - hooks.
+  - Hooks.
   - Theme context gemaakt voor dark/light mode.
   - Authenticatie token beheer met localStorage.
   - Error handling voor API calls.
