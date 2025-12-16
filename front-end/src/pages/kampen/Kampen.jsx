@@ -1,8 +1,8 @@
 import { useMemo, useCallback } from 'react';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import KampenLijst from '../../components/Kampen/KampenLijst';
-import { getAll, post } from '../../api';
+import { getAll, post, deleteById } from '../../api';
 import { Link } from 'react-router-dom';
 import AsyncData from '../../components/AsyncData';
 import { useAuth } from '../../contexts/auth';
@@ -26,10 +26,15 @@ function Kampen() {
 
   const { user, token } = useAuth();
 
-  const { trigger: inschrijvenTrigger, isMutating: isBusy } = useSWRMutation(
+  const { trigger: inschrijvenTrigger, isMutating: inschrijvenBusy } = useSWRMutation(
     'kampen/inschrijven',
     (url, { arg: kampId }) =>
       post(`kampen/${kampId}/inschrijven`, { arg: null }),
+  );
+
+  const { trigger: uitschrijvenTrigger, isMutating: uitschrijvenBusy } = useSWRMutation(
+    'kampen/uitschrijven',
+    (url, { arg: kampId }) => deleteById(`kampen/${kampId}/inschrijven`),
   );
 
   const handleInschrijven = useCallback(async (kampId) => {
@@ -37,7 +42,7 @@ function Kampen() {
 
     try {
       await inschrijvenTrigger(kampId);
-
+      await mutate('kampen');
       alert('🥳 Inschrijving is gelukt!');
     } catch (e) {
       console.error('Inschrijffout:', e);
@@ -50,6 +55,21 @@ function Kampen() {
       }
     }
   }, [user, token, inschrijvenTrigger]);
+
+  const handleUitschrijven = useCallback(async (kampId) => {
+    if (!user || !token) return alert('U moet ingelogd zijn om uit te schrijven.');
+
+    try {
+      await uitschrijvenTrigger(kampId);
+      await mutate('kampen');
+      alert('U bent uitgeschreven voor dit kamp.');
+    } catch (e) {
+      console.error('Uitschrijffout:', e);
+      alert('Fout tijdens uitschrijving. Probeer opnieuw.');
+    }
+  }, [user, token, uitschrijvenTrigger]);
+
+  const isBusy = inschrijvenBusy || uitschrijvenBusy;
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -110,6 +130,7 @@ function Kampen() {
               alGedaan={false} 
               user={user}
               onInschrijven={handleInschrijven} 
+              onUitschrijven={handleUitschrijven}
               isBusy={isBusy}
             />
           </div>

@@ -44,8 +44,8 @@ export class KampenController {
   })
   @Public()
   @Get()
-  async getAll(): Promise<KampenListResponseDto> {
-    return this.kampenService.getAll();
+  async getAll(@CurrentUser() user?: AuthUser): Promise<KampenListResponseDto> {
+    return this.kampenService.getAll(user);
   }
 
   @ApiOperation({
@@ -101,6 +101,33 @@ export class KampenController {
     @CurrentUser() user: AuthUser,
   ): Promise<InschrijvingResponseDto> {
     return this.kampenService.inschrijvenVoorKamp(id, user);
+  }
+
+  @ApiOperation({
+    summary: 'Uitschrijven voor kamp',
+    description: 'Schrijf de huidige gebruiker uit voor een kamp',
+  })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'Unieke ID van het kamp',
+  })
+  @ApiResponse({
+    status: 204,
+    description: 'Uitschrijven succesvol',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Inschrijving niet gevonden',
+  })
+  @Roles('lid', 'leiding', 'hoofdleiding')
+  @Delete(':id/inschrijven')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async uitschrijven(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: AuthUser,
+  ): Promise<void> {
+    await this.kampenService.uitschrijvenVanKamp(id, user);
   }
 
   @ApiOperation({

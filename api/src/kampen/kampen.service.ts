@@ -12,8 +12,27 @@ export class KampenService {
     private readonly db: DatabaseProvider,
   ) {}
 
-  async getAll(): Promise<KampenListResponseDto> {
+  async getAll(user?: { id: number; roles: string[] }): Promise<KampenListResponseDto> {
     const items = await this.db.query.kampen.findMany();
+
+    const ingeschrevenKampIds = new Set<number>();
+
+    if (user?.id) {
+      if (user.roles.includes('lid')) {
+        const inschrijvingenLid = await this.db.query.lidKamp.findMany({
+          where: eq(lidKamp.lidId, user.id),
+        });
+        inschrijvingenLid.forEach((inschrijving) => ingeschrevenKampIds.add(inschrijving.kampId));
+      }
+
+      if (user.roles.some((role) => role === 'leiding' || role === 'hoofdleiding')) {
+        const inschrijvingenLeiding = await this.db.query.leidingKamp.findMany({
+          where: eq(leidingKamp.leidingId, user.id),
+        });
+        inschrijvingenLeiding.forEach((inschrijving) => ingeschrevenKampIds.add(inschrijving.kampId));
+      }
+    }
+
     return {
       items: items.map((item) => ({
         id: item.id,
@@ -22,13 +41,14 @@ export class KampenService {
         beschrijving: item.beschrijving,
         startDatum: item.startDatum.toISOString(),
         eindDatum: item.eindDatum.toISOString(),
+        isIngeschreven: ingeschrevenKampIds.has(item.id),
       })),
     };
   }
 
   async getKampWithId(
     id: number,
-    user?: { roles: string[] },
+    user?: { id?: number; roles?: string[] },
   ): Promise<KampResponseDto> {
     const kamp = await this.db.query.kampen.findFirst({
       where: eq(kampen.id, id),
@@ -68,6 +88,14 @@ export class KampenService {
     const magLeidingZien = isLid(user) || isLeiding(user);
     const magLedenZien = isLeiding(user);
 
+    const isIngeschrevenAlsLid = isLid(user)
+      ? kamp.leden.some((lk) => lk.lidId === user?.id)
+      : false;
+    const isIngeschrevenAlsLeiding = isLeiding(user)
+      ? kamp.leiding.some((lk) => lk.leidingId === user?.id)
+      : false;
+    const isIngeschreven = isIngeschrevenAlsLid || isIngeschrevenAlsLeiding;
+
     return {
       id: kamp.id,
       naam: kamp.naam,
@@ -75,6 +103,7 @@ export class KampenService {
       beschrijving: kamp.beschrijving,
       startDatum: kamp.startDatum.toISOString(),
       eindDatum: kamp.eindDatum.toISOString(),
+      isIngeschreven,
 
       leiding: magLeidingZien
         ? kamp.leiding.map((lk) => ({
@@ -142,6 +171,36 @@ export class KampenService {
         id: userId,
         kampid: kampId,
     };
+  }
+
+  async uitschrijvenVanKamp(
+    id: number,
+    user: { id: number; roles: string[] },
+  ): Promise<void> {
+    const kampId = id;
+    const userId = user.id;
+
+    let deleted = 0;
+
+    if (user.roles.includes('lid')) {
+      const [result] = await this.db
+        .delete(lidKamp)
+        .where(and(eq(lidKamp.lidId, userId), eq(lidKamp.kampId, kampId)));
+
+      deleted += (result as any)?.affectedRows ?? 0;
+    }
+
+    if (user.roles.includes('leiding') || user.roles.includes('hoofdleiding')) {
+      const [result] = await this.db
+        .delete(leidingKamp)
+        .where(and(eq(leidingKamp.leidingId, userId), eq(leidingKamp.kampId, kampId)));
+
+      deleted += (result as any)?.affectedRows ?? 0;
+    }
+
+    if (deleted === 0) {
+      throw new NotFoundException('U bent niet ingeschreven voor dit kamp.');
+    }
   }
 
   async createKamp({naam, stad, startDatum, eindDatum, beschrijving}: CreateKampRequestDto): Promise<KampResponseDto> {

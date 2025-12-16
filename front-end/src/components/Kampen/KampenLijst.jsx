@@ -1,6 +1,6 @@
 import Kamp from './Kamp';
 
-function KampenLijst({ kampen, alGedaan, user, onInschrijven, isBusy }) { 
+function KampenLijst({ kampen, alGedaan, user, onInschrijven, onUitschrijven, isBusy }) { 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 2xl:px-60">
@@ -15,7 +15,9 @@ function KampenLijst({ kampen, alGedaan, user, onInschrijven, isBusy }) {
             alGedaan={alGedaan}
             user={user}
             onInschrijven={onInschrijven}
+            onUitschrijven={onUitschrijven}
             isBusy={isBusy}
+            isIngeschreven={kamp.isIngeschreven}
           />
         ))}
       </div>

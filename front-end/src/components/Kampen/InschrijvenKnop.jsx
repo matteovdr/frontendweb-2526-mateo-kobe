@@ -1,18 +1,40 @@
-const InschrijvenKnop = ({ kampId, onInschrijven, isBusy }) => {
+const InschrijvenKnop = ({
+  kampId,
+  onInschrijven,
+  onUitschrijven,
+  isBusy,
+  isIngeschreven,
+}) => {
   const handleClick = () => {
-    onInschrijven(kampId);
+    if (isBusy) return;
+    if (isIngeschreven) {
+      onUitschrijven?.(kampId);
+    } else {
+      onInschrijven(kampId);
+    }
   };
 
+  const baseClasses = 'py-1 px-3 transition rounded-4xl mt-2 mx-2 text-white';
+  const busyClasses = 'bg-gray-400 cursor-not-allowed';
+  const inschrijvenClasses = 'bg-green-500 hover:bg-green-600 hover:cursor-pointer';
+  const uitschrijvenClasses = 'bg-blue-500 hover:bg-blue-600 hover:cursor-pointer';
+
+  const buttonClasses = `${baseClasses} ${
+    isBusy
+      ? busyClasses
+      : isIngeschreven
+        ? uitschrijvenClasses
+        : inschrijvenClasses
+  }`;
+
   return (
-    <button 
+    <button
       onClick={handleClick}
       disabled={isBusy}
       data-cy="inschrijven-btn"
-      className={`py-1 px-3 transition rounded-4xl mt-2 mx-2
-                        ${isBusy ? 'bg-gray-400 cursor-not-allowed' 
-      : 'bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white'}`}
+      className={buttonClasses}
     >
-      {isBusy ? 'Bezig...' : 'Inschrijven'}
+      {isBusy ? 'Bezig...' : isIngeschreven ? 'Uitschrijven' : 'Inschrijven'}
     </button>
   );
 };

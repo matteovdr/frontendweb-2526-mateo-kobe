@@ -56,6 +56,13 @@ export class KampResponseDto extends CreateKampRequestDto {
   id: number;
 
   @ApiProperty({
+    example: true,
+    required: false,
+    description: 'Geeft aan of de ingelogde gebruiker is ingeschreven voor dit kamp',
+  })
+  isIngeschreven?: boolean;
+
+  @ApiProperty({
     description: 'Lijst van leden in dit kamp',
     type: () => KampLidResponseDto,
     isArray: true,
@@ -104,6 +111,13 @@ export class KampListItemDto {
     format: 'date',
   })
   eindDatum: string;
+
+  @ApiProperty({
+    example: false,
+    required: false,
+    description: 'Geeft aan of de ingelogde gebruiker al is ingeschreven',
+  })
+  isIngeschreven?: boolean;
 }
 
 export class KampenListResponseDto {
