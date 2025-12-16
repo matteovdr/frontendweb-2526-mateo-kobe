@@ -85,8 +85,8 @@ async function bootstrap() {
 
   
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Budget Web Services')
-    .setDescription('The Budget API application')
+    .setTitle('KSA Hillegem API')
+    .setDescription('The API for KSA Hillegem application')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
