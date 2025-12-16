@@ -51,8 +51,8 @@ describe('Kamp verwijderen', () => {
       // Bevestig de delete actie
       cy.on('window:confirm', () => true);
       
-      // wacht op antwoord backEnd en check of code 200 is
-      cy.wait('@deleteKamp').its('response.statusCode').should('eq', 200);
+      // wacht op antwoord backEnd en check of code 204 is (No Content)
+      cy.wait('@deleteKamp').its('response.statusCode').should('eq', 204);
     });
   });
 });
