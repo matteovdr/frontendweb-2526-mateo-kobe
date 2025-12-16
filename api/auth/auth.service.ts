@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import { persoon } from '../src/drizzle/schema';
+import { persoon, lid, leiding } from '../src/drizzle/schema';
 import { Role } from './roles';
 import * as argon2 from 'argon2';
 import { LoginRequestDto, RegisterPersoonRequestDto } from '../src/persoon/persoon.dto';
@@ -19,6 +19,32 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService<ServerConfig>,
   ) {}
+
+  private getAgeGroup(birthDate: Date): string {
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    if (age >= 16) {
+      return '+16';
+    } else if (age >= 14) {
+      return "Sjo’ers";
+    } else if (age >= 12) {
+      return 'Knimmers';
+    } else if (age >= 10) {
+      return "Joro’s";
+    } else if (age >= 8) {
+      return 'Paggaders';
+    } else if (age >= 6) {
+      return 'Sloebers';
+    }
+    return 'unknown';
+  }
+  
   
   async hashPassword(password: string): Promise<string> {
     const authConfig = this.configService.get<AuthConfig>('auth')!;
@@ -86,8 +112,14 @@ export class AuthService {
     telefoon,
     geboorteDatum,
     password,
+    role,
+    beschrijving,
+    ageGroup,
   }: RegisterPersoonRequestDto): Promise<string> {
     const passwordHash = await this.hashPassword(password);
+
+    // Determine roles based on role parameter
+    const roles = role === 'leiding' ? [Role.LEIDING] : [Role.LID];
 
     const [newPersoon] = await this.db
       .insert(persoon)
@@ -98,9 +130,29 @@ export class AuthService {
          telefoon,
         geboorteDatum: new Date(geboorteDatum), 
         passwordHash,
-        roles: [Role.LID],
+        roles,
       })
       .$returningId();
+
+    // Create lid record if registering as 'lid'
+    if (role !== 'leiding') {
+      const birthDate = new Date(geboorteDatum);
+      const computedAgeGroup = this.getAgeGroup(birthDate);
+      
+      await this.db.insert(lid).values({
+        persoonId: newPersoon.id,
+        ageGroup: computedAgeGroup,
+      });
+    } else {
+      // Create leiding record if registering as 'leiding'
+      await this.db.insert(leiding).values({
+        persoonId: newPersoon.id,
+        ageGroup: ageGroup || 'unknown',
+        imageUrl: '',
+        beschrijving: beschrijving || '',
+        isHoofdleiding: false,
+      });
+    }
 
     const created = await this.db.query.persoon.findFirst({
       where: eq(persoon.id, newPersoon.id),

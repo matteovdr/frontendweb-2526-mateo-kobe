@@ -1,22 +1,32 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, MinLength, MaxLength, IsDateString } from 'class-validator';
 
 export class CreateKampRequestDto {
   @ApiProperty({
     example: 'Zomerkamp 2025',
     description: 'Naam van het kamp',
   })
+  @IsString()
+  @MinLength(2)
+  @MaxLength(255)
   naam: string;
 
   @ApiProperty({
     example: 'Gent',
     description: 'Stad waar het kamp doorgaat',
   })
+  @IsString()
+  @MinLength(2)
+  @MaxLength(255)
   stad: string;
 
   @ApiProperty({
     example: 'Een week vol activiteiten voor jongeren.',
     description: 'Korte beschrijving van het kamp',
   })
+  @IsString()
+  @MinLength(10)
+  @MaxLength(1000)
   beschrijving: string;
 
   @ApiProperty({
@@ -25,6 +35,7 @@ export class CreateKampRequestDto {
     type: String,
     format: 'date',
   })
+  @IsDateString()
   startDatum: string;
 
   @ApiProperty({
@@ -33,6 +44,7 @@ export class CreateKampRequestDto {
     type: String,
     format: 'date',
   })
+  @IsDateString()
   eindDatum: string;
 }
 

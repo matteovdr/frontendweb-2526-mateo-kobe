@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import useSWR from 'swr';
 import { getAll } from '../api/';
 import AsyncData from '../components/AsyncData';
+import { CiImageOff } from 'react-icons/ci';
 
 export default function Leiding() {
   const {
@@ -52,11 +53,18 @@ export default function Leiding() {
                   dark:border-gray-700 rounded-2xl shadow-md p-6 max-w-xs text-center
                   hover:shadow-lg transition-shadow duration-200"
                 >
-                  <img
-                    src={Hoofdleiding.imageUrl}
-                    alt={Hoofdleiding.name}
-                    className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
-                  />
+                  {Hoofdleiding.imageUrl ? (
+                    <img
+                      src={Hoofdleiding.imageUrl}
+                      alt={Hoofdleiding.name}
+                      className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
+                    />
+                  ) : (
+                    <div className="w-40 h-40 mx-auto rounded-full bg-gray-200 
+                    dark:bg-gray-700 flex items-center justify-center mb-4">
+                      <CiImageOff className="text-4xl text-gray-400 dark:text-gray-500" />
+                    </div>
+                  )}
                   <h4 className="text-xl font-semibold text-[#004C97] dark:text-blue-300">
                     {Hoofdleiding.name}
                   </h4>
@@ -84,11 +92,17 @@ export default function Leiding() {
                   dark:border-gray-700 rounded-2xl shadow-md p-6 max-w-xs text-center
                   hover:shadow-lg transition-shadow duration-200"  
                 >
-                  <img
-                    src={leiding.imageUrl}
-                    alt={leiding.voornaam}
-                    className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
-                  />
+                  {leiding.imageUrl ? (
+                    <img
+                      src={leiding.imageUrl}
+                      alt={leiding.voornaam}
+                      className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
+                    />
+                  ) : (
+                    <div className="w-40 h-40 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mb-4">
+                      <CiImageOff className="text-4xl text-gray-400 dark:text-gray-500" />
+                    </div>
+                  )}
                   <h4 className="text-xl font-semibold text-[#004C97] dark:text-blue-300">
                     {leiding.voornaam}
                   </h4>
