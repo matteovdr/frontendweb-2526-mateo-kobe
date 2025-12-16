@@ -17,13 +17,19 @@
 
 ## 🔐 Logingegevens
 
+### Hoofdleiding (admin)
+
 - **E-mailadres**: <lotte.staes@gmail.com>
 - **Wachtwoord**: 12345678
-- **Rol**: hoofdleiding (= admin)
+- **Rol**: hoofdleiding
+
+### Leiding
 
 - **E-mailadres**: <liam.robyns@gmail.com>
 - **Wachtwoord**: 12345678
 - **Rol**: leiding
+
+### Lid
 
 - **E-mailadres**: <nora.debruyn@gmail.com>
 - **Wachtwoord**: 12345678
@@ -112,7 +118,6 @@ Ik zou meer tijd geven voor de lessen of de cursus verklijnen want het is wel ec
 
 ### Matteo van droogenbroeck
 
-
 **Wat heb je geleerd?**
 
 Tijdens dit project heb ik leren samenwerken via GitHub en Git. Ik leerde hoe we samen aan één codebase konden werken door gebruik te maken van branches, commits en pull requests.
@@ -133,14 +138,9 @@ De oplossingen als voorbeeld zijn zeer handig om het te kunnen implementeren in 
 **Wat zou je toevoegen/aanpassen?**
 Meer mogen aan werken tijdens de les, het was soms veel werk buiten de lessen.
 
-
 ### Reflectie groepswerk
 
-
 **Hoe verliep het groepswerk?**
-
-// TODO verwijder dit na invulling
-> **Instructie:** Vink voor elk groepslid één van de drie opties aan door een 'x' tussen de vierkante haken te plaatsen: `[x]`
 
 - **Kobe Vlieghe:**
 
@@ -205,7 +205,7 @@ Meer mogen aan werken tijdens de les, het was soms veel werk buiten de lessen.
   - Leiding pagina gemaakt.
   - cypress login en register
   - Register gemaakt.
-  - hooks 
+  - hooks.
   - Theme context gemaakt voor dark/light mode.
   - Authenticatie token beheer met localStorage.
   - Error handling voor API calls.
