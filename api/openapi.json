@@ -1,0 +1,1478 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/health/ping": {
+      "get": {
+        "description": "Controleert of de API beschikbaar is",
+        "operationId": "HealthController_ping",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "API is gezond",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pong": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Gezondheidscontrole",
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/api/kampen": {
+      "get": {
+        "description": "Haalt een lijst op van alle beschikbare kampen",
+        "operationId": "KampenController_getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Get all kampen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KampenListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Alle kampen ophalen",
+        "tags": [
+          "Kampen"
+        ]
+      },
+      "post": {
+        "description": "Maak een nieuw kamp aan met de opgegeven gegevens",
+        "operationId": "KampenController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Gegevens voor het nieuwe kamp",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKampRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Kamp succesvol aangemaakt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KampResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Nieuw kamp aanmaken",
+        "tags": [
+          "Kampen"
+        ]
+      }
+    },
+    "/api/kampen/{id}": {
+      "get": {
+        "description": "Haalt de details op van een specifiek kamp",
+        "operationId": "KampenController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van het kamp",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Kamp details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KampResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Kamp not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Kamp ophalen op ID",
+        "tags": [
+          "Kampen"
+        ]
+      },
+      "put": {
+        "description": "Update de gegevens van een bestaand kamp",
+        "operationId": "KampenController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van het kamp",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Bijgewerkte gegevens voor het kamp",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKampRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Kamp succesvol bijgewerkt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KampResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Kamp niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Kamp bijwerken",
+        "tags": [
+          "Kampen"
+        ]
+      },
+      "delete": {
+        "description": "Verwijder een bestaand kamp",
+        "operationId": "KampenController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van het kamp",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Kamp succesvol verwijderd"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Kamp niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Kamp verwijderen",
+        "tags": [
+          "Kampen"
+        ]
+      }
+    },
+    "/api/kampen/{id}/inschrijven": {
+      "post": {
+        "description": "Schrijf de huidige gebruiker in voor een kamp",
+        "operationId": "KampenController_inschrijven",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van het kamp",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Inschrijving succesvol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InschrijvingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldig verzoek"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Inschrijven voor kamp",
+        "tags": [
+          "Kampen"
+        ]
+      }
+    },
+    "/api/leiding": {
+      "get": {
+        "description": "Haalt een lijst op van alle beschikbare leiding",
+        "operationId": "LeidingController_getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Alle leiding ophalen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeidingListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Alle leiding ophalen",
+        "tags": [
+          "Leiding"
+        ]
+      },
+      "post": {
+        "description": "Maak een nieuw leidingspersoon aan met de opgegeven gegevens",
+        "operationId": "LeidingController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLeidingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Leiding succesvol aangemaakt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeidingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Nieuwe leiding aanmaken",
+        "tags": [
+          "Leiding"
+        ]
+      }
+    },
+    "/api/leiding/{id}": {
+      "get": {
+        "description": "Haalt de details op van een specifieke leidingspersoon",
+        "operationId": "LeidingController_getById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van de leiding",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Leiding details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeidingResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Leiding niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Leiding ophalen op ID",
+        "tags": [
+          "Leiding"
+        ]
+      },
+      "patch": {
+        "description": "Update de gegevens van een bestaande leidingspersoon",
+        "operationId": "LeidingController_updateById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van de leiding",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLeidingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Leiding succesvol bijgewerkt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeidingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Leiding niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Leiding bijwerken",
+        "tags": [
+          "Leiding"
+        ]
+      },
+      "delete": {
+        "description": "Verwijder een bestaande leidingspersoon",
+        "operationId": "LeidingController_deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van de leiding",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Leiding succesvol verwijderd"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Leiding niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Leiding verwijderen",
+        "tags": [
+          "Leiding"
+        ]
+      }
+    },
+    "/api/personen": {
+      "get": {
+        "description": "Haalt een lijst op van alle geregistreerde personen",
+        "operationId": "PersoonController_getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Alle personen ophalen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersoonListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Alle personen ophalen",
+        "tags": [
+          "Personen"
+        ]
+      },
+      "post": {
+        "description": "Maak een nieuwe persoon aan met de opgegeven gegevens",
+        "operationId": "PersoonController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePersoonDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Persoon succesvol aangemaakt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersoonResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Nieuwe persoon aanmaken",
+        "tags": [
+          "Personen"
+        ]
+      }
+    },
+    "/api/personen/me": {
+      "get": {
+        "description": "Haalt de gegevens op van de ingelogde gebruiker",
+        "operationId": "PersoonController_getMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Huidige gebruiker ophalen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersoonResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Niet geauthoriseerd - geen geldige token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Huidige gebruiker ophalen",
+        "tags": [
+          "Personen"
+        ]
+      }
+    },
+    "/api/personen/{id}": {
+      "get": {
+        "description": "Haalt de details op van een specifieke persoon, of \"me\" voor huidige gebruiker",
+        "operationId": "PersoonController_getById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van de persoon of \"me\" voor huidige gebruiker",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Persoon details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersoonResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Niet geauthoriseerd"
+          },
+          "404": {
+            "description": "Persoon niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Persoon ophalen op ID",
+        "tags": [
+          "Personen"
+        ]
+      },
+      "patch": {
+        "description": "Update de gegevens van een bestaande persoon",
+        "operationId": "PersoonController_updateById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van de persoon",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePersoonDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Persoon succesvol bijgewerkt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicPersoonResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Persoon niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Persoon bijwerken",
+        "tags": [
+          "Personen"
+        ]
+      },
+      "delete": {
+        "description": "Verwijder een bestaande persoon",
+        "operationId": "PersoonController_deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unieke ID van de persoon",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Persoon succesvol verwijderd"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          },
+          "404": {
+            "description": "Persoon niet gevonden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Persoon verwijderen",
+        "tags": [
+          "Personen"
+        ]
+      }
+    },
+    "/api/personen/register": {
+      "post": {
+        "description": "Registreer een nieuwe gebruiker en ontvang een JWT token",
+        "operationId": "PersoonController_registerPersoon",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterPersoonRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registratie succesvol, JWT token ontvangen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Unauthorized - you need to be signed in"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Gebruiker registreren",
+        "tags": [
+          "Personen"
+        ]
+      }
+    },
+    "/api/sessions": {
+      "post": {
+        "description": "Login met e-mailadres en wachtwoord en ontvang een JWT token",
+        "operationId": "SessionController_signIn",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login succesvol, JWT token ontvangen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoergegevens"
+          },
+          "401": {
+            "description": "Ongeldige inloggegevens"
+          }
+        },
+        "summary": "Gebruiker inloggen",
+        "tags": [
+          "Sessions"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": " Web Services",
+    "description": " API application",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "KampListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van het kamp"
+          },
+          "naam": {
+            "type": "string",
+            "example": "Zomerkamp 2025",
+            "description": "Naam van het kamp"
+          },
+          "stad": {
+            "type": "string",
+            "example": "Gent",
+            "description": "Stad waar het kamp doorgaat"
+          },
+          "startDatum": {
+            "type": "string",
+            "example": "2025-07-15",
+            "description": "Startdatum van het kamp",
+            "format": "date"
+          },
+          "eindDatum": {
+            "type": "string",
+            "example": "2025-07-22",
+            "description": "Einddatum van het kamp",
+            "format": "date"
+          }
+        },
+        "required": [
+          "id",
+          "naam",
+          "stad",
+          "startDatum",
+          "eindDatum"
+        ]
+      },
+      "KampenListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Lijst van kampen",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KampListItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "KampLidResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van het kamp-lid"
+          },
+          "voornaam": {
+            "type": "string",
+            "example": "Lars",
+            "description": "Voornaam van het kamp-lid"
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Janssens",
+            "description": "Achternaam van het kamp-lid"
+          }
+        },
+        "required": [
+          "id",
+          "voornaam",
+          "achternaam"
+        ]
+      },
+      "KampLeidingResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van de leiding"
+          },
+          "voornaam": {
+            "type": "string",
+            "example": "Emma",
+            "description": "Voornaam van de leiding"
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Vermeulen",
+            "description": "Achternaam van de leiding"
+          }
+        },
+        "required": [
+          "id",
+          "voornaam",
+          "achternaam"
+        ]
+      },
+      "KampResponseDto": {
+        "type": "object",
+        "properties": {
+          "naam": {
+            "type": "string",
+            "example": "Zomerkamp 2025",
+            "description": "Naam van het kamp"
+          },
+          "stad": {
+            "type": "string",
+            "example": "Gent",
+            "description": "Stad waar het kamp doorgaat"
+          },
+          "beschrijving": {
+            "type": "string",
+            "example": "Een week vol activiteiten voor jongeren.",
+            "description": "Korte beschrijving van het kamp"
+          },
+          "startDatum": {
+            "type": "string",
+            "example": "2025-07-15",
+            "description": "Startdatum van het kamp",
+            "format": "date"
+          },
+          "eindDatum": {
+            "type": "string",
+            "example": "2025-07-22",
+            "description": "Einddatum van het kamp",
+            "format": "date"
+          },
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van het kamp"
+          },
+          "leden": {
+            "description": "Lijst van leden in dit kamp",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KampLidResponseDto"
+            }
+          },
+          "leiding": {
+            "description": "Lijst van leiding in dit kamp",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KampLeidingResponseDto"
+            }
+          }
+        },
+        "required": [
+          "naam",
+          "stad",
+          "beschrijving",
+          "startDatum",
+          "eindDatum",
+          "id",
+          "leden",
+          "leiding"
+        ]
+      },
+      "InschrijvingResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van de inschrijving"
+          },
+          "kampid": {
+            "type": "number",
+            "example": 1,
+            "description": "ID van het kamp"
+          }
+        },
+        "required": [
+          "id",
+          "kampid"
+        ]
+      },
+      "CreateKampRequestDto": {
+        "type": "object",
+        "properties": {
+          "naam": {
+            "type": "string",
+            "example": "Zomerkamp 2025",
+            "description": "Naam van het kamp"
+          },
+          "stad": {
+            "type": "string",
+            "example": "Gent",
+            "description": "Stad waar het kamp doorgaat"
+          },
+          "beschrijving": {
+            "type": "string",
+            "example": "Een week vol activiteiten voor jongeren.",
+            "description": "Korte beschrijving van het kamp"
+          },
+          "startDatum": {
+            "type": "string",
+            "example": "2025-07-15",
+            "description": "Startdatum van het kamp",
+            "format": "date"
+          },
+          "eindDatum": {
+            "type": "string",
+            "example": "2025-07-22",
+            "description": "Einddatum van het kamp",
+            "format": "date"
+          }
+        },
+        "required": [
+          "naam",
+          "stad",
+          "beschrijving",
+          "startDatum",
+          "eindDatum"
+        ]
+      },
+      "LeidingResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van de leiding"
+          },
+          "voornaam": {
+            "type": "string",
+            "example": "liam",
+            "description": "Voornaam van de leiding"
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Van de walle",
+            "description": "Achternaam van de leiding"
+          },
+          "ageGroup": {
+            "type": "string",
+            "example": "18+",
+            "description": "Leeftijdsgroep van de leiding"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "/src/images/liam.png",
+            "description": "URL naar de profielfoto van de leiding"
+          },
+          "description": {
+            "type": "string",
+            "example": "Ervaren monitor met focus op sportactiviteiten.",
+            "description": "Korte beschrijving van de leiding"
+          },
+          "isHoofdleiding": {
+            "type": "boolean",
+            "example": true,
+            "description": "Of deze leiding hoofdleiding is"
+          }
+        },
+        "required": [
+          "id",
+          "voornaam",
+          "achternaam",
+          "ageGroup",
+          "imageUrl",
+          "description"
+        ]
+      },
+      "LeidingListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Lijst van leiding",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeidingResponseDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "CreateLeidingDto": {
+        "type": "object",
+        "properties": {
+          "persoonId": {
+            "type": "number",
+            "example": 1,
+            "description": "Optioneel ID van de gekoppelde persoon",
+            "nullable": true
+          },
+          "voornaam": {
+            "type": "string",
+            "example": "Emma",
+            "description": "Voornaam van de leiding"
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Vermeulen",
+            "description": "Achternaam van de leiding"
+          },
+          "ageGroup": {
+            "type": "string",
+            "example": "18+",
+            "description": "Leeftijdsgroep van de leiding"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://example.com/images/leiding-emma.jpg",
+            "description": "URL naar de profielfoto van de leiding"
+          },
+          "description": {
+            "type": "string",
+            "example": "Ervaren monitor met focus op sportactiviteiten.",
+            "description": "Korte beschrijving van de leiding"
+          },
+          "isHoofdleiding": {
+            "type": "boolean",
+            "example": true,
+            "description": "Of deze leiding hoofdleiding is"
+          }
+        },
+        "required": [
+          "ageGroup",
+          "imageUrl",
+          "description"
+        ]
+      },
+      "UpdateLeidingDto": {
+        "type": "object",
+        "properties": {
+          "voornaam": {
+            "type": "string",
+            "example": "Emma",
+            "description": "Voornaam van de leiding"
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Vermeulen",
+            "description": "Achternaam van de leiding"
+          },
+          "ageGroup": {
+            "type": "string",
+            "example": "18+",
+            "description": "Leeftijdsgroep van de leiding"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://example.com/images/leiding-emma.jpg",
+            "description": "URL naar de profielfoto van de leiding"
+          },
+          "description": {
+            "type": "string",
+            "example": "Ervaren monitor met focus op sportactiviteiten.",
+            "description": "Korte beschrijving van de leiding"
+          },
+          "isHoofdleiding": {
+            "type": "boolean",
+            "example": true,
+            "description": "Of deze leiding hoofdleiding is"
+          }
+        }
+      },
+      "PublicPersoonResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Unieke ID van de persoon"
+          },
+          "voornaam": {
+            "type": "string",
+            "example": "Jan",
+            "description": "Voornaam van de persoon"
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Peeters",
+            "description": "Achternaam van de persoon"
+          },
+          "email": {
+            "type": "string",
+            "example": "jan.peeters@example.com",
+            "description": "E-mailadres van de persoon"
+          },
+          "roles": {
+            "example": [
+              "USER",
+              "ADMIN"
+            ],
+            "description": "Rollen van de persoon",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "voornaam",
+          "achternaam",
+          "email",
+          "roles"
+        ]
+      },
+      "PersoonListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Lijst van personen",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicPersoonResponseDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "CreatePersoonDto": {
+        "type": "object",
+        "properties": {
+          "voornaam": {
+            "type": "string",
+            "example": "Jan",
+            "description": "Voornaam van de persoon",
+            "minLength": 2,
+            "maxLength": 255
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Peeters",
+            "description": "Achternaam van de persoon",
+            "minLength": 2,
+            "maxLength": 255
+          },
+          "geboorteDatum": {
+            "type": "string",
+            "example": "1990-01-01",
+            "description": "Geboortedatum van de persoon",
+            "format": "date"
+          },
+          "telefoon": {
+            "type": "string",
+            "example": "+32470123456",
+            "description": "Telefoonnummer van de persoon"
+          },
+          "email": {
+            "type": "string",
+            "example": "jan.peeters@example.com",
+            "description": "E-mailadres van de persoon"
+          },
+          "passwordHash": {
+            "type": "string",
+            "example": "SterkPasswoord123!",
+            "description": "Wachtwoord (plaintext, wordt gehashed op de server met salt)",
+            "minLength": 8,
+            "maxLength": 128
+          },
+          "roles": {
+            "example": [
+              "USER"
+            ],
+            "description": "Optionele rollen voor de persoon",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "voornaam",
+          "achternaam",
+          "geboorteDatum",
+          "email",
+          "passwordHash"
+        ]
+      },
+      "UpdatePersoonDto": {
+        "type": "object",
+        "properties": {
+          "voornaam": {
+            "type": "string",
+            "example": "Jan",
+            "description": "Voornaam van de persoon",
+            "minLength": 2,
+            "maxLength": 255
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Peeters",
+            "description": "Achternaam van de persoon",
+            "minLength": 2,
+            "maxLength": 255
+          },
+          "geboorteDatum": {
+            "type": "string",
+            "example": "1990-01-01",
+            "description": "Geboortedatum van de persoon",
+            "format": "date"
+          },
+          "telefoon": {
+            "type": "string",
+            "example": "+32470123456",
+            "description": "Telefoonnummer van de persoon"
+          },
+          "email": {
+            "type": "string",
+            "example": "jan.peeters@example.com",
+            "description": "E-mailadres van de persoon"
+          },
+          "roles": {
+            "example": [
+              "USER",
+              "ADMIN"
+            ],
+            "description": "Rollen van de persoon",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RegisterPersoonRequestDto": {
+        "type": "object",
+        "properties": {
+          "voornaam": {
+            "type": "string",
+            "example": "Jan",
+            "description": "Voornaam van de persoon",
+            "minLength": 2,
+            "maxLength": 255
+          },
+          "achternaam": {
+            "type": "string",
+            "example": "Peeters",
+            "description": "Achternaam van de persoon",
+            "minLength": 2,
+            "maxLength": 255
+          },
+          "email": {
+            "type": "string",
+            "example": "jan.peeters@example.com",
+            "description": "E-mailadres van de persoon"
+          },
+          "telefoon": {
+            "type": "string",
+            "example": "+32470123456",
+            "description": "Telefoonnummer van de persoon",
+            "minLength": 4,
+            "maxLength": 20
+          },
+          "geboorteDatum": {
+            "type": "string",
+            "example": "1990-01-01",
+            "description": "Geboortedatum (ISO string)",
+            "format": "date"
+          },
+          "password": {
+            "type": "string",
+            "example": "SterkPasswoord123!",
+            "description": "Wachtwoord van de gebruiker",
+            "minLength": 8,
+            "maxLength": 128
+          },
+          "role": {
+            "type": "string",
+            "example": "lid",
+            "description": "Type account: \"lid\" of \"leiding\"",
+            "enum": [
+              "lid",
+              "leiding"
+            ]
+          },
+          "ageGroup": {
+            "type": "string",
+            "example": "+16",
+            "description": "Leeftijdsgroep (voor leiding)",
+            "enum": [
+              "+16",
+              "Sjo’ers",
+              "Knimmers",
+              "Joro’s",
+              "Paggaders",
+              "Sloebers"
+            ]
+          },
+          "beschrijving": {
+            "type": "string",
+            "example": "Ervaren monitor met focus op sportactiviteiten.",
+            "description": "Beschrijving (alleen voor leiding)",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "voornaam",
+          "achternaam",
+          "email",
+          "telefoon",
+          "geboorteDatum",
+          "password"
+        ]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            "description": "JWT token voor authenticatie"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "LoginRequestDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@email.com",
+            "description": "E-mailadres van de gebruiker"
+          },
+          "password": {
+            "type": "string",
+            "example": "SterkPasswoord123!",
+            "description": "Wachtwoord van de gebruiker",
+            "minLength": 8,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      }
+    }
+  }
+}

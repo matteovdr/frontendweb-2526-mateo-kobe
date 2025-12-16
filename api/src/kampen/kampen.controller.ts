@@ -21,7 +21,7 @@ import { ApiResponse, ApiTags, ApiOperation, ApiParam, ApiBearerAuth, ApiBody } 
 import { Public } from 'auth/decoraters/public.decorater';
 import { Roles } from 'auth/decoraters/roles.decorator';
 import { CurrentUser } from 'auth/decoraters/currentUser.decorator';
-import type { AuthUser } from 'auth/auth.types';
+import type { AuthUser } from '../../auth/auth.types';
 
 @ApiTags('Kampen')
 @ApiBearerAuth()
