@@ -27,7 +27,7 @@ describe('KampForm', () => {
     cy.contains('Beschrijving is verplicht');
   });
 
-  it('should not allow selecting past dates', () => {
+  it('should enforce min/max validation rules', () => {
     // Intercept login request
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
     
@@ -37,17 +37,30 @@ describe('KampForm', () => {
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
     
-    // IMPORTANT: Wait for login API call to complete
+    // Wait for login
     cy.wait('@loginRequest');
-    
-    // Then wait for navigation to complete
     cy.url().should('not.include', '/login', { timeout: 5000 });
     
-    // Finally go to kamp form page
     cy.visit('http://localhost:5173/kampen/add');
-    cy.get('[data-cy="input-start"]').type('2020-01-01');
+
+    cy.get('[data-cy="input-naam"]').type('A');
+    cy.get('[data-cy="input-stad"]').type('B');
+    cy.get('[data-cy="input-beschrijving"]').type('Te kort');
     cy.get('[data-cy="submit-button"]').click();
-    cy.contains('Startdatum moet in de toekomst liggen');
+
+    cy.contains('Naam moet minstens 2 tekens bevatten');
+    cy.contains('Stad moet minstens 2 tekens bevatten');
+    cy.contains('Beschrijving moet minstens 10 tekens bevatten');
+
+    const longString = 'x'.repeat(260);
+    cy.get('[data-cy="input-naam"]').clear().type(longString);
+    cy.get('[data-cy="input-stad"]').clear().type(longString);
+    cy.get('[data-cy="input-beschrijving"]').clear().type('x'.repeat(1001));
+    cy.get('[data-cy="submit-button"]').click();
+
+    cy.contains('Naam mag maximaal 255 tekens bevatten');
+    cy.contains('Stad mag maximaal 255 tekens bevatten');
+    cy.contains('Beschrijving mag maximaal 1000 tekens bevatten');
   });
 
   it('should validate that end date is after start date', () => {

@@ -8,19 +8,16 @@ import { mutate } from 'swr';
 const kampSchema = Yup.object().shape({
   naam: Yup.string()
     .required('Naam is verplicht')
-    .max(40, 'Naam mag maximaal 40 tekens bevatten'),
+    .min(2, 'Naam moet minstens 2 tekens bevatten')
+    .max(255, 'Naam mag maximaal 255 tekens bevatten'),
 
   stad: Yup.string()
     .required('Stad is verplicht')
-    .max(20, 'Stad mag maximaal 20 tekens bevatten'),
+    .min(2, 'Stad moet minstens 2 tekens bevatten')
+    .max(255, 'Stad mag maximaal 255 tekens bevatten'),
 
   startDatum: Yup.date()
-    .required('Startdatum is verplicht')
-    .min(
-      // Creëert een Date object dat de start van de huidige dag (middernacht) vertegenwoordigt
-      new Date(new Date().setHours(0, 0, 0, 0)),
-      'Startdatum moet in de toekomst liggen',
-    ),
+    .required('Startdatum is verplicht'),
 
   eindDatum: Yup.date()
     .required('Einddatum is verplicht')
@@ -35,6 +32,7 @@ const kampSchema = Yup.object().shape({
     ),
   beschrijving: Yup.string()
     .required('Beschrijving is verplicht')
+    .min(10, 'Beschrijving moet minstens 10 tekens bevatten')
     .max(1000, 'Beschrijving mag maximaal 1000 tekens bevatten'),
 
 });
