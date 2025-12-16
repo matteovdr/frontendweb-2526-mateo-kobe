@@ -129,6 +129,7 @@ export default function Register() {
     <FormProvider {...methods}>
       <div className="flex justify-center items-center min-h-screen">
         <form
+          noValidate
           onSubmit={handleSubmit(handleRegister)}
           className="flex justify-center items-center flex-col border-4 border-blue-300
                      rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
