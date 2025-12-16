@@ -1,13 +1,18 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts';
 import { useAuth } from '../contexts/auth';
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { darkmode, toggleDarkmode } = useTheme();
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -15,8 +20,12 @@ function Navbar() {
     setMenuOpen(false);
   };
 
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
   return (
-    <nav className="bg-[#004C97] dark:bg-gray-900 text-white p-4 shadow-md transition-colors">
+    <nav className="sticky top-0 z-50 bg-[#004C97] dark:bg-gray-900 text-white p-4 shadow-md transition-colors">
       <div className="flex justify-between items-center">
 
         <div className="flex items-center gap-3">
@@ -65,7 +74,7 @@ function Navbar() {
             )}
           </button>
 
-          <h1 className="text-xl font-bold tracking-wide">KSA HILLEGEM</h1>
+          <h1 className="text-xl font-bold tracking-wide my-0">KSA HILLEGEM</h1>
         </div>
  
         <div className="flex items-center space-x-4">
@@ -100,10 +109,14 @@ function Navbar() {
           </button>
 
           <div className="hidden md:flex space-x-6 items-center">
-            <Link to="/home" className="hover:text-yellow-300 transition p-2">Home</Link>
-            <Link to="/leiding" className="hover:text-yellow-300 transition p-2">Leiding</Link>
-            <Link to="/about" className="hover:text-yellow-300 transition p-2">About Us</Link>
-            <Link to="/kampen" className="hover:text-yellow-300 transition p-2">Kampen</Link>
+            <Link to="/home" className={`transition p-2 border-b-2 ${isActive('/home') ? 
+              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>Home</Link>
+            <Link to="/leiding" className={`transition p-2 border-b-2 ${isActive('/leiding') ? 
+              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>Leiding</Link>
+            <Link to="/about" className={`transition p-2 border-b-2 ${isActive('/about') ? 
+              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>About Us</Link>
+            <Link to="/kampen" className={`transition p-2 border-b-2 ${isActive('/kampen') ? 
+              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>Kampen</Link>
             {user ? (
               <>
                 <span className={`font-semibold transition p-2 
@@ -119,7 +132,8 @@ function Navbar() {
                 </button>
               </>
             ) : (
-              <Link to="/login" className="hover:text-yellow-300 font-semibold transition p-2">
+              <Link to="/login" className={`font-semibold transition p-2 border-b-2 ${isActive('/login') ? 
+                'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>
                 Login
               </Link>
             )}
@@ -131,13 +145,21 @@ function Navbar() {
       {menuOpen && (
         <div className="md:hidden mt-4 flex flex-col space-y-4">
           <Link onClick={() => setMenuOpen(false)} to="/home" 
-            className="hover:text-yellow-300 transition p-2">Home</Link>
+            className={`transition p-2 border-l-4 ${isActive('/home') ? 
+              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
+            Home</Link>
           <Link onClick={() => setMenuOpen(false)} to="/leiding" 
-            className="hover:text-yellow-300 transition p-2">Leiding</Link>
+            className={`transition p-2 border-l-4 ${isActive('/leiding') ? 
+              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
+            Leiding</Link>
           <Link onClick={() => setMenuOpen(false)} to="/about" 
-            className="hover:text-yellow-300 transition p-2">About Us</Link>
+            className={`transition p-2 border-l-4 ${isActive('/about') ? 
+              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
+            About Us</Link>
           <Link onClick={() => setMenuOpen(false)} to="/kampen" 
-            className="hover:text-yellow-300 transition p-2">Kampen</Link>
+            className={`transition p-2 border-l-4 ${isActive('/kampen') ? 
+              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
+            Kampen</Link>
           {user ? (
             <>
               <span className={`font-semibold transition p-2 
@@ -154,7 +176,8 @@ function Navbar() {
             </>
           ) : (
             <Link onClick={() => setMenuOpen(false)} to="/login" 
-              className="hover:text-yellow-300 font-semibold transition p-2">
+              className={`font-semibold transition p-2 border-l-4 ${isActive('/login') ? 
+                'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
               Login
             </Link>
           )}

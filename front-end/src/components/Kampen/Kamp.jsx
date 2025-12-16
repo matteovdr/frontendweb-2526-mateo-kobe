@@ -38,15 +38,24 @@ function Kamp({ id, naam, stad, startDatum, eindDatum, alGedaan, onInschrijven, 
   };
 
   const colsClass = activeButtons === 1 ? 'grid-cols-1' : activeButtons === 2 ? 'grid-cols-2' : 'grid-cols-3';
+  const badgeText = alGedaan ? 'Afgelopen' : 'Komend';
+  const badgeClass = alGedaan
+    ? 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'
+    : 'bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-200';
 
   return (
     <div className="flex flex-1 flex-col place-content-center 
         border border-blue-300 dark:border-gray-700 rounded-2xl p-5
         bg-gray-100 dark:bg-gray-800 shadow-xl transition-colors">
 
-      <h3 className="text-center font-semibold text-xl text-blue-600 dark:text-blue-300">
-        {naam}
-      </h3>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="font-semibold text-xl text-blue-600 dark:text-blue-300">
+          {naam}
+        </h3>
+        <span className={`text-xs px-3 py-1 rounded-full font-semibold ${badgeClass}`}>
+          {badgeText}
+        </span>
+      </div>
 
       {/* DATA */}
       <div>
