@@ -21,7 +21,7 @@ function KampDetail() {
   const navigate = useNavigate();
   
   const { data: kamp, isLoading: kampLoading, error: kampError } = useSWR(
-    `/api/kampen/${id}`,
+    `/kampen/${id}`,
     fetcher,
   );
 
