@@ -26,7 +26,7 @@ export default function Leiding() {
           Onze leidingsploeg
         </h2>
         <img
-          src="/src/images/leiding.jpg"
+          src="/images/leiding.jpg"
           className="w-full h-96 object-cover mb-8 max-w-4xl justify-self-center rounded-2xl"
           alt="Leiding"
         />

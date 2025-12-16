@@ -13,7 +13,7 @@ function Home() {
       to-blue-800 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/src/images/ksa.webp"
+            src="/images/ksa.webp"
             alt="KSA Banner"
             className="w-full h-full object-cover opacity-40"
           />
@@ -72,7 +72,7 @@ function Home() {
           </div>
           <div>
             <img
-              src="/src/images/3randomguys.webp"
+              src="/images/3randomguys.webp"
               alt="KSA Leden"
               className="rounded-2xl shadow-lg w-full h-80 object-cover"
             />
@@ -141,7 +141,7 @@ function Home() {
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <img
-                src="/src/images/kerstmarkt.webp"
+                src="/images/kerstmarkt.webp"
                 alt="Activiteiten"
                 className="w-full h-64 object-cover rounded-xl shadow-md mb-6"
               />
@@ -154,7 +154,7 @@ function Home() {
             </div>
             <div className="text-center">
               <img
-                src="/src/images/matteoenvrouw.webp"
+                src="/images/matteoenvrouw.webp"
                 alt="Kampementen"
                 className="w-full h-64 object-cover rounded-xl shadow-md mb-6"
               />
@@ -167,7 +167,7 @@ function Home() {
             </div>
             <div className="text-center">
               <img
-                src="/src/images/leiding.jpg"
+                src="/images/leiding.jpg"
                 alt="Leiding"
                 className="w-full h-64 object-cover rounded-xl shadow-md mb-6"
               />
@@ -180,7 +180,7 @@ function Home() {
             </div>
             <div className="text-center">
               <img
-                src="/src/images/ZWARTEPIET.webp"
+                src="/images/ZWARTEPIET.webp"
                 alt="Feestelijkheden"
                 className="w-full h-64 object-cover rounded-xl shadow-md mb-6"
               />
