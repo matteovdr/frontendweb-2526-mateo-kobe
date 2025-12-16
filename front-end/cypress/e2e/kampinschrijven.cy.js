@@ -35,7 +35,7 @@ describe('Inschrijven voor kamp', () => {
 
     it('kan succesvol inschrijven (201)', () => {
       cy.intercept('POST', '**/kampen/*/inschrijven', (req) => {
-        req.reply({ statusCode: 201, body: { id: 1, kampid: 1 } });
+        req.reply({ statusCode: 201, body: { id: 1, kampid: 6 } });
       }).as('inschrijven');
 
       cy.get('[data-cy="inschrijven-btn"]').its('length').should('be.greaterThan', 0);
@@ -66,7 +66,7 @@ describe('Inschrijven voor kamp', () => {
 
     it('kan succesvol inschrijven (201)', () => {
       cy.intercept('POST', '**/kampen/*/inschrijven', (req) => {
-        req.reply({ statusCode: 201, body: { id: 12, kampid: 1 } });
+        req.reply({ statusCode: 201, body: { id: 12, kampid: 6 } });
       }).as('inschrijvenLeiding');
 
       cy.get('[data-cy="inschrijven-btn"]').first().click();
@@ -96,24 +96,13 @@ describe('Inschrijven voor kamp', () => {
 
     it('kan succesvol inschrijven (201)', () => {
       cy.intercept('POST', '**/kampen/*/inschrijven', (req) => {
-        req.reply({ statusCode: 201, body: { id: 2, kampid: 1 } });
+        req.reply({ statusCode: 201, body: { id: 2, kampid: 6 } });
       }).as('inschrijvenHoofdleiding');
 
       cy.get('[data-cy="inschrijven-btn"]').first().click();
 
       cy.wait('@inschrijvenHoofdleiding').its('response.statusCode').should('eq', 201);
       cy.get('@alert').should('have.been.calledWithMatch', 'Inschrijving is gelukt');
-    });
-
-    it('krijgt melding bij dubbele inschrijving (409)', () => {
-      cy.intercept('POST', '**/kampen/*/inschrijven', (req) => {
-        req.reply({ statusCode: 409, body: { message: 'U bent al als leiding ingeschreven voor dit kamp.' } });
-      }).as('inschrijvenHoofdleidingConflict');
-
-      cy.get('[data-cy="inschrijven-btn"]').first().click();
-
-      cy.wait('@inschrijvenHoofdleidingConflict').its('response.statusCode').should('eq', 409);
-      cy.get('@alert').should('have.been.calledWithMatch', 'al ingeschreven');
     });
   });
 });

@@ -62,7 +62,7 @@ function Kampen() {
     try {
       await uitschrijvenTrigger(kampId);
       await mutate('kampen');
-      alert('U bent uitgeschreven voor dit kamp.');
+      alert('✅ Uitschrijving is gelukt!');
     } catch (e) {
       console.error('Uitschrijffout:', e);
       alert('Fout tijdens uitschrijving. Probeer opnieuw.');

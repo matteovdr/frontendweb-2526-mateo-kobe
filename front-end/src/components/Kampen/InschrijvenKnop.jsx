@@ -31,7 +31,7 @@ const InschrijvenKnop = ({
     <button
       onClick={handleClick}
       disabled={isBusy}
-      data-cy="inschrijven-btn"
+      data-cy={isIngeschreven ? 'uitschrijven-btn' : 'inschrijven-btn'}
       className={buttonClasses}
     >
       {isBusy ? 'Bezig...' : isIngeschreven ? 'Uitschrijven' : 'Inschrijven'}
