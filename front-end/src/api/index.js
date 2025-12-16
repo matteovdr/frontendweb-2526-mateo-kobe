@@ -7,6 +7,12 @@ export const axios = axiosRoot.create({
   baseURL: baseUrl,
 });
 
+let unauthorizedHandler;
+
+export const setUnauthorizedHandler = (handler) => {
+  unauthorizedHandler = handler;
+};
+
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem(JWT_TOKEN_KEY);
 
@@ -16,6 +22,17 @@ axios.interceptors.request.use((config) => {
 
   return config;
 });
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error?.response?.status === 401) {
+      unauthorizedHandler?.();
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 // ---------------------
 // API FUNCTIONS

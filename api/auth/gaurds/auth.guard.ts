@@ -26,12 +26,17 @@ export class AuthGuard implements CanActivate {
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
       if (token) {
-        const payload = await this.authService.verifyJwt(token);
-        request.user = {
-          id: payload.sub,
-          roles: payload.roles as Role[],
-          email: payload.email,
-        };
+        try {
+          const payload = await this.authService.verifyJwt(token);
+          request.user = {
+            id: payload.sub,
+            roles: payload.roles as Role[],
+            email: payload.email,
+          };
+        } catch (err) {
+          // Ignore invalid or expired tokens on public routes
+          return true;
+        }
       }
       return true;
     }

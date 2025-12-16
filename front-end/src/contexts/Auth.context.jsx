@@ -1,8 +1,9 @@
 // src/contexts/Auth.context.jsx
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import * as api from '../api';
+import { setUnauthorizedHandler } from '../api';
 import { JWT_TOKEN_KEY, AuthContext } from './auth';
 
 const AuthProvider = ({ children }) => {
@@ -39,6 +40,17 @@ const AuthProvider = ({ children }) => {
       localStorage.removeItem(JWT_TOKEN_KEY);
     }
   }, [mutateUser]);
+
+  useEffect(() => {
+    setUnauthorizedHandler(() => setSession(null));
+    return () => setUnauthorizedHandler(undefined);
+  }, [setSession]);
+
+  useEffect(() => {
+    if (userError?.response?.status === 401) {
+      setSession(null);
+    }
+  }, [userError, setSession]);
 
   const login = useCallback(
     async (email, password) => {
