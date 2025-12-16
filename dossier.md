@@ -57,7 +57,7 @@ De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers e
 
 ## API calls
 
-Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de online versie op <https://api-ksa-hillegem.onrender.com/api/docs/>
+Kijk hiervoor naar de documentatie van swagger op localhost:3000/api/docs of de online versie op <[https://api-ksa-hillegem.onrender.com/api/docs](https://api-ksa-hillegem.onrender.com/docs)/>
 
 ## 🚀 Extra technologieën
 
