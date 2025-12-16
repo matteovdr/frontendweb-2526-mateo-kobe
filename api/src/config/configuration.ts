@@ -42,7 +42,14 @@ export default () => ({
   port: parseInt(process.env.PORT || '9000'),
   cors: {
     origins: process.env.CORS_ORIGINS
-      ? (JSON.parse(process.env.CORS_ORIGINS) as string[])
+      ? (() => {
+          try {
+            return JSON.parse(process.env.CORS_ORIGINS) as string[];
+          } catch {
+            // Fallback: treat as comma-separated string
+            return process.env.CORS_ORIGINS.split(',').map((o) => o.trim());
+          }
+        })()
       : [],
     maxAge: parseInt(process.env.CORS_MAX_AGE || String(3 * 60 * 60)),
   },
