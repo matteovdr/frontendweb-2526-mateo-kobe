@@ -70,7 +70,7 @@ function Kampen() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-9xl mx-auto px-4 py-12">
         {/* Controleer of de gebruiker bestaat (is ingelogd) en of de rollen de vereiste rol bevatten */}
         {user && user.roles.includes('hoofdleiding') && (
           <div className='flex justify-center mb-12'>
