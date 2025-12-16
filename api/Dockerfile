@@ -5,6 +5,10 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 RUN apk add --no-cache libc6-compat
 
+# Keep memory usage low in constrained environments like Render
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--max-old-space-size=1024
+
 FROM base AS dev-deps
 
 WORKDIR /app
@@ -37,4 +41,4 @@ COPY --from=builder /app/migrations ./migrations
 
 EXPOSE 3000
 
-CMD ["node", "dist/src/main"]
+CMD ["node", "dist/main.js"]

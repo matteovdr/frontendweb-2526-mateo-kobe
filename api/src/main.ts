@@ -41,7 +41,9 @@ async function bootstrap() {
 
 
   app.enableCors({
-    origin: ['http://localhost:5173'],
+    origin: (cors?.origins && cors.origins.length > 0)
+      ? cors.origins
+      : ['http://localhost:5173'],
     credentials: true,
     methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -82,18 +84,20 @@ async function bootstrap() {
   app.use(helmet());
 
   
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('Budget Web Services')
-    .setDescription('The Budget API application')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+  if (process.env.NODE_ENV !== 'production') {
+    const swaggerConfig = new DocumentBuilder()
+      .setTitle('Budget Web Services')
+      .setDescription('The Budget API application')
+      .setVersion('1.0')
+      .addBearerAuth()
+      .build();
 
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('docs', app, document);
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup('docs', app, document);
+  }
 
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   logger.log(`Server started on http://localhost:${port}/api`);
 }
 
