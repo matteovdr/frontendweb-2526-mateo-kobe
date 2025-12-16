@@ -10,7 +10,6 @@ export default function Leiding() {
     isLoading,
     error,
   } = useSWR('leiding', getAll);
-  console.log('leiding:', leiding);
 
   const groepen = useMemo(() => {
     return leiding.reduce((acc, lid) => {
@@ -99,7 +98,8 @@ export default function Leiding() {
                       className="w-40 h-40 mx-auto rounded-full object-cover mb-4"
                     />
                   ) : (
-                    <div className="w-40 h-40 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mb-4">
+                    <div className="w-40 h-40 mx-auto rounded-full bg-gray-200 
+                    dark:bg-gray-700 flex items-center justify-center mb-4">
                       <CiImageOff className="text-4xl text-gray-400 dark:text-gray-500" />
                     </div>
                   )}

@@ -36,7 +36,6 @@ function Kampen() {
     if (!user || !token) return alert('U moet ingelogd zijn om in te schrijven.');
 
     try {
-      console.log(kampId);
       await inschrijvenTrigger(kampId);
 
       alert('🥳 Inschrijving is gelukt!');

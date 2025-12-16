@@ -56,14 +56,6 @@ function Login() {
     [login, navigate, search],
   );
 
-  // const handleSuccess = (credentialResponse) => {
-  //   console.log('Google login success:', credentialResponse);
-  // };
-
-  // const handleError = () => {
-  //   console.log('Google login failed');
-  // };
-
   return (
     <FormProvider {...methods}>
       <div className="flex items-center justify-center min-h-screen w-full">

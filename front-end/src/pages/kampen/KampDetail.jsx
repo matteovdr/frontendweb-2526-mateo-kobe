@@ -34,11 +34,11 @@ function KampDetail() {
   if (kampLoading) return <div className="text-gray-800 dark:text-gray-100">Laden...</div>;
   if (kampError) return <Error error={kampError} />;
 
-  console.log(kamp);
   const { naam, stad, startDatum, eindDatum, beschrijving, leden, leiding } = kamp;
 
   return (
-    <div className="max-w-xl mx-auto mt-8 bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 transition-colors text-gray-800 dark:text-gray-100">
+    <div className="max-w-xl mx-auto mt-8 bg-white dark:bg-gray-900 
+    rounded-xl shadow-xl p-6 transition-colors text-gray-800 dark:text-gray-100">
       <h2 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-300">
         Details van {naam} ({stad})
       </h2>
@@ -85,7 +85,8 @@ function KampDetail() {
 
       <button
         onClick={() => navigate(-1)}
-        className="mt-6 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-50 transition-colors"
+        className="mt-6 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm 
+        dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-50 transition-colors"
       >
         Terug naar overzicht
       </button>
