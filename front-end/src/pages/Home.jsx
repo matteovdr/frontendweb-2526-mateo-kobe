@@ -1,5 +1,7 @@
 import { useAuth } from '../contexts/auth';
 import { Link } from 'react-router-dom';
+import { FaFacebook } from 'react-icons/fa';
+import { RiInstagramFill } from 'react-icons/ri';
 
 function Home() {
   const { user } = useAuth();
@@ -117,7 +119,8 @@ function Home() {
                 De tieners groeien als persoon en nemen volledige rollen op als scouts en gidsen.
               </p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border-l-4 border-purple-500 md:col-span-2">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border-l-4 
+            border-purple-500 md:col-span-2">
               <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-4">
                 +16 (Jongeren & Leiding)
               </h3>
@@ -135,7 +138,7 @@ function Home() {
           <h2 className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-12 text-center">
             Wat we Doen
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <img
                 src="/src/images/kerstmarkt.webp"
@@ -175,12 +178,25 @@ function Home() {
                 Ervaren leiders die jonge mensen inspireren en begeleiden.
               </p>
             </div>
+            <div className="text-center">
+              <img
+                src="/src/images/ZWARTEPIET.webp"
+                alt="Feestelijkheden"
+                className="w-full h-64 object-cover rounded-xl shadow-md mb-6"
+              />
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                Speciale Feestelijkheden
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Jaarlijkse hoogtepunten en feestelijke evenementen voor alle leden.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-6 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="py-16 px-6 bg-linear-to-r from-blue-600 to-blue-800">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-4xl font-bold mb-6">
             Klaar voor Avontuur?
@@ -192,14 +208,16 @@ function Home() {
             {!user && (
               <Link
                 to="/register"
-                className="bg-white text-blue-600 px-10 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                className="bg-white text-blue-600 px-10 py-3 rounded-lg font-semibold 
+                hover:bg-blue-50 transition-colors"
               >
                 Meld je Aan
               </Link>
             )}
             <Link
               to="/leiding"
-              className="bg-blue-500 text-white px-10 py-3 rounded-lg font-semibold hover:bg-blue-400 transition-colors border border-white"
+              className="bg-blue-500 text-white px-10 py-3 rounded-lg font-semibold 
+              hover:bg-blue-400 transition-colors border border-white"
             >
               Ontmoet onze Leiding
             </Link>
@@ -212,10 +230,10 @@ function Home() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
           <div>
             <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-              Alle Leeftijden Welkom
+              6 tot 18+ jaar is Welkom!
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Van 6 jaar tot volwassenen kunnen deelnemen.
+              Jongeren van 6 tot 18 jaar kunnen deelnemen als leiding. Leiding vanaf 18 jaar. 
             </p>
           </div>
           <div>
@@ -230,9 +248,31 @@ function Home() {
             <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-2">
               Meer Informatie
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
               Neem contact op of bezoek ons op sociale media.
             </p>
+            <div className="flex justify-center gap-6">
+              <a
+                href="https://www.facebook.com/ksahillegem"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 
+                dark:hover:text-blue-300 transition-colors"
+                title="Bezoek onze Facebook pagina"
+              >
+                <FaFacebook className="text-4xl" />
+              </a>
+              <a
+                href="https://www.instagram.com/ksahillegem/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-600 hover:text-pink-800 dark:text-pink-400 
+                dark:hover:text-pink-300 transition-colors"
+                title="Bezoek onze Instagram pagina"
+              >
+                <RiInstagramFill className="text-4xl" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
