@@ -7,9 +7,20 @@ import {
   IsDate,
   IsArray,
   IsDateString,
+  IsOptional,
+  IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+
+export enum AgeGroupEnum {
+  PLUS_16 = '+16',
+  SJOERS = "Sjo’ers",
+  KNIMMERS = 'Knimmers',
+  JOROS = "Joro’s",
+  PAGGADERS = 'Paggaders',
+  SLOEBERS = 'Sloebers',
+}
 
 export class PublicPersoonResponseDto {
   @Expose()
@@ -92,7 +103,7 @@ export class CreatePersoonDto {
 
   @ApiProperty({
     example: 'SterkPasswoord123!',
-    description: 'Wachtwoord (plaintext, wordt gehashed op de server)',
+    description: 'Wachtwoord (plaintext, wordt gehashed op de server met salt)',
     minLength: 8,
     maxLength: 128,
   })
@@ -237,6 +248,36 @@ export class RegisterPersoonRequestDto {
   @MinLength(8)
   @MaxLength(128)
   password: string;
+
+  @ApiProperty({
+    example: 'lid',
+    description: 'Type account: "lid" of "leiding"',
+    required: false,
+    enum: ['lid', 'leiding'],
+  })
+  @IsString()
+  role?: string;
+
+  @ApiProperty({
+    example: '+16',
+    description: 'Leeftijdsgroep (voor leiding)',
+    required: false,
+    enum: AgeGroupEnum,
+  })
+  @IsEnum(AgeGroupEnum)
+  @IsOptional()
+  ageGroup?: AgeGroupEnum;
+
+  @ApiProperty({
+    example: 'Ervaren monitor met focus op sportactiviteiten.',
+    description: 'Beschrijving (alleen voor leiding)',
+    required: false,
+    maxLength: 500,
+  })
+  @IsString()
+  @IsOptional()
+  @MaxLength(500)
+  beschrijving?: string;
 }
 
 export class LoginRequestDto {
