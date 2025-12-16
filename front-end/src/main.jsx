@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import './index.css';
@@ -43,13 +42,13 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ThemeProvider>
-      {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> */}
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-      { /* </GoogleOAuthProvider> */}
-    </ThemeProvider>
-  </StrictMode>,
+  // <StrictMode>
+  <ThemeProvider>
+    {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> */}
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+    { /* </GoogleOAuthProvider> */}
+  </ThemeProvider>,
+  // </StrictMode>,
 );
