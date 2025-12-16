@@ -23,7 +23,7 @@ function Home() {
             Welkom bij KSA
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 mb-8">
-            Katholicke Scouts en Gidsen
+            Katholieke Studentenactie
           </p>
           {user ? (
             <p className="text-lg text-blue-50 mb-8">
