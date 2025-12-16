@@ -84,17 +84,15 @@ async function bootstrap() {
   app.use(helmet());
 
   
-  if (process.env.NODE_ENV !== 'production') {
-    const swaggerConfig = new DocumentBuilder()
-      .setTitle('Budget Web Services')
-      .setDescription('The Budget API application')
-      .setVersion('1.0')
-      .addBearerAuth()
-      .build();
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Budget Web Services')
+    .setDescription('The Budget API application')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
 
-    const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('docs', app, document);
-  }
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('docs', app, document);
 
 
   await app.listen(port, '0.0.0.0');
