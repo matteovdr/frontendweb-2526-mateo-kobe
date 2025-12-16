@@ -16,7 +16,10 @@ export default function Register() {
   const navigate = useNavigate();
   const [userType, setUserType] = useState('lid');
 
-  const methods = useForm();
+  const methods = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+  });
   const {
     register,
     handleSubmit,
