@@ -1,26 +1,20 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import Error from '../../components/Error';
+import { axios } from '../../api';
 
 const getToken = () => localStorage.getItem('jwtToken'); // Gebruik JWT_TOKEN_KEY string
 
-// De fetcher past nu de Authorization header toe
-const fetcher = (url) => {
-  const token = getToken();
-  
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }), 
-  };
-  
-  return fetch(`http://localhost:3000${url}`, { headers })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      return res.json();
-    });
-};
+// SWR fetcher via shared axios instance (uses VITE_API_URL)
+const fetcher = (url) =>
+  axios
+    .get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...(getToken() && { Authorization: `Bearer ${getToken()}` }),
+      },
+    })
+    .then((res) => res.data);
 
 function KampDetail() {
   const { id } = useParams();
