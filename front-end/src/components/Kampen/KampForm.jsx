@@ -67,76 +67,97 @@ function KampForm() {
       }}
     >
       {({ isSubmitting }) => (
-        <Form className="flex justify-center items-center min-h-full">  
-          <div
-            className="flex flex-col border-4 border-blue-300 rounded-4xl p-8 
-            w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm"
-          >
-            {/* NAAM */}
-            <label className="font-semibold text-blue-600 mb-1">Naam van het kamp</label>
-            <Field
-              name="naam"
-              placeholder="Bijv. Zomerkamp Leuven"
-              data-cy="input-naam"
-              className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
-              shadow-sm focus:ring-2 focus:ring-blue-400 placeholder:text-blue-400"
-            />
-            <ErrorMessage name="naam" component="div" className="text-red-500 text-sm mb-3" />
+        <Form className="min-h-[70vh] bg-linear-to-b from-gray-50 via-white to-gray-100 
+        dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center py-10 px-4">
+          <div className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur rounded-3xl 
+          shadow-2xl border border-white/40 dark:border-gray-800 p-7 md:p-9">
+            <div className="text-center mb-8">
+              <p className="text-sm uppercase tracking-[0.25em] text-blue-600 dark:text-blue-300">Nieuw kamp</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mt-2">Plan een kamp in</h1>
+              <p className="text-gray-600 dark:text-gray-300 mt-3">
+                Vul de details in zodat iedereen zich kan inschrijven en voorbereid kan vertrekken.</p>
+            </div>
 
-            {/* STAD */}
-            <label className="font-semibold text-blue-600 mb-1">Stad</label>
-            <Field
-              name="stad"
-              placeholder="Bijv. Gent"
-              data-cy="input-stad"
-              className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
-              shadow-sm focus:ring-2 focus:ring-blue-400 placeholder:text-blue-400"
-            />
-            <ErrorMessage name="stad" component="div" className="text-red-500 text-sm mb-3" />
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+              {/* NAAM */}
+              <div className="md:col-span-2">
+                <label className="font-semibold text-gray-800 dark:text-gray-200 mb-1 block">Naam van het kamp</label>
+                <Field
+                  name="naam"
+                  placeholder="Bijv. Zomerkamp Leuven"
+                  data-cy="input-naam"
+                  className="w-full rounded-2xl border border-gray-200 dark:border-gray-700 
+                  bg-white dark:bg-gray-800 px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 
+                  focus:border-blue-500 placeholder:text-gray-400"
+                />
+                <ErrorMessage name="naam" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
 
-            {/* STARTDATUM */}
-            <label className="font-semibold text-blue-600 mb-1">Startdatum</label>
-            <Field
-              type="date"
-              name="startDatum"
-              data-cy="input-start"
-              className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
-              shadow-sm focus:ring-2 focus:ring-blue-400"
-            />
-            <ErrorMessage name="startDatum" component="div" className="text-red-500 text-sm mb-3" />
+              {/* STAD */}
+              <div className="md:col-span-2">
+                <label className="font-semibold text-gray-800 dark:text-gray-200 mb-1 block">Stad</label>
+                <Field
+                  name="stad"
+                  placeholder="Bijv. Gent"
+                  data-cy="input-stad"
+                  className="w-full rounded-2xl border border-gray-200 
+                  dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 shadow-sm focus:ring-2 
+                  focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
+                />
+                <ErrorMessage name="stad" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
 
-            {/* EINDDATUM */}
-            <label className="font-semibold text-blue-600 mb-1">Einddatum</label>
-            <Field
-              type="date"
-              name="eindDatum"
-              data-cy="input-eind"
-              className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
-              shadow-sm focus:ring-2 focus:ring-blue-400"
-            />
-            <ErrorMessage name="eindDatum" component="div" className="text-red-500 text-sm mb-4" />
+              {/* STARTDATUM */}
+              <div>
+                <label className="font-semibold text-gray-800 dark:text-gray-200 mb-1 block">Startdatum</label>
+                <Field
+                  type="date"
+                  name="startDatum"
+                  data-cy="input-start"
+                  className="w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white 
+                  dark:bg-gray-800 px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <ErrorMessage name="startDatum" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
 
-            {/* BESCHRIJVING */}
-            <label className="font-semibold text-blue-600 mb-1">Beschrijving</label>
-            <Field
-              as="textarea"
-              name="beschrijving"
-              placeholder="Bijv. Een avontuurlijk kamp met veel activiteiten"
-              data-cy="input-beschrijving"
-              className="bg-blue-100 rounded-2xl w-full px-4 py-3 mb-1 outline-none
-              shadow-sm focus:ring-2 focus:ring-blue-400 placeholder:text-blue-400 h-28"
-            />
-            <ErrorMessage name="beschrijving" component="div" className="text-red-500 text-sm mb-3" />
+              {/* EINDDATUM */}
+              <div>
+                <label className="font-semibold text-gray-800 dark:text-gray-200 mb-1 block">Einddatum</label>
+                <Field
+                  type="date"
+                  name="eindDatum"
+                  data-cy="input-eind"
+                  className="w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white 
+                  dark:bg-gray-800 px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <ErrorMessage name="eindDatum" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
 
-            {/* SUBMIT BUTTON */}
+              {/* BESCHRIJVING */}
+              <div className="md:col-span-2">
+                <label className="font-semibold text-gray-800 dark:text-gray-200 mb-1 block">Beschrijving</label>
+                <Field
+                  as="textarea"
+                  name="beschrijving"
+                  placeholder="Bijv. Een avontuurlijk kamp met veel activiteiten"
+                  data-cy="input-beschrijving"
+                  className="w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white 
+                  dark:bg-gray-800 px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 
+                  focus:border-blue-500 placeholder:text-gray-400 h-28"
+                />
+                <ErrorMessage name="beschrijving" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+            </div>
+
             <button
               type="submit"
               data-cy="submit-button"
               disabled={isSubmitting}
-              className="mt-4 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white
-              py-3 rounded-2xl transition-all shadow-md w-full"
+              className="mt-8 w-full inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-500 
+              to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 rounded-2xl shadow-lg 
+              hover:shadow-xl transition duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Voeg kamp toe
+              {isSubmitting ? 'Opslaan...' : 'Voeg kamp toe'}
             </button>
           </div>
         </Form>
