@@ -130,34 +130,35 @@ export default function Register() {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-800 transition-colors">
         <form
           noValidate
           onSubmit={handleSubmit(handleRegister)}
-          className="flex justify-center items-center flex-col border-4 border-blue-300
-                     rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 backdrop-blur-sm
-                     h-auto"
+          className="flex justify-center items-center flex-col border-4 border-blue-300 dark:border-gray-700
+                     rounded-4xl p-8 w-96 md:w-md lg:w-lg shadow-xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm
+                     h-auto transition-colors"
         >
           {error && (
-            <p className="mb-2 text-red-600 text-sm">
+            <p className="mb-2 text-red-600 dark:text-red-400 text-sm">
               {String(error)}
             </p>
           )}
 
-          <CgProfile className="text-8xl text-blue-400 mb-4" />
-          <h1 className="font-bold text-6xl text-blue-600 mb-6">Registreren</h1>
+          <CgProfile className="text-8xl text-blue-400 dark:text-blue-300 mb-4" />
+          <h1 className="font-bold text-6xl text-blue-600 dark:text-blue-300 mb-6">Registreren</h1>
 
           {/* USER TYPE DROPDOWN */}
           <div className="w-72 md:w-80 mb-4">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               Soort account
             </label>
             <select
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
               data-cy="usertype_select"
-              className="w-full bg-blue-100 rounded-2xl px-4 py-3
-                         focus:ring-2 focus:ring-blue-400 shadow-sm text-gray-700 outline-none"
+              className="w-full bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                         focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 shadow-sm 
+                         text-gray-700 dark:text-gray-100 outline-none"
             >
               <option value="lid">Lid</option>
               <option value="leiding">Leiding</option>
@@ -166,49 +167,51 @@ export default function Register() {
 
           {/* Divider */}
           <div className="flex items-center my-4 w-72 md:w-80">
-            <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
+            <div className="flex-1 border-b-2 border-blue-400 dark:border-gray-600 shadow-sm" />
           </div>
 
           {/* NAAM */}
           <div className="w-72 md:w-80 mb-2">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               Naam
             </label>
 
             {/* Voornaam */}
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3 mb-1
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <CgProfile className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3 mb-1
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <CgProfile className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="text"
                 placeholder="Voornaam"
                 {...register('voornaam', validationRules.voornaam)}
                 data-cy="voornaam_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.voornaam && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.voornaam.message}
               </p>
             )}
 
             {/* Achternaam */}
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3 mt-2
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <CgProfile className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3 mt-2
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <CgProfile className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="text"
                 placeholder="Achternaam"
                 {...register('achternaam', validationRules.achternaam)}
                 data-cy="achternaam_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.achternaam && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.achternaam.message}
               </p>
             )}
@@ -216,28 +219,29 @@ export default function Register() {
 
           {/* Divider */}
           <div className="flex items-center my-4 w-72 md:w-80">
-            <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
+            <div className="flex-1 border-b-2 border-blue-400 dark:border-gray-600 shadow-sm" />
           </div>
 
           {/* E-MAIL */}
           <div className="w-72 md:w-80 mb-4">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               E-mail
             </label>
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <IoMdMailOpen className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <IoMdMailOpen className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="email"
                 placeholder="E-mail"
                 {...register('email', validationRules.email)}
                 data-cy="email_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.email.message}
               </p>
             )}
@@ -245,23 +249,24 @@ export default function Register() {
 
           {/* TELEFOON */}
           <div className="w-72 md:w-80 mb-4">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               Telefoonnummer
             </label>
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <FaPhone className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <FaPhone className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="tel"
                 placeholder="Telefoonnummer"
                 {...register('telefoon', validationRules.telefoon)}
                 data-cy="telefoon_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.telefoon && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.telefoon.message}
               </p>
             )}
@@ -269,22 +274,23 @@ export default function Register() {
 
           {/* GEBOORTEDATUM */}
           <div className="w-72 md:w-80 mb-2">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               Geboortedatum
             </label>
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <SlCalender className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <SlCalender className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="date"
                 {...register('geboorteDatum', validationRules.geboorteDatum)}
                 data-cy="geboortedatum_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.geboorteDatum && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.geboorteDatum.message}
               </p>
             )}
@@ -294,14 +300,15 @@ export default function Register() {
           {userType === 'leiding' && (
             <>
               <div className="w-72 md:w-80 mb-4">
-                <label className="block mb-1 text-sm font-medium text-blue-700">
+                <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
                   Leeftijdsgroep
                 </label>
                 <select
                   {...register('ageGroup', validationRules.ageGroup)}
                   data-cy="agegroup_select"
-                  className="w-full bg-blue-100 rounded-2xl px-4 py-3
-                             focus:ring-2 focus:ring-blue-400 shadow-sm text-gray-700 outline-none"
+                  className="w-full bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                             focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 
+                             shadow-sm text-gray-700 dark:text-gray-100 outline-none"
                 >
                   <option value="">-- Selecteer leeftijdsgroep --</option>
                   <option value="+16">+16</option>
@@ -319,21 +326,22 @@ export default function Register() {
               </div>
 
               <div className="w-72 md:w-80 mb-2">
-                <label className="block mb-1 text-sm font-medium text-blue-700">
+                <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
                   Beschrijving
                 </label>
-                <div className="flex items-start bg-blue-100 rounded-2xl px-4 py-3
-                                focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
+                <div className="flex items-start bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                                focus-within:ring-2 focus-within:ring-blue-400 
+                                dark:focus-within:ring-blue-500 shadow-sm">
                   <textarea
                     placeholder="Beschrijf jezelf..."
                     {...register('beschrijving', validationRules.beschrijving)}
                     data-cy="beschrijving_input"
-                    className="bg-transparent outline-none flex-1 text-gray-700 
-                    placeholder:text-blue-400 resize-none min-h-20"
+                    className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                    placeholder:text-blue-400 dark:placeholder:text-gray-300 resize-none min-h-20"
                   />
                 </div>
                 {errors.beschrijving && (
-                  <p className="text-red-500 text-xs mt-1">
+                  <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                     {errors.beschrijving.message}
                   </p>
                 )}
@@ -343,28 +351,29 @@ export default function Register() {
 
           {/* Divider */}
           <div className="flex items-center my-4 w-72 md:w-80">
-            <div className="flex-1 border-b-2 border-blue-400 shadow-sm" />
+            <div className="flex-1 border-b-2 border-blue-400 dark:border-gray-600 shadow-sm" />
           </div>
 
           {/* WACHTWOORD */}
           <div className="w-72 md:w-80 mb-4">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               Wachtwoord
             </label>
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <PiLockLight className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <PiLockLight className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="password"
                 placeholder="Wachtwoord"
                 {...register('password', validationRules.password)}
                 data-cy="wachtwoord_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.password.message}
               </p>
             )}
@@ -372,23 +381,24 @@ export default function Register() {
 
           {/* BEVESTIG WACHTWOORD */}
           <div className="w-72 md:w-80 mb-4">
-            <label className="block mb-1 text-sm font-medium text-blue-700">
+            <label className="block mb-1 text-sm font-medium text-blue-700 dark:text-blue-300">
               Bevestig wachtwoord
             </label>
-            <div className="flex items-center bg-blue-100 rounded-2xl px-4 py-3
-                            focus-within:ring-2 focus-within:ring-blue-400 shadow-sm">
-              <PiLockLight className="text-blue-400 text-2xl" />
-              <div className="h-6 w-px bg-blue-300 mx-3" />
+            <div className="flex items-center bg-blue-100 dark:bg-gray-700 rounded-2xl px-4 py-3
+                            focus-within:ring-2 focus-within:ring-blue-400 dark:focus-within:ring-blue-500 shadow-sm">
+              <PiLockLight className="text-blue-400 dark:text-blue-300 text-2xl" />
+              <div className="h-6 w-px bg-blue-300 dark:bg-gray-600 mx-3" />
               <input
                 type="password"
                 placeholder="Bevestig wachtwoord"
                 {...register('confirmPassword', validationRules.confirmPassword)}
                 data-cy="bevestig_wachtwoord_input"
-                className="bg-transparent outline-none flex-1 text-gray-700 placeholder:text-blue-400"
+                className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-100 
+                placeholder:text-blue-400 dark:placeholder:text-gray-300"
               />
             </div>
             {errors.confirmPassword && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 dark:text-red-400 text-xs mt-1">
                 {errors.confirmPassword.message}
               </p>
             )}
@@ -408,16 +418,17 @@ export default function Register() {
           <button
             type="button"
             onClick={handleCancel}
-            className="mt-2 bg-gray-200 hover:bg-gray-300 text-blue-700
+            className="mt-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 
+            dark:hover:bg-gray-600 text-blue-700 dark:text-blue-200
             py-3 rounded-2xl transition-all shadow-md w-72 md:w-80 hover:cursor-pointer"
           >
             Annuleren
           </button>
 
           <div className="flex flex-col items-center mt-6 text-sm">
-            <p className="text-black">
+            <p className="text-black dark:text-gray-100">
               Heb je al een account?{' '}
-              <Link to="/login" className="font-semibold text-blue-600 underline">
+              <Link to="/login" className="font-semibold text-blue-600 dark:text-blue-300 underline">
                 Login
               </Link>
             </p>
