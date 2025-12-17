@@ -21,7 +21,7 @@ import {
 } from './persoon.dto';
 import { PersoonService } from './persoon.service';
 import { Public } from '../../auth/decoraters/public.decorater';
-import { Roles } from 'auth/decoraters/roles.decorator';
+import { Roles } from '../../auth/decoraters/roles.decorator';
 import { AuthDelayInterceptor } from '../../auth/interceptors/authDelay.interceptor';
 import { LoginResponseDto } from '../../src/session/session.dto';
 import { AuthService } from '../../auth/auth.service';

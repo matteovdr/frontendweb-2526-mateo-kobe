@@ -18,9 +18,9 @@ import {
   InschrijvingResponseDto,
 } from './kamp.dto';
 import { ApiResponse, ApiTags, ApiOperation, ApiParam, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
-import { Public } from 'auth/decoraters/public.decorater';
-import { Roles } from 'auth/decoraters/roles.decorator';
-import { CurrentUser } from 'auth/decoraters/currentUser.decorator';
+import { Public } from '../../auth/decoraters/public.decorater';
+import { Roles } from '../../auth/decoraters/roles.decorator';
+import { CurrentUser } from '../../auth/decoraters/currentUser.decorator';
 import type { AuthUser } from '../../auth/auth.types';
 
 @ApiTags('Kampen')

@@ -18,7 +18,7 @@ import {
   LeidingResponseDto,
 } from './leiding.dto';
 import { Public } from '../../auth/decoraters/public.decorater';
-import { Roles } from 'auth/decoraters/roles.decorator';
+import { Roles } from '../../auth/decoraters/roles.decorator';
 import { ApiBearerAuth, ApiResponse, ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('Leiding')
