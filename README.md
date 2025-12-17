@@ -56,6 +56,7 @@ cd api
 pnpm install
 (Maak nu het .env bestand aan zoals hieronder beschreven)
 docker compose up -d
+(Wacht 3-5 seconden tot de database volledig is opgestart)
 pnpm db:migrate
 pnpm db:seed
 docker compose -f docker-compose-backend.yml up
@@ -90,7 +91,7 @@ CORS_ORIGINS=["http://localhost:5173", "http://localhost"]
 CORS_MAX_AGE=10800
 
 # Database configuration
-DATABASE_URL=mysql://mysql://devusr:devpwd@localhost:3306/ksa
+DATABASE_URL=mysql://devusr:devpwd@localhost:3306/ksa
 
 # Auth configuration
 AUTH_JWT_SECRET=eenveeltemoeilijksecretdatniemandooitzalradenandersisdesitegehacked
@@ -107,6 +108,6 @@ LOG_DISABLED=true
 
 ```bash
 cd api
-docker compose -f docker-compose-test.yml up -d
+docker compose -f docker-compose.test.yml up -d
 pnpm test:e2e
 ```
