@@ -52,7 +52,7 @@ Aangezien het tekens zijn dat aan ons gevraagd werd te verduidelijken zal ik dat
 | Zero or Many | `}o--` |
 | One or Many | `}\|--` |
 
-![Cardinaliteiten](images/ERDCardinality.webp)
+![Cardinaliteiten](images/ERDCardinallity.webp)
 
 De entiteit Kamp vormt het centrale element, waarbij Inschrijvingen deelnemers en leiding aan een specifiek kamp koppelen. Leden en Leiding maken elk deel uit van een Groep, terwijl Hoofdleiding een gespecialiseerde vorm van leiding is met extra verantwoordelijkheden. Ouders zijn verbonden aan één of meerdere leden en dienen als contactpersonen. Daarnaast is er een Kookploeg die minstens aan 1 of meerdere kampen zijn gekoppeld.
 
