@@ -55,6 +55,9 @@ git pull origin main
 cd api
 pnpm install
 (Maak nu het .env bestand aan zoals hieronder beschreven)
+docker compose up -d
+pnpm db:migrate
+pnpm db:seed
 docker compose -f docker-compose-backend.yml up
 ```
 
@@ -87,7 +90,7 @@ CORS_ORIGINS=["http://localhost:5173", "http://localhost"]
 CORS_MAX_AGE=10800
 
 # Database configuration
-DATABASE_URL=mysql://301886kv:tk10z5DKcAZomai09PzwIa38Dfsun7vq@vichogent.be:41260/301886kv
+DATABASE_URL=mysql://mysql://devusr:devpwd@localhost:3306/ksa
 
 # Auth configuration
 AUTH_JWT_SECRET=eenveeltemoeilijksecretdatniemandooitzalradenandersisdesitegehacked
