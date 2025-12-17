@@ -23,7 +23,7 @@ Ik verwacht dat volgende software reeds geïnstalleerd is:
 ```bash
 git clone https://github.com/HOGENT-frontendweb/frontendweb-2526-mateo-kobe.git
 git pull origin main
-cd .\front-end\
+cd front-end
 pnpm install
 docker compose up
 ```
@@ -41,8 +41,8 @@ VITE_API_URL='http://localhost:3000/api'
 ### Testen
 
 ```bash
-cd .\front-end\
-pnpm test
+cd front-end
+pnpm exec cypress run
 ```
 
 ## Back-end
@@ -52,11 +52,10 @@ pnpm test
 ```bash
 git clone https://github.com/HOGENT-frontendweb/frontendweb-2526-mateo-kobe.git
 git pull origin main
-cd .\api\
+cd api
 pnpm install
-pnpm db:migrate
-pnpm db:seed
-pnpm start:dev
+(Maak nu het .env bestand aan zoals hieronder beschreven)
+docker compose -f docker-compose-backend.yml up
 ```
 
 ### .env bestand
@@ -66,18 +65,16 @@ maak een .env bestand aan in de api map met volgende inhoud:
 ```env
 NODE_ENV=development
 PORT=3000
-CORS_ORIGINS=["http://localhost:5173", "http://localhost"]
+CORS_ORIGINS=["http://localhost"]
 CORS_MAX_AGE=10800
 AUTH_JWT_SECRET=<JE_EIGEN_SECRET_HIER>
-DATABASE_URL=mysql://<user>:<wachtwoord>@<host>:<database_poort>/<database_naam>
+DATABASE_URL=mysql://301886kv:tk10z5DKcAZomai09PzwIa38Dfsun7vq@vichogent.be:41260/301886kv
 LOG_LEVELS=["log","error","warn","debug"]
 ```
 
 ### Testen
 
 ```bash
-cd .\api\
+cd api
 pnpm test:e2e
 ```
-
-// TODO  NOG NAKIJKEN OF DIT JUIST IS
