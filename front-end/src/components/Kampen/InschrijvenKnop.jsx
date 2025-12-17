@@ -1,3 +1,25 @@
+const BASE_CLASSES = 'py-1 px-3 transition rounded-4xl mt-2 mx-2 text-white';
+const BUSY_CLASSES = 'bg-gray-400 cursor-not-allowed';
+const INSCHRIJVEN_CLASSES = 'bg-green-500 hover:bg-green-600 hover:cursor-pointer';
+const UITSCHRIJVEN_CLASSES = 'bg-blue-500 hover:bg-blue-600 hover:cursor-pointer';
+
+const getButtonClasses = (isBusy, isIngeschreven) => `${BASE_CLASSES} ${
+  isBusy ? BUSY_CLASSES : isIngeschreven ? UITSCHRIJVEN_CLASSES : INSCHRIJVEN_CLASSES
+}`;
+
+const BUTTON_LABELS = {
+  busy: 'Bezig...',
+  uitschrijven: 'Uitschrijven',
+  inschrijven: 'Inschrijven',
+};
+
+const getButtonLabel = (isBusy, isIngeschreven) =>
+  isBusy
+    ? BUTTON_LABELS.busy
+    : isIngeschreven
+      ? BUTTON_LABELS.uitschrijven
+      : BUTTON_LABELS.inschrijven;
+
 const InschrijvenKnop = ({
   kampId,
   onInschrijven,
@@ -14,27 +36,14 @@ const InschrijvenKnop = ({
     }
   };
 
-  const baseClasses = 'py-1 px-3 transition rounded-4xl mt-2 mx-2 text-white';
-  const busyClasses = 'bg-gray-400 cursor-not-allowed';
-  const inschrijvenClasses = 'bg-green-500 hover:bg-green-600 hover:cursor-pointer';
-  const uitschrijvenClasses = 'bg-blue-500 hover:bg-blue-600 hover:cursor-pointer';
-
-  const buttonClasses = `${baseClasses} ${
-    isBusy
-      ? busyClasses
-      : isIngeschreven
-        ? uitschrijvenClasses
-        : inschrijvenClasses
-  }`;
-
   return (
     <button
       onClick={handleClick}
       disabled={isBusy}
       data-cy={isIngeschreven ? 'uitschrijven-btn' : 'inschrijven-btn'}
-      className={buttonClasses}
+      className={getButtonClasses(isBusy, isIngeschreven)}
     >
-      {isBusy ? 'Bezig...' : isIngeschreven ? 'Uitschrijven' : 'Inschrijven'}
+      {getButtonLabel(isBusy, isIngeschreven)}
     </button>
   );
 };

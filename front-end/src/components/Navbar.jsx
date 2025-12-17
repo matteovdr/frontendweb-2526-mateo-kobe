@@ -3,6 +3,25 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts';
 import { useAuth } from '../contexts/auth';
 
+const NAV_LINKS = [
+  { path: '/home', label: 'Home' },
+  { path: '/leiding', label: 'Leiding' },
+  { path: '/about', label: 'About Us' },
+  { path: '/kampen', label: 'Kampen' },
+];
+
+const isActivePath = (pathname, path) => pathname === path;
+
+const desktopLinkClass = (pathname, path) =>
+  `transition p-2 border-b-2 ${isActivePath(pathname, path)
+    ? 'text-yellow-300 border-yellow-300'
+    : 'hover:text-yellow-300 border-transparent'}`;
+
+const mobileLinkClass = (pathname, path) =>
+  `transition p-2 border-l-4 ${isActivePath(pathname, path)
+    ? 'text-yellow-300 border-yellow-300 bg-white/10'
+    : 'hover:text-yellow-300 border-transparent'}`;
+
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -18,10 +37,6 @@ function Navbar() {
     logout();
     navigate('/login');
     setMenuOpen(false);
-  };
-
-  const isActive = (path) => {
-    return location.pathname === path;
   };
 
   return (
@@ -109,14 +124,15 @@ function Navbar() {
           </button>
 
           <div className="hidden md:flex space-x-6 items-center">
-            <Link to="/home" className={`transition p-2 border-b-2 ${isActive('/home') ? 
-              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>Home</Link>
-            <Link to="/leiding" className={`transition p-2 border-b-2 ${isActive('/leiding') ? 
-              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>Leiding</Link>
-            <Link to="/about" className={`transition p-2 border-b-2 ${isActive('/about') ? 
-              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>About Us</Link>
-            <Link to="/kampen" className={`transition p-2 border-b-2 ${isActive('/kampen') ? 
-              'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>Kampen</Link>
+            {NAV_LINKS.map(({ path, label }) => (
+              <Link
+                key={path}
+                to={path}
+                className={desktopLinkClass(location.pathname, path)}
+              >
+                {label}
+              </Link>
+            ))}
             {user ? (
               <>
                 <span className={`font-semibold transition p-2 
@@ -132,8 +148,10 @@ function Navbar() {
                 </button>
               </>
             ) : (
-              <Link to="/login" className={`font-semibold transition p-2 border-b-2 ${isActive('/login') ? 
-                'text-yellow-300 border-yellow-300' : 'hover:text-yellow-300 border-transparent'}`}>
+              <Link
+                to="/login"
+                className={desktopLinkClass(location.pathname, '/login')}
+              >
                 Login
               </Link>
             )}
@@ -144,22 +162,16 @@ function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden mt-4 flex flex-col space-y-4">
-          <Link onClick={() => setMenuOpen(false)} to="/home" 
-            className={`transition p-2 border-l-4 ${isActive('/home') ? 
-              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
-            Home</Link>
-          <Link onClick={() => setMenuOpen(false)} to="/leiding" 
-            className={`transition p-2 border-l-4 ${isActive('/leiding') ? 
-              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
-            Leiding</Link>
-          <Link onClick={() => setMenuOpen(false)} to="/about" 
-            className={`transition p-2 border-l-4 ${isActive('/about') ? 
-              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
-            About Us</Link>
-          <Link onClick={() => setMenuOpen(false)} to="/kampen" 
-            className={`transition p-2 border-l-4 ${isActive('/kampen') ? 
-              'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
-            Kampen</Link>
+          {NAV_LINKS.map(({ path, label }) => (
+            <Link
+              key={path}
+              onClick={() => setMenuOpen(false)}
+              to={path}
+              className={mobileLinkClass(location.pathname, path)}
+            >
+              {label}
+            </Link>
+          ))}
           {user ? (
             <>
               <span className={`font-semibold transition p-2 
@@ -175,9 +187,11 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <Link onClick={() => setMenuOpen(false)} to="/login" 
-              className={`font-semibold transition p-2 border-l-4 ${isActive('/login') ? 
-                'text-yellow-300 border-yellow-300 bg-white/10' : 'hover:text-yellow-300 border-transparent'}`}>
+            <Link
+              onClick={() => setMenuOpen(false)}
+              to="/login"
+              className={mobileLinkClass(location.pathname, '/login')}
+            >
               Login
             </Link>
           )}

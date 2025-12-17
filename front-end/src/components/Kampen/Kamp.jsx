@@ -4,6 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth';
 import InschrijvenKnop from './InschrijvenKnop';
 
+const gridColsClass = (activeButtons) =>
+  activeButtons === 1 ? 'grid-cols-1' : activeButtons === 2 ? 'grid-cols-2' : 'grid-cols-3';
+
+const badgeTextFor = (alGedaan) => (alGedaan ? 'Afgelopen' : 'Komend');
+
+const badgeClassFor = (alGedaan) =>
+  alGedaan
+    ? 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'
+    : 'bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-200';
+
+const countActiveButtons = (kanInschrijven, isHoofleiding) =>
+  (kanInschrijven ? 1 : 0) + 1 + (isHoofleiding ? 1 : 0);
+
 function Kamp({
   id,
   naam,
@@ -27,11 +40,7 @@ function Kamp({
   const kanInschrijven = !alGedaan && user && (isLid || isLeidingOrHoofdleiding);
 
   // Tel enkel knoppen die effectief gerenderd worden
-  const activeButtons = (
-    (kanInschrijven ? 1 : 0) + // inschrijfknop enkel als mogelijk
-    1 +                          // details knop altijd
-    (isHoofleiding ? 1 : 0)     // verwijderknop voor hoofdleiding
-  );
+  const activeButtons = countActiveButtons(kanInschrijven, isHoofleiding);
 
   const handleDelete = async () => {
     if (!confirm(`Weet je zeker dat je ${naam} wil verwijderen?`)) return;
@@ -48,11 +57,9 @@ function Kamp({
     navigate(`/kampen/${id}`);
   };
 
-  const colsClass = activeButtons === 1 ? 'grid-cols-1' : activeButtons === 2 ? 'grid-cols-2' : 'grid-cols-3';
-  const badgeText = alGedaan ? 'Afgelopen' : 'Komend';
-  const badgeClass = alGedaan
-    ? 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'
-    : 'bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-200';
+  const colsClass = gridColsClass(activeButtons);
+  const badgeText = badgeTextFor(alGedaan);
+  const badgeClass = badgeClassFor(alGedaan);
 
   return (
     <div className="flex flex-1 flex-col place-content-center 

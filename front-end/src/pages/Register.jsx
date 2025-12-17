@@ -11,6 +11,61 @@ import { IoMdMailOpen } from 'react-icons/io';
 import { FaPhone } from 'react-icons/fa6';
 import { SlCalender } from 'react-icons/sl';
 
+const buildValidationRules = (userType, getValues) => ({
+  voornaam: { required: 'Voornaam is verplicht' },
+  achternaam: { required: 'Achternaam is verplicht' },
+  email: {
+    required: 'E-mail is verplicht',
+    pattern: {
+      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      message: 'Ongeldig e-mailadres',
+    },
+  },
+  telefoon: { required: 'Telefoonnummer is verplicht' },
+  geboorteDatum: {
+    required: 'Geboortedatum is verplicht',
+    validate: (value) => {
+      if (!value) return true;
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate >= today) {
+        return 'Geboortedatum kan niet vandaag of in de toekomst liggen';
+      }
+      
+      let age = today.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = today.getMonth() - selectedDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
+        age--;
+      }
+      
+      const minAge = userType === 'leiding' ? 18 : 6;
+      const minAgeMessage = userType === 'leiding' 
+        ? 'Je moet minimaal 18 jaar oud zijn voor leiding'
+        : 'Je moet minimaal 6 jaar oud zijn';
+      
+      return age >= minAge || minAgeMessage;
+    },
+  },
+  password: {
+    required: 'Wachtwoord is verplicht',
+    minLength: {
+      value: 8,
+      message: 'Wachtwoord moet minimaal 8 tekens lang zijn',
+    },
+  },
+  confirmPassword: {
+    required: 'Bevestig je wachtwoord',
+    validate: (value) => {
+      const password = getValues('password');
+      return password === value || 'Wachtwoorden komen niet overeen';
+    },
+  },
+  ageGroup: userType === 'leiding' ? { required: 'Leeftijdsgroep is verplicht voor leiding' } : {},
+  beschrijving: userType === 'leiding' ? { required: 'Beschrijving is verplicht voor leiding' } : {},
+});
+
 export default function Register() {
   const { error, loading, register: registerUser } = useAuth();
   const navigate = useNavigate();
@@ -69,62 +124,7 @@ export default function Register() {
   );
 
   const validationRules = useMemo(
-    () => ({
-      voornaam: { required: 'Voornaam is verplicht' },
-      achternaam: { required: 'Achternaam is verplicht' },
-      email: {
-        required: 'E-mail is verplicht',
-        pattern: {
-          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-          message: 'Ongeldig e-mailadres',
-        },
-      },
-      telefoon: { required: 'Telefoonnummer is verplicht' },
-      geboorteDatum: {
-        required: 'Geboortedatum is verplicht',
-        validate: (value) => {
-          if (!value) return true;
-          const selectedDate = new Date(value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          
-          if (selectedDate >= today) {
-            return 'Geboortedatum kan niet vandaag of in de toekomst liggen';
-          }
-          
-          // Calculate age
-          let age = today.getFullYear() - selectedDate.getFullYear();
-          const monthDiff = today.getMonth() - selectedDate.getMonth();
-          if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
-            age--;
-          }
-          
-          // Check minimum age based on user type
-          const minAge = userType === 'leiding' ? 18 : 6;
-          const minAgeMessage = userType === 'leiding' 
-            ? 'Je moet minimaal 18 jaar oud zijn voor leiding'
-            : 'Je moet minimaal 6 jaar oud zijn';
-          
-          return age >= minAge || minAgeMessage;
-        },
-      },
-      password: {
-        required: 'Wachtwoord is verplicht',
-        minLength: {
-          value: 8,
-          message: 'Wachtwoord moet minimaal 8 tekens lang zijn',
-        },
-      },
-      confirmPassword: {
-        required: 'Bevestig je wachtwoord',
-        validate: (value) => {
-          const password = getValues('password');
-          return password === value || 'Wachtwoorden komen niet overeen';
-        },
-      },
-      ageGroup: userType === 'leiding' ? { required: 'Leeftijdsgroep is verplicht voor leiding' } : {},
-      beschrijving: userType === 'leiding' ? { required: 'Beschrijving is verplicht voor leiding' } : {},
-    }),
+    () => buildValidationRules(userType, getValues),
     [getValues, userType],
   );
 
