@@ -65,10 +65,10 @@ maak een .env bestand aan in de api map met volgende inhoud:
 ```env
 NODE_ENV=development
 PORT=3000
-CORS_ORIGINS=["http://localhost"]
+CORS_ORIGINS=["http://localhost:5173", "http://localhost"]
 CORS_MAX_AGE=10800
-AUTH_JWT_SECRET=<JE_EIGEN_SECRET_HIER>
-DATABASE_URL=mysql://301886kv:tk10z5DKcAZomai09PzwIa38Dfsun7vq@vichogent.be:41260/301886kv
+DATABASE_URL=mysql://devusr:devpwd@localhost:3306/ksa
+AUTH_JWT_SECRET=<JE_EIGEN_GEHEIME_SLEUTEL_HIER>
 LOG_LEVELS=["log","error","warn","debug"]
 ```
 
