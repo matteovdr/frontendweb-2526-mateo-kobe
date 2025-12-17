@@ -1,6 +1,6 @@
 describe('Login Page', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost/login');
   });
 
   describe('Form Elements', () => {

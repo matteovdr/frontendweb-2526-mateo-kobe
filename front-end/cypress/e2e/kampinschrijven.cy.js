@@ -1,7 +1,7 @@
 describe('Inschrijven voor kamp', () => {
   const loginAls = (email, password) => {
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost/login');
     cy.get('[data-cy=email_input]').type(email);
     cy.get('[data-cy=password_input]').type(password);
     cy.get('[data-cy=submit_btn]').click();
@@ -10,7 +10,7 @@ describe('Inschrijven voor kamp', () => {
   };
 
   const openKampenPagina = () => {
-    cy.visit('http://localhost:5173/kampen');
+    cy.visit('http://localhost/kampen');
   };
 
   const stubAlert = () => {

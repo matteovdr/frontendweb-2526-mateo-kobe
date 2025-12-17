@@ -25,8 +25,10 @@ git clone https://github.com/HOGENT-frontendweb/frontendweb-2526-mateo-kobe.git
 git pull origin main
 cd .\front-end\
 pnpm install
-pnpm dev
+docker compose up
 ```
+
+Hierna kan je naar [http://localhost](http://localhost) navigeren om de front-end te bekijken.
 
 ### .env bestand
 
@@ -42,8 +44,6 @@ VITE_API_URL='http://localhost:3000/api'
 cd .\front-end\
 pnpm test
 ```
-
-Dan moet je op e2e testen klikken in de terminal, dan de browser die je wilt. En je kunt dan de testen laten runnen.
 
 ## Back-end
 

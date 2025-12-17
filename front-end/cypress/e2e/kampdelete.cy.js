@@ -1,7 +1,7 @@
 describe('Kamp verwijderen', () => {
   describe('Niet ingelogde gebruiker', () => {
     it('zou de delete button niet mogen zien', () => {
-      cy.visit('http://localhost:5173/kampen');
+      cy.visit('http://localhost/kampen');
       cy.get('[data-cy="delete"]').should('not.exist');
     });
   });
@@ -9,14 +9,14 @@ describe('Kamp verwijderen', () => {
   describe('Ingelogde gebruiker (niet hoofdleiding)', () => {
     beforeEach(() => {
       // Login als lid (niet hoofdleiding)
-      cy.visit('http://localhost:5173/login');
+      cy.visit('http://localhost/login');
       cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
       cy.get('[data-cy=password_input]').type('12345678');
       cy.get('[data-cy=submit_btn]').click();
       
       // Wacht tot ingelogd en ga naar kampen pagina
       cy.url().should('not.include', '/login');
-      cy.visit('http://localhost:5173/kampen');
+      cy.visit('http://localhost/kampen');
     });
 
     it('zou de delete button niet mogen zien', () => {
@@ -27,14 +27,14 @@ describe('Kamp verwijderen', () => {
   describe('Ingelogde gebruiker (hoofdleiding)', () => {
     beforeEach(() => {
       // Login als hoofdleiding
-      cy.visit('http://localhost:5173/login');
+      cy.visit('http://localhost/login');
       cy.get('[data-cy=email_input]').type('lotte.staes@gmail.com');
       cy.get('[data-cy=password_input]').type('12345678');
       cy.get('[data-cy=submit_btn]').click();
       
       // Wacht tot ingelogd en ga naar kampen pagina
       cy.url().should('not.include', '/login');
-      cy.visit('http://localhost:5173/kampen');
+      cy.visit('http://localhost/kampen');
     });
 
     it('zou de delete button moeten zien', () => {

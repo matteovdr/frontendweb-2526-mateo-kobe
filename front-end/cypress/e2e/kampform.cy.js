@@ -4,7 +4,7 @@ describe('KampForm', () => {
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
     
     // Login
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost/login');
     cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
@@ -16,7 +16,7 @@ describe('KampForm', () => {
     cy.url().should('not.include', '/login', { timeout: 5000 });
     
     // Finally go to kamp form page
-    cy.visit('http://localhost:5173/kampen/add');
+    cy.visit('http://localhost/kampen/add');
 
     cy.get('[data-cy="submit-button"]').click();
 
@@ -32,7 +32,7 @@ describe('KampForm', () => {
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
     
     // Login
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost/login');
     cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
@@ -41,7 +41,7 @@ describe('KampForm', () => {
     cy.wait('@loginRequest');
     cy.url().should('not.include', '/login', { timeout: 5000 });
     
-    cy.visit('http://localhost:5173/kampen/add');
+    cy.visit('http://localhost/kampen/add');
 
     cy.get('[data-cy="input-naam"]').type('A');
     cy.get('[data-cy="input-stad"]').type('B');
@@ -68,7 +68,7 @@ describe('KampForm', () => {
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
     
     // Login
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost/login');
     cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
@@ -80,7 +80,7 @@ describe('KampForm', () => {
     cy.url().should('not.include', '/login', { timeout: 5000 });
     
     // Finally go to kamp form page
-    cy.visit('http://localhost:5173/kampen/add');
+    cy.visit('http://localhost/kampen/add');
     cy.get('[data-cy="input-start"]').type('2030-01-10');
     cy.get('[data-cy="input-eind"]').type('2030-01-10');
     cy.get('[data-cy="submit-button"]').click();
@@ -91,7 +91,7 @@ describe('KampForm', () => {
     cy.intercept('POST', '**/api/sessions').as('loginRequest');
     
     // Login
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost/login');
     cy.get('[data-cy=email_input]').type('lotte.staes@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
@@ -103,7 +103,7 @@ describe('KampForm', () => {
     cy.url().should('not.include', '/login', { timeout: 5000 });
     
     // Finally go to kamp form page
-    cy.visit('http://localhost:5173/kampen/add');
+    cy.visit('http://localhost/kampen/add');
     cy.get('[data-cy="input-naam"]').type('Cypress Kamp');
     cy.get('[data-cy="input-stad"]').type('Gent');
     cy.get('[data-cy="input-start"]').type('2030-01-10');
