@@ -114,7 +114,7 @@ De oplossingen van de oefeningen waren zeer nuttig voor een voorbeeld te hebben.
 
 **Wat zou je toevoegen/aanpassen?**
 
-Ik zou meer tijd geven voor de lessen of de cursus verklijnen want het is wel echt ENORM veel nieuw om te leren in zo'n korte tijd. Ik heb voor dit vak echt veel uren moeten steken om alles te begrijpen en te implementeren. En ik heb het gevoel dat ik erdoor andere vakken heb laten liggen.
+Ik zou meer tijd geven voor de lessen of de cursus verkleinen want het is wel echt ENORM veel nieuw om te leren in zo'n korte tijd. Ik heb voor dit vak echt veel uren moeten steken om alles te begrijpen en te implementeren. En ik heb het gevoel dat ik erdoor andere vakken heb laten liggen.
 
 ### Matteo van droogenbroeck
 
