@@ -180,7 +180,7 @@ Meer mogen aan werken tijdens de les, het was soms veel werk buiten de lessen.
   - Gebruikersregistratie en login functionaliteit toegevoegd.
   - Swagger documentatie gemaakt.
   - Testen voor de controllers gemaakt.
-  - OpenAPI generator geimplementeerd om types te genereren.// TODO
+  - OpenAPI generator geimplementeerd om types te genereren.
 
 **Welke functionaliteiten heeft elk groepslid toegevoegd voor Front-end Web Development?**
 
