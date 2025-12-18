@@ -137,7 +137,7 @@ Ik vond persoonlijke HF9 de back-end testen het moeilijkste om te snappen.
 De oplossingen als voorbeeld zijn zeer handig om het te kunnen implementeren in je eigen project.
 
 **Wat zou je toevoegen/aanpassen?**
-Meer mogen aan werken tijdens de les, het was soms veel werk buiten de lessen.
+Ik zou de demo liever via Teams of een andere appilicatie opnemen aangezien je daar met meerdere personen je scherm en camera kan delen,wat zeer handig is voor een demo in een groepswerk.
 
 ### Reflectie groepswerk
 
