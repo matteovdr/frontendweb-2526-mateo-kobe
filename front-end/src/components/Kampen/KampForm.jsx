@@ -17,19 +17,21 @@ const kampSchema = Yup.object().shape({
     .max(255, 'Stad mag maximaal 255 tekens bevatten'),
 
   startDatum: Yup.date()
-    .required('Startdatum is verplicht'),
+    .transform((value, originalValue) => (originalValue === '' ? null : new Date(originalValue)))
+    .typeError('Startdatum is verplicht')
+    .required('Startdatum is verplicht')
+    .test('not-in-past', 'Startdatum mag niet in het verleden liggen', (value) => {
+      if (!value) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return value >= today;
+    }),
 
   eindDatum: Yup.date()
+    .transform((value, originalValue) => (originalValue === '' ? null : new Date(originalValue)))
+    .typeError('Einddatum is verplicht')
     .required('Einddatum is verplicht')
-    .test(
-      'is-after',
-      'Einddatum moet later zijn dan de startdatum',
-      function (value) {
-        const { startDatum } = this.parent;
-        if (!startDatum || !value) return false;
-        return value > startDatum;
-      },
-    ),
+    .min(Yup.ref('startDatum'), 'Einddatum moet later zijn dan de startdatum'),
   beschrijving: Yup.string()
     .required('Beschrijving is verplicht')
     .min(10, 'Beschrijving moet minstens 10 tekens bevatten')
