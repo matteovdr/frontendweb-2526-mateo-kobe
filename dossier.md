@@ -13,7 +13,8 @@
 - **Online versies:**
   - **Back-end:** <https://api-ksa-hillegem.onrender.com/api/>
   - **Front-end:** <https://ksa-hillegem.onrender.com/home>
-- **Demo:** <LINK_NAAR_DEMO_VIDEO> //TODO
+- **Demo deel 1:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ad741799-09cc-4462-95f1-b3b700e2972a&edit=true>
+- **Demo deel 2:** <DEMO_LINK_HIER_INVOEGEN> // TODO
 
 ## 🔐 Logingegevens
 
