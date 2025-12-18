@@ -36,7 +36,6 @@ const kampSchema = Yup.object().shape({
     .required('Beschrijving is verplicht')
     .min(10, 'Beschrijving moet minstens 10 tekens bevatten')
     .max(1000, 'Beschrijving mag maximaal 1000 tekens bevatten'),
-
 });
 
 function KampForm() {

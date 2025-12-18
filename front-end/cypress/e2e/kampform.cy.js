@@ -82,7 +82,7 @@ describe('KampForm', () => {
     // Finally go to kamp form page
     cy.visit('http://localhost/kampen/add');
     cy.get('[data-cy="input-start"]').type('2030-01-10');
-    cy.get('[data-cy="input-eind"]').type('2030-01-10');
+    cy.get('[data-cy="input-eind"]').type('2030-01-09');
     cy.get('[data-cy="submit-button"]').click();
     cy.contains('Einddatum moet later zijn dan de startdatum');
   });
