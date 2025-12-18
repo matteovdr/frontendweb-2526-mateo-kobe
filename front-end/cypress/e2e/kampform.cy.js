@@ -5,7 +5,7 @@ describe('KampForm', () => {
     
     // Login
     cy.visit('http://localhost/login');
-    cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
+    cy.get('[data-cy=email_input]').type('lotte.staes@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
     
@@ -33,7 +33,7 @@ describe('KampForm', () => {
     
     // Login
     cy.visit('http://localhost/login');
-    cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
+    cy.get('[data-cy=email_input]').type('lotte.staes@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
     
@@ -69,7 +69,7 @@ describe('KampForm', () => {
     
     // Login
     cy.visit('http://localhost/login');
-    cy.get('[data-cy=email_input]').type('amelie.depauw@gmail.com');
+    cy.get('[data-cy=email_input]').type('lotte.staes@gmail.com');
     cy.get('[data-cy=password_input]').type('12345678');
     cy.get('[data-cy=submit_btn]').click();
     
