@@ -14,7 +14,7 @@
   - **Back-end:** <https://api-ksa-hillegem.onrender.com/api/>
   - **Front-end:** <https://ksa-hillegem.onrender.com/home>
 - **Demo deel 1:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ad741799-09cc-4462-95f1-b3b700e2972a&edit=true>
-- **Demo deel 2:** <DEMO_LINK_HIER_INVOEGEN> // TODO
+- **Demo deel 2:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c415c06b-3333-4f8d-ae0f-b3b7017c1eee>
 
 ## 🔐 Logingegevens
 
