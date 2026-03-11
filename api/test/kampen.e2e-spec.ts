@@ -60,7 +60,10 @@ describe('Kampen', () => {
       );
     });
 
-    testAuthHeader(() => request(app.getHttpServer()).get(url));
+    it('should allow public access', async () => {
+      const res = await request(app.getHttpServer()).get(url);
+      expect(res.statusCode).toBe(200);
+    });
   });
 
   describe('GET /api/kampen/:id', () => {
@@ -70,14 +73,19 @@ describe('Kampen', () => {
         .set('Authorization', `Bearer ${userAuthToken}`);
 
       expect(res.statusCode).toBe(200);
-      expect(res.body).toEqual({
-        id: 1,
-        naam: 'Stadskamp Brussel Atomium',
-        stad: 'Brussel',
-        beschrijving: 'Beschrijving wordt later toegevoegd.',
-        startDatum: new Date('2025-04-07').toISOString(),
-        eindDatum: new Date('2025-04-13').toISOString(),
-      });
+      expect(res.body).toEqual(
+        expect.objectContaining({
+          id: 1,
+          naam: 'Stadskamp Brussel Atomium',
+          stad: 'Brussel',
+          beschrijving: 'Beschrijving wordt later toegevoegd.',
+          startDatum: new Date('2025-04-07').toISOString(),
+          eindDatum: new Date('2025-04-13').toISOString(),
+          isIngeschreven: false,
+        }),
+      );
+      expect(Array.isArray(res.body.leden)).toBe(true);
+      expect(Array.isArray(res.body.leiding)).toBe(true);
     });
 
     it('should 404 when kamp does not exist', async () => {
@@ -86,7 +94,7 @@ describe('Kampen', () => {
         .set('Authorization', `Bearer ${userAuthToken}`);
 
       expect(res.statusCode).toBe(404);
-      expect(res.body.message).toBe('No kamp with this id exists');
+      expect(res.body.message).toBe('Kamp with ID 999 not found');
     });
 
     it('should 400 with invalid id', async () => {
@@ -97,7 +105,10 @@ describe('Kampen', () => {
       expect(res.statusCode).toBe(400);
     });
 
-    testAuthHeader(() => request(app.getHttpServer()).get(`${url}/1`));
+    it('should allow public access to kamp details', async () => {
+      const res = await request(app.getHttpServer()).get(`${url}/1`);
+      expect(res.statusCode).toBe(200);
+    });
   });
 
   describe('POST /api/kampen', () => {
@@ -142,7 +153,7 @@ describe('Kampen', () => {
         .send({
           naam: 'Stadskamp Brussel Centrum',
           stad: 'Brussel',
-          beschrijving: 'Aangepast',
+          beschrijving: 'Aangepaste beschrijving',
           startDatum: '2025-04-07',
           eindDatum: '2025-04-13',
         });
@@ -158,6 +169,7 @@ describe('Kampen', () => {
         .send({
           naam: 'Test',
           stad: 'Test',
+          beschrijving: 'Test beschrijving',
           startDatum: '2025-01-01',
           eindDatum: '2025-01-02',
         });

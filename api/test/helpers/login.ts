@@ -4,7 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 export const login = async (app: INestApplication): Promise<string> => {
   const authService = app.get(AuthService);
   const token = await authService.login({
-    email: 'matteo.vandroogenbroeck@gmail.com',
+    email: 'hoofd.leiding@test.be',
     password: '12345678',
   });
 
@@ -18,7 +18,7 @@ export const login = async (app: INestApplication): Promise<string> => {
 export const loginAdmin = async (app: INestApplication): Promise<string> => {
   const authService = app.get(AuthService);
   const token = await authService.login({
-    email: 'beau.dhondt@gmail.com',
+    email: 'hoofd.leiding@test.be',
     password: '12345678',
   });
 

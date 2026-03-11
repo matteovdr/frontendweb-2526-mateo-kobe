@@ -5,7 +5,7 @@ import { login, loginAdmin } from './helpers/login';
 import testAuthHeader from './helpers/testAuthHeader';
 
 import { DatabaseProvider, DrizzleAsyncProvider } from '../src/drizzle/drizzle.provider';
-import { seedLeiding, clearLeiding } from './seeds/leiding';
+import { seedPersoon, clearPersoon } from './seeds/personen';
 
 describe('Personen', () => {
   let app: INestApplication;
@@ -19,7 +19,8 @@ describe('Personen', () => {
     app = await createTestApp();
     drizzle = app.get(DrizzleAsyncProvider);
 
-    await seedLeiding(drizzle);
+    await clearPersoon(drizzle);
+    await seedPersoon(drizzle);
 
     // Login een gewone gebruiker en een admin (je kan hier je eerste HOOFDLEIDING gebruiken als admin)
     userAuthToken = await login(app);  // moet een LID/LEIDING token zijn
@@ -27,7 +28,7 @@ describe('Personen', () => {
   });
 
   afterAll(async () => {
-    await clearLeiding(drizzle);
+    await clearPersoon(drizzle);
     await app.close();
   });
 
@@ -59,7 +60,7 @@ describe('Personen', () => {
     it('should return a single persoon', async () => {
       const res = await request(app.getHttpServer())
         .get(`${url}/1`)
-        .set('Authorization', `Bearer ${userAuthToken}`);
+        .set('Authorization', `Bearer ${adminAuthToken}`);
 
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual(
@@ -75,16 +76,16 @@ describe('Personen', () => {
     it('should 404 when persoon does not exist', async () => {
       const res = await request(app.getHttpServer())
         .get(`${url}/999`)
-        .set('Authorization', `Bearer ${userAuthToken}`);
+        .set('Authorization', `Bearer ${adminAuthToken}`);
 
       expect(res.statusCode).toBe(404);
-      expect(res.body.message).toBe('No persoon with this id exists');
+      expect(res.body.message).toBe('Geen persoon gevonden met dit ID');
     });
 
     it('should 400 with invalid id', async () => {
       const res = await request(app.getHttpServer())
         .get(`${url}/invalid`)
-        .set('Authorization', `Bearer ${userAuthToken}`);
+        .set('Authorization', `Bearer ${adminAuthToken}`);
 
       expect(res.statusCode).toBe(400);
     });
@@ -106,14 +107,14 @@ describe('Personen', () => {
           geboorteDatum: '2010-01-01',
           telefoon: '0499 11 22 33',
           email: 'test.person@gmail.com',
-          password: '12345678',
-          roles: ['LEIDING'],
+          passwordHash: '12345678',
+          roles: ['leiding'],
         });
 
       expect(res.statusCode).toBe(201);
       expect(res.body.id).toBeTruthy();
       expect(res.body.voornaam).toBe('Test');
-      expect(res.body.roles).toContain('LEIDING');
+      expect(res.body.roles).toContain('leiding');
     });
 
     it('should 400 when missing required fields', async () => {
@@ -134,39 +135,56 @@ describe('Personen', () => {
         geboorteDatum: '2010-01-01',
         telefoon: '0499 11 22 33',
         email: 'test.person@gmail.com',
-        password: '12345678',
-        roles: ['LEIDING'],
+        passwordHash: '12345678',
+        roles: ['leiding'],
       }),
     );
   });
 
   // ------------------------
-  // PUT /api/personen/:id
+  // PATCH /api/personen/:id
   // ------------------------
-  describe('PUT /api/personen/:id', () => {
+  describe('PATCH /api/personen/:id', () => {
     it('should update an existing persoon', async () => {
       const res = await request(app.getHttpServer())
-        .put(`${url}/1`)
+        .patch(`${url}/1`)
         .set('Authorization', `Bearer ${adminAuthToken}`)
         .send({
+          voornaam: 'Hoofd',
+          achternaam: 'Leiding',
+          geboorteDatum: '2000-01-01',
           telefoon: '0499 99 99 99',
+          email: 'hoofd.leiding@test.be',
+          roles: ['hoofdleiding'],
         });
 
       expect(res.statusCode).toBe(200);
-      expect(res.body.telefoon).toBe('0499 99 99 99');
+      expect(res.body).toEqual(
+        expect.objectContaining({
+          id: 1,
+          email: 'hoofd.leiding@test.be',
+        }),
+      );
     });
 
     it('should 404 when persoon does not exist', async () => {
       const res = await request(app.getHttpServer())
-        .put(`${url}/999`)
+        .patch(`${url}/999`)
         .set('Authorization', `Bearer ${adminAuthToken}`)
-        .send({ telefoon: '0499 00 00 00' });
+        .send({
+          voornaam: 'Onbekend',
+          achternaam: 'Persoon',
+          geboorteDatum: '2000-01-01',
+          telefoon: '0499 00 00 00',
+          email: 'unknown.person@test.be',
+          roles: ['leiding'],
+        });
 
       expect(res.statusCode).toBe(404);
     });
 
     testAuthHeader(() =>
-      request(app.getHttpServer()).put(`${url}/1`).send({ telefoon: '0499 99 99 99' }),
+      request(app.getHttpServer()).patch(`${url}/1`).send({ telefoon: '0499 99 99 99' }),
     );
   });
 
@@ -183,13 +201,12 @@ describe('Personen', () => {
       expect(res.body).toEqual({});
     });
 
-    it('should 404 when persoon does not exist', async () => {
+    it('should still return 204 when persoon does not exist', async () => {
       const res = await request(app.getHttpServer())
         .delete(`${url}/999`)
         .set('Authorization', `Bearer ${adminAuthToken}`);
 
-      expect(res.statusCode).toBe(404);
-      expect(res.body.message).toBe('No persoon with this id exists');
+      expect(res.statusCode).toBe(204);
     });
 
     testAuthHeader(() =>

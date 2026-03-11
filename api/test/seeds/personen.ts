@@ -47,6 +47,26 @@ export async function seedPersoon(drizzle: DatabaseProvider) {
       passwordHash: await hashPassword('12345678'),
       roles: [Role.LID],
     },
+    {
+      id: 17,
+      voornaam: 'Lid',
+      achternaam: 'Zeventien',
+      geboorteDatum: new Date('2012-01-01'),
+      telefoon: '0400 00 00 17',
+      email: 'lid17@test.be',
+      passwordHash: await hashPassword('12345678'),
+      roles: [Role.LID],
+    },
+    {
+      id: 18,
+      voornaam: 'Lid',
+      achternaam: 'Achttien',
+      geboorteDatum: new Date('2012-01-02'),
+      telefoon: '0400 00 00 18',
+      email: 'lid18@test.be',
+      passwordHash: await hashPassword('12345678'),
+      roles: [Role.LID],
+    },
   ]);
 }
 
