@@ -1,5 +1,5 @@
-import * as schema from '../../src/drizzle/schema';
 import { DatabaseProvider } from '../../src/drizzle/drizzle.provider';
+import { kampen } from '../../src/drizzle/schema';
 
 export const KAMPEN_SEED = [
   {
@@ -22,12 +22,12 @@ export const KAMPEN_SEED = [
 
 export async function seedKampen(drizzle: DatabaseProvider) {
   console.log('⛺ Seeding kampen...');
-  await drizzle.insert(schema.kampen).values(KAMPEN_SEED);
+  await drizzle.insert(kampen).values(KAMPEN_SEED);
   console.log('✅ Kampen seeded!\n');
 }
 
 export async function clearKampen(drizzle: DatabaseProvider) {
   console.log('🗑️ Clearing kampen...');
-  await drizzle.delete(schema.kampen);
+  await drizzle.delete(kampen);
   console.log('✅ Kampen cleared!\n');
 }
