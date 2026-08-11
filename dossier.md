@@ -13,8 +13,9 @@
 - **Online versies:**
   - **Back-end:** <https://api-ksa-hillegem.onrender.com/api/>
   - **Front-end:** <https://ksa-hillegem.onrender.com/home>
-- **Demo deel 1:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ad741799-09cc-4462-95f1-b3b700e2972a&edit=true>
-- **Demo deel 2:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c415c06b-3333-4f8d-ae0f-b3b7017c1eee>
+- **Demo EP 1 deel 1:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ad741799-09cc-4462-95f1-b3b700e2972a&edit=true>
+- **Demo EP 1 deel 2:** <https://hogent.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c415c06b-3333-4f8d-ae0f-b3b7017c1eee>
+- **Demo EP 3:** <https://teams.microsoft.com/l/meetingrecap?driveId=b%21zPfojeJzUka8zkSW8BChErsSmxJn7UtEusG35MtK42hMBxXdguljTao0rdzwVNkp&driveItemId=01RWQ2EDIEKSPJYGFVI5GIRZ4CF2XY3E5S&sitePath=https%3A%2F%2Fhogent-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fmatteo_vandroogenbroeck_student_hogent_be%2FIQAEVJ6cGLVHTIjngi6vjZOyAaXAQI96yzYSy7s_CdxE_EI&fileUrl=https%3A%2F%2Fhogent-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fmatteo_vandroogenbroeck_student_hogent_be%2FIQAEVJ6cGLVHTIjngi6vjZOyAaXAQI96yzYSy7s_CdxE_EI&threadId=19%3A6f1ec292-99a2-4f69-afd0-c1df222f1976_800f56b6-ff42-439b-af7e-a2dc8a1d8c25%40unq.gbl.spaces&callId=3c6f7748-0906-4b77-ab90-e762fa1aadee&threadType=OneOnOneChat&meetingType=Unknown&subType=RecapSharingLink_RecapChiclet>
 
 ## 🔐 Logingegevens
 
