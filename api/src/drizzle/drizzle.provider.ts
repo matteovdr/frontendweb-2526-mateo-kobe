@@ -20,7 +20,7 @@ export const drizzleProvider = [
           uri: databaseConfig.url,
           connectionLimit: 5,
         }),
-        mode: 'default',
+        mode: 'planetscale',
         schema,
       });
     },
