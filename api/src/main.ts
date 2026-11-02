@@ -1,4 +1,4 @@
-// src/main.ts
+﻿// src/main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
@@ -41,9 +41,7 @@ async function bootstrap() {
 
 
   app.enableCors({
-    origin: (cors?.origins && cors.origins.length > 0)
-      ? cors.origins
-      : ['http://localhost:5173'],
+    origin: true,
     credentials: true,
     methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -81,7 +79,7 @@ async function bootstrap() {
   app.useGlobalFilters(new DrizzleQueryErrorFilter());
 
   
-  app.use(helmet());
+  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
   
   const swaggerConfig = new DocumentBuilder()

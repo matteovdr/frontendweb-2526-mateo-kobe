@@ -1,4 +1,4 @@
-import {
+﻿import {
   Body,
   Controller,
   Delete,
@@ -46,6 +46,14 @@ export class LeidingController {
     return this.leidingService.getAll();
   }
 
+  @ApiOperation({ summary: 'Alle leiding als kale lijst (voor SAP Build)' })
+  @Public()
+  @Get('plain')
+  async getAllPlain() {
+    const result = await this.leidingService.getAll();
+    return result.items;
+  }
+
   @ApiOperation({
     summary: 'Leiding ophalen op ID',
     description: 'Haalt de details op van een specifieke leidingspersoon',
@@ -64,6 +72,7 @@ export class LeidingController {
     status: 404,
     description: 'Leiding niet gevonden',
   })
+  @Public()
   @Get(':id')
   async getById(
     @Param('id', ParseIntPipe) id: number,
