@@ -29,6 +29,17 @@ export class LeidingService {
       with: { persoon: true },
     });
 
+    const order = ['Sloebers', 'Paggaders', 'Joro\u2019s', 'Knimmers', 'Sjo\u2019ers', '+16'];
+    const rank = (g: string) => {
+      const i = order.indexOf(g);
+      return i === -1 ? order.length : i;
+    };
+    items.sort(
+      (a, b) =>
+        rank(a.ageGroup) - rank(b.ageGroup) ||
+        (a.persoon?.voornaam ?? '').localeCompare(b.persoon?.voornaam ?? ''),
+    );
+
     return {
       items: items.map((item) => ({
         id: item.persoon?.id ?? item.persoonId,
